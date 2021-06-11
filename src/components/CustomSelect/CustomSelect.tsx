@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from "@material-ui/core/MenuItem";
+// import SelectorVariantsType from "@utils/types/SelectorVariantsType";
+import SelectorVariantsType from "../../utils/types/SelectorVariantsType";
+
+export interface CustomSelectInterface {
+    width: number,
+    selectItems: SelectorVariantsType[]
+};
 
 const CustomSelect = () => {
     const useStyles = makeStyles((theme) => ({
