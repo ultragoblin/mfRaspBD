@@ -1,12 +1,13 @@
 import { Button } from '@material-ui/core';
-import './App.css';
-import Header from './Header/Header';
+import './App.scss';
+import Header from '@components/Header';
 
 function App() {
   return (
     <div className="App">
+      <div className="App__container">
       <Header/>
-      proj
+      </div>
     </div>
   );
 }
