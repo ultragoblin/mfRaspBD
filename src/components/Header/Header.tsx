@@ -94,6 +94,7 @@ const Header = () => {
             <div className={styles.header__form}>
                 {
                     selects.map((select) => <CustomSelect
+                        key={select.label}
                         width={select.width}
                         selectItems={select.selectItems}
                         label={select.label}

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import FormControl from "@material-ui/core/FormControl";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import { makeStyles } from '@material-ui/core/styles';
@@ -47,7 +46,7 @@ const CustomSelect = ({ selectItems, width, label, id }: CustomSelectInterface) 
                 label={label}
             >
                 {
-                    selectItems.map((item) => <MenuItem value={item.value}>{item.placeholder}</MenuItem>)
+                    selectItems.map((item) => <MenuItem key={item.placeholder} value={item.value}>{item.placeholder}</MenuItem>)
                 }
             </Select>
         </FormControl>

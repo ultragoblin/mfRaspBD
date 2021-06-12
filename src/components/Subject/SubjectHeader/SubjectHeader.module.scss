@@ -1,0 +1,13 @@
+.header {
+    margin-top: 104px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttons {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 132px 142px;
+    grid-template-rows: 36px;
+}
