@@ -1,0 +1,18 @@
+.id__label {
+  &_year {
+    grid-area: s-year;
+  }
+
+  &_caf {
+    grid-area: s-caf;
+  }
+
+  &_fac {
+    grid-area: s-fac;
+  }
+
+  &_group {
+    grid-area: s-group;
+  }
+}
+

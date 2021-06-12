@@ -1,6 +1,6 @@
 type SelectorVariantsType = {
-  value: String;
-  placeholder: String;
+  value: string;
+  placeholder: string;
 };
 
 export default SelectorVariantsType;

@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &__form {
+    display: grid;
+    grid-template-areas:
+    "s-year f-radio f-radio"
+    "s-fac s-caf s-group";
+    align-items: center;
+    gap: 20px;
+  }
+
+  &__buttons {
+    display: grid;
+    gap: 20px;
+    background-color: white;
+    grid-template-columns: repeat(3, 161px);
+    grid-template-rows: 36px;
+  }
+}
+
+.form {
+  &__radio {
+    margin-left: 11px;
+    grid-area: f-radio;
+  }
+}
