@@ -1,10 +1,18 @@
 .caption {
-    display: grid;
-    grid-template-columns: 205px 412px;
-    grid-template-rows: 42px;
-    align-items: center;
+  display: grid;
+  grid-template-columns: 205px 412px;
+  grid-template-rows: 42px;
+  align-items: center;
 
-    &_h {
-        height: 100%;
-    }
+  &_h {
+    height: 100%;
+  }
+}
+
+.table {
+  background-color: #f0f0f0;
+}
+
+.tr, .td {
+    border: #D2D2D2 1px solid
 }

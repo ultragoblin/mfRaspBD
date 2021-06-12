@@ -1,14 +1,14 @@
+import styles from "./Naming.module.scss";
+
 const Naming = () => {
   return (
-    <tr>
-      <td>
-        <th>№</th>
-        <th>Время</th>
-      </td>
-      <th>Предмет</th>
-      <th>Преподаватель</th>
-      <th>Аудитория</th>
-      <th>Подгруппа</th>
+    <tr className={styles.tr}>
+      <th className={styles.th}>№</th>
+      <th colSpan={2} className={styles.th}>Время</th>
+      <th className={styles.th}>Предмет</th>
+      <th className={styles.th}>Преподаватель</th>
+      <th className={styles.th}>Аудитория</th>
+      <th className={styles.th}>Подгруппа</th>
     </tr>
   );
 };
