@@ -1,19 +1,34 @@
 import { useState } from "react";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import Checkbox from "@material-ui/core/Checkbox";
-import TextField from "@material-ui/core/TextField";
-import styles from "./Row.module.scss";
+import Single from "./Single";
+import Double from "./Double";
+import "./Row.scss";
 
-interface RowProps {
+export enum RowWidth {
+  NUMBER = 42,
+  TIMER = 121,
+  CHECKBOX = 42,
+  SUBJECT = 442,
+  TEACHER = 392,
+  AUD = 213,
+  SUBGROUP = 124
+}
+
+export type ISubj = {
+  name: string;
+};
+
+export interface RowProps {
   number: number;
   timer: string;
 }
 
-type ISubj = {
-  name: string
+export interface RowChildProps extends RowProps {
+  state: boolean;
+  handler: () => void;
+  options: ISubj[];
 }
 
-// ! Сюда подгрузим список предметов 
+// ! Сюда подгрузим список предметов
 const options: ISubj[] = [
   {
     name: "keker",
@@ -23,51 +38,26 @@ const options: ISubj[] = [
 const Row = ({ number, timer }: RowProps) => {
   const [double, setDouble] = useState(false);
 
-  const doubleHandler = () => {
+  const doubleHandler = (): void => {
     setDouble(!double);
-    console.log(double);
   };
 
-  return (
-    <tr className={styles.tr}>
-      <td width={42} className={styles.td}>
-        {number}
-      </td>
-      <td width={121} className={styles.td}>
-        {timer}
-      </td>
-      <td width={42} className={styles.td}>
-        <Checkbox color="primary" checked={double} onChange={doubleHandler} />
-      </td>
-      <td width={442} className={styles.td}>
-        <Autocomplete
-          id="combo-box-demo"
-          options={options}
-          getOptionLabel={(option) => option.name}
-          style={{ width: 300 }}
-          renderInput={(params) => (
-            <TextField {...params} label="" variant="outlined" />
-          )}
-        />
-      </td>
-      <td width={392} className={styles.td}>
-      <Autocomplete
-          id="combo-box-demo"
-          options={options}
-          getOptionLabel={(option) => option.name}
-          style={{ width: 300 }}
-          renderInput={(params) => (
-            <TextField {...params} label="" variant="outlined" />
-          )}
-        />
-      </td>
-      <td width={213} className={styles.td}>
-        6
-      </td>
-      <td width={124} className={styles.td}>
-        7
-      </td>
-    </tr>
+  return !double ? (
+    <Single
+      handler={doubleHandler}
+      number={number}
+      timer={timer}
+      state={double}
+      options={options}
+    />
+  ) : (
+    <Double
+      handler={doubleHandler}
+      number={number}
+      timer={timer}
+      state={double}
+      options={options}
+    />
   );
 };
 

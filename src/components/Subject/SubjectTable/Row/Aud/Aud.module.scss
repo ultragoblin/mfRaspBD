@@ -1,0 +1,10 @@
+.aud {
+    display: grid;
+    grid-template-columns: 177px 14px;
+    align-items: center;
+    justify-content: center;
+
+    &:last-child {
+        cursor: pointer;
+    }
+}
