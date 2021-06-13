@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import AddIcon from "@material-ui/icons/Add";
@@ -11,17 +12,43 @@ export interface AudProps {
 }
 
 const Aud = ({ options, addStyles }: AudProps) => {
+  const [added, setAdded] = useState<boolean>(false);
+
+  const handleChange = () => {
+    setAdded(!added);
+  };
+
   return (
-    <div className={styles.aud}>
+    <div
+      className={`${styles.aud} ${
+        added ? styles.aud_double : styles.aud_single
+      }`}
+    >
       <Autocomplete
-        style={styles}
+        style={addStyles}
         options={options}
         getOptionLabel={(option) => option.name}
         renderInput={(params) => (
           <TextField {...params} label="" variant="outlined" />
         )}
       />
-      <AddIcon />
+      {added ? (
+        <Autocomplete
+          style={{marginLeft: 4}}
+          options={options}
+          getOptionLabel={(option) => option.name}
+          renderInput={(params) => (
+            <TextField {...params} label="" variant="outlined" />
+          )}
+        />
+      ) : (
+        ""
+      )}
+      {added ? (
+        <RemoveIcon onClick={handleChange} />
+      ) : (
+        <AddIcon onClick={handleChange} />
+      )}
     </div>
   );
 };

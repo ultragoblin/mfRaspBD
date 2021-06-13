@@ -36,7 +36,7 @@ const options: ISubj[] = [
 ];
 
 const Row = ({ number, timer }: RowProps) => {
-  const [double, setDouble] = useState(false);
+  const [double, setDouble] = useState<boolean>(false);
 
   const doubleHandler = (): void => {
     setDouble(!double);

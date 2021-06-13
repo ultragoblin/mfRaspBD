@@ -1,10 +1,18 @@
 .aud {
-    display: grid;
-    grid-template-columns: 177px 14px;
-    align-items: center;
-    justify-content: center;
+  display: grid;
+  grid-template-columns: 177px 14px;
+  align-items: center;
+  justify-content: center;
 
-    &:last-child {
-        cursor: pointer;
-    }
+  &_single {
+    grid-template-columns: 177px 14px;
+  }
+
+  &_double {
+    grid-template-columns: 88.5px 88.5px 14px;
+  }
+
+  &:last-child {
+    cursor: pointer;
+  }
 }
