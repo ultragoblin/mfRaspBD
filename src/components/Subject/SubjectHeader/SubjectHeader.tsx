@@ -19,7 +19,7 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
         >
           Сбросить
         </Button>
-        <Button startIcon={<SaveIcon />} variant="contained" color="primary">
+        <Button style={{backgroundColor: '#007DFF'}} startIcon={<SaveIcon />} variant="contained" color="primary">
           Сохранить
         </Button>
       </div>

@@ -34,7 +34,7 @@ const Aud = ({ options, addStyles }: AudProps) => {
       />
       {added ? (
         <Autocomplete
-          style={{marginLeft: 4}}
+          style={{ marginLeft: 4 }}
           options={options}
           getOptionLabel={(option) => option.name}
           renderInput={(params) => (
@@ -44,11 +44,13 @@ const Aud = ({ options, addStyles }: AudProps) => {
       ) : (
         ""
       )}
-      {added ? (
-        <RemoveIcon onClick={handleChange} />
-      ) : (
-        <AddIcon onClick={handleChange} />
-      )}
+      <div className="icon">
+        {added ? (
+          <RemoveIcon style={{ color: '#FF505F' }} onClick={handleChange} />
+        ) : (
+          <AddIcon style={{ color: '#007DFF' }} onClick={handleChange} />
+        )}
+      </div>
     </div>
   );
 };

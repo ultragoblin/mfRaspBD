@@ -1,14 +1,10 @@
-import React from "react";
 import CustomSelect, { CustomSelectInterface } from "../CustomSelect/CustomSelect";
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import PrintIcon from '@material-ui/icons/Print';
 import StorageIcon from '@material-ui/icons/Storage';
 import Button from "@material-ui/core/Button";
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
 import styles from "./Header.module.scss";
+import CustomRadio, { radioType } from "../CustomRadio/CustomRadio";
 
 const selectWidth: number = 167;
 
@@ -87,6 +83,17 @@ const selects: CustomSelectInterface[] = [
     },
 ];
 
+const radio: radioType = {
+    value: {
+        first: '1 семестр',
+        second: '2 семестр'
+    },
+    label: {
+        first: '1',
+        second: '2'
+    }
+}
+
 const Header = () => {
 
     return (
@@ -101,17 +108,12 @@ const Header = () => {
                         id={select.id}
                     />)
                 }
-                <FormControl className={styles.form__radio} component="fieldset">
-                    <RadioGroup row aria-label="position" name="position" defaultValue="end">
-                        <FormControlLabel value="семестр 1" control={<Radio color="primary" />} label="1" />
-                        <FormControlLabel value="семестр 2" control={<Radio color="primary" />} label="2" />
-                    </RadioGroup>
-                </FormControl>
+                <CustomRadio {...radio}/>
             </div>
             <div className={styles.header__buttons}>
                 <Button startIcon={<StorageIcon />} variant="contained">База данных</Button>
                 <Button startIcon={<PrintIcon />} variant="contained">Печать</Button>
-                <Button startIcon={<DirectionsRunIcon />} variant="contained" color="primary">
+                <Button style={{backgroundColor: '#007DFF'}} startIcon={<DirectionsRunIcon />} variant="contained" color="primary">
                     Выход
                 </Button>
             </div>
