@@ -4,6 +4,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import styles from "./CustomRadio.module.scss";
+import { withStyles } from "@material-ui/core/styles";
 
 export type radioType = {
   label?: {
@@ -14,40 +15,44 @@ export type radioType = {
     first: string;
     second: string;
   };
+  handler: (e: any) => void;
 };
 
-const defaultColor: React.CSSProperties = { color: "#000000" };
-const activeColor: React.CSSProperties = { color: "#007DFF" };
+const BlueRadio = withStyles({
+  root: {
+    color: "#000000",
+    "&$checked": {
+      color: "#007DFF",
+    },
+  },
+  checked: {},
+})((props) => <Radio color="default" {...props} />);
 
-const CustomRadio = ({ value, label }: radioType) => {
-  const [firstColor, setFirstColor] =
-    useState<React.CSSProperties>(defaultColor);
-  const [secondColor, setSecondColor] =
-    useState<React.CSSProperties>(defaultColor);
+const CustomRadio = ({ value, label, handler }: radioType) => {
+  const [val, setVal] = useState<string>(value.first);
 
-  const handleFirst = () => {
-    setFirstColor(activeColor);
-    setSecondColor(defaultColor);
-  };
-
-  const handleSecond = () => {
-    setFirstColor(defaultColor);
-    setSecondColor(activeColor);
+  const handleChange = (e: any) => {
+    setVal(e.target.value);
+    handler(e.target.value);
   };
 
   return (
     <FormControl className={styles.form__radio} component="fieldset">
-      <RadioGroup row aria-label="position" name="position">
+      <RadioGroup
+        row
+        aria-label="position"
+        name="position"
+        value={val}
+        onChange={handleChange}
+      >
         <FormControlLabel
-          onChange={handleFirst}
           value={value.first}
-          control={<Radio style={firstColor} />}
+          control={<BlueRadio />}
           label={label?.first}
         />
         <FormControlLabel
-          onChange={handleSecond}
           value={value.second}
-          control={<Radio style={secondColor} />}
+          control={<BlueRadio />}
           label={label?.second}
         />
       </RadioGroup>

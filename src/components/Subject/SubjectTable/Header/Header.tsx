@@ -1,19 +1,25 @@
 import styles from "./Header.module.scss";
 import CustomRadio from "../../../CustomRadio";
 import { radioType } from "../../../CustomRadio/CustomRadio";
+import { EDayType } from "../SubjectTable";
 
-const radio: radioType = {
-  value: {
-    first: "common",
-    second: "special",
-  },
-  label: {
-    first: "Обычное расписание",
-    second: "Особое расписание",
-  },
-};
+export interface HeaderProps {
+  setDayTVal: (e: any) => void 
+}
 
-const Header = () => {
+const Header = ({setDayTVal}: HeaderProps) => {
+  const radio: radioType = {
+    value: {
+      first: EDayType.COMMON,
+      second: EDayType.SPECIAL,
+    },
+    label: {
+      first: "Обычное расписание",
+      second: "Особое расписание",
+    },
+    handler: setDayTVal
+  };
+
   return (
     <tr className={styles.tr}>
       <td colSpan={2}>
