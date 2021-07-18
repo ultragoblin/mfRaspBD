@@ -4,11 +4,11 @@ import TextField from "@material-ui/core/TextField";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import styles from "./Aud.module.scss";
-import { ISubj } from "../Row";
+import { IOptions } from "../Row";
 
 export interface AudProps {
   addStyles?: React.CSSProperties;
-  options: ISubj[];
+  options: IOptions[];
 }
 
 const Aud = ({ options, addStyles }: AudProps) => {

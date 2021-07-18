@@ -84,6 +84,9 @@ const selects: CustomSelectInterface[] = [
 ];
 
 const radio: radioType = {
+    handler(e: any): void {
+        console.log('kek')
+    },
     value: {
         first: '1 семестр',
         second: '2 семестр'

@@ -5,7 +5,7 @@ import { RowChildProps, RowWidth } from "../Row";
 import Subgroup from "../Subgroup";
 import Aud from "../Aud";
 
-const Double = ({ state, timer, handler, number, options }: RowChildProps) => {
+const Double = ({ state, timer, handler, number, options: {subGroup, aud, teacher, subject} }: RowChildProps) => {
   const { AUD, SUBJECT, TIMER, SUBGROUP, CHECKBOX, NUMBER, TEACHER } = RowWidth;
 
   return (
@@ -22,7 +22,7 @@ const Double = ({ state, timer, handler, number, options }: RowChildProps) => {
         </td>
         <td width={SUBJECT} className="td">
           <Autocomplete
-            options={options}
+            options={subject}
             style={{ width: SUBJECT }}
             getOptionLabel={(option) => option.name}
             renderInput={(params) => (
@@ -32,7 +32,7 @@ const Double = ({ state, timer, handler, number, options }: RowChildProps) => {
         </td>
         <td width={TEACHER} className="td">
           <Autocomplete
-            options={options}
+            options={teacher}
             getOptionLabel={(option) => option.name}
             style={{ width: TEACHER }}
             renderInput={(params) => (
@@ -41,17 +41,17 @@ const Double = ({ state, timer, handler, number, options }: RowChildProps) => {
           />
         </td>
         <td width={AUD} className="td">
-          <Aud options={options} />
+          <Aud options={aud} />
         </td>
         <td width={SUBGROUP} className="td">
-          <Subgroup options={options} />
+          <Subgroup options={subGroup} />
         </td>
       </tr>
 
       <tr>
         <td width={SUBJECT} className="td__dobule">
           <Autocomplete
-            options={options}
+            options={subject}
             style={{ width: SUBJECT }}
             getOptionLabel={(option) => option.name}
             renderInput={(params) => (
@@ -61,7 +61,7 @@ const Double = ({ state, timer, handler, number, options }: RowChildProps) => {
         </td>
         <td width={TEACHER} className="td__dobule">
           <Autocomplete
-            options={options}
+            options={teacher}
             getOptionLabel={(option) => option.name}
             style={{ width: TEACHER }}
             renderInput={(params) => (
@@ -70,10 +70,10 @@ const Double = ({ state, timer, handler, number, options }: RowChildProps) => {
           />
         </td>
         <td width={AUD} className="td__dobule">
-          <Aud options={options} />
+          <Aud options={aud} />
         </td>
         <td width={SUBGROUP} className="td__dobule">
-          <Subgroup options={options} />
+          <Subgroup options={subGroup} />
         </td>
       </tr>
     </>

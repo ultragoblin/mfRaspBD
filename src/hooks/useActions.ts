@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as timingActionCreators from "../Redux/actions/timing";
+import actions from "../Redux/actions/index";
 
 export const useActions = () => {
   const disptach = useDispatch();
-  return bindActionCreators(timingActionCreators, disptach);
+  return bindActionCreators(actions, disptach);
 };

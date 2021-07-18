@@ -1,10 +1,10 @@
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
-import { ISubj } from "../Row";
+import { IOptions } from "../Row";
 
 export interface AudProps {
   styles?: React.CSSProperties;
-  options: ISubj[];
+  options: IOptions[];
 }
 
 const Subgroup = ({ options, styles }: AudProps) => {
