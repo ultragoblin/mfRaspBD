@@ -1,10 +1,10 @@
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
-import { IOptions } from "../Row";
+import { SubGroupOptions } from "../Row";
 
 export interface AudProps {
   styles?: React.CSSProperties;
-  options: IOptions[];
+  options: SubGroupOptions[];
 }
 
 const Subgroup = ({ options, styles }: AudProps) => {
@@ -12,7 +12,7 @@ const Subgroup = ({ options, styles }: AudProps) => {
     <Autocomplete
       style={styles}
       options={options}
-      getOptionLabel={(option) => option.name}
+      getOptionLabel={(option) => option.subgroup}
       renderInput={(params) => (
         <TextField {...params} label="" variant="outlined" />
       )}

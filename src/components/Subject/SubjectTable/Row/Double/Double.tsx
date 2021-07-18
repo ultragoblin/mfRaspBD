@@ -24,7 +24,7 @@ const Double = ({ state, timer, handler, number, options: {subGroup, aud, teache
           <Autocomplete
             options={subject}
             style={{ width: SUBJECT }}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) => option.subject}
             renderInput={(params) => (
               <TextField {...params} label="" variant="outlined" />
             )}
@@ -33,7 +33,7 @@ const Double = ({ state, timer, handler, number, options: {subGroup, aud, teache
         <td width={TEACHER} className="td">
           <Autocomplete
             options={teacher}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) => option.teacher}
             style={{ width: TEACHER }}
             renderInput={(params) => (
               <TextField {...params} label="" variant="outlined" />
@@ -53,7 +53,7 @@ const Double = ({ state, timer, handler, number, options: {subGroup, aud, teache
           <Autocomplete
             options={subject}
             style={{ width: SUBJECT }}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) => option.subject}
             renderInput={(params) => (
               <TextField {...params} label="" variant="outlined" />
             )}
@@ -62,7 +62,7 @@ const Double = ({ state, timer, handler, number, options: {subGroup, aud, teache
         <td width={TEACHER} className="td__dobule">
           <Autocomplete
             options={teacher}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) => option.teacher}
             style={{ width: TEACHER }}
             renderInput={(params) => (
               <TextField {...params} label="" variant="outlined" />

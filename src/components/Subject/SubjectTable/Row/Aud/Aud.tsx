@@ -4,11 +4,11 @@ import TextField from "@material-ui/core/TextField";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import styles from "./Aud.module.scss";
-import { IOptions } from "../Row";
+import { AudOptions } from "../Row";
 
 export interface AudProps {
   addStyles?: React.CSSProperties;
-  options: IOptions[];
+  options: AudOptions[];
 }
 
 const Aud = ({ options, addStyles }: AudProps) => {
@@ -27,7 +27,7 @@ const Aud = ({ options, addStyles }: AudProps) => {
       <Autocomplete
         style={addStyles}
         options={options}
-        getOptionLabel={(option) => option.name}
+        getOptionLabel={(option) => option.aud}
         renderInput={(params) => (
           <TextField {...params} label="" variant="outlined" />
         )}
@@ -36,7 +36,7 @@ const Aud = ({ options, addStyles }: AudProps) => {
         <Autocomplete
           style={{ marginLeft: 4 }}
           options={options}
-          getOptionLabel={(option) => option.name}
+          getOptionLabel={(option) => option.aud}
           renderInput={(params) => (
             <TextField {...params} label="" variant="outlined" />
           )}
