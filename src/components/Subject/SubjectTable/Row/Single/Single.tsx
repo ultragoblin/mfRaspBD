@@ -22,20 +22,20 @@ const Single = ({
     });
     const {AUD, SUBJECT, TIMER, SUBGROUP, CHECKBOX, NUMBER, TEACHER} = RowWidth;
 
-    const handleChange = (event: any, value: OptionsTypes | null) => {
-        let name: string;
-        let id: number;
+    const handleChange = (event: any, value: any) => {
+        let name: string = '';
+        let id: number = 0;
+
+        for (let key in value) {
+            if (key.includes("id")) {
+                id = value[key];
+            } else {
+                name = value[key]
+            }
+        }
+
         console.log(value)
-        // for (let key in value) {
-        //     if (key.includes("id")) {
-        //         console.log(value['1'])
-        //         // console.log(value[key])
-        //         // id = value[key];
-        //     } else {
-        //         name = key;
-        //     }
-        // }
-        // setSingleRow({...singleRow, })
+        console.log(name,id)
 
         console.log(singleRow)
     }
