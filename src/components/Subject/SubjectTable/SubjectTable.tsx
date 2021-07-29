@@ -21,13 +21,18 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   const rd = useTypedSelector((state) => state.raspData);
   useEffect(() => {
     console.log(name ,rd)
-  }, [rd])
+  }, [rd.day])
 
   const [pairList, setPairList] = useState<raspDayT>({
     pairList: [],
     id: id,
     special_day: false
   });
+  
+  useEffect(() => {
+    console.log(name ,pairList)
+  }, [pairList])
+
   const [dayType, setDayType] = useState<EDayType>(EDayType.COMMON);
   const timings = useTypedSelector((state) => state.timing);
 
@@ -44,11 +49,10 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
       let tempArr: pairListT[] = pairList.pairList;
       tempArr.push(payload);
       setPairList({ ...pairList, pairList: tempArr })
-      console.log('changed >>> ', pairList)
+      // console.log('changed >>> ', pairList)
       return;
     }
-
-    // console.log("HANDLER")
+    // flag - совпадение итемов по id
     let flag = false;
 
     let tempState = pairList.pairList.map((item) => {
@@ -66,16 +70,15 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
 
       return item;
     });
+    console.log('tempState >>> ',tempState)
     if (!flag) {
       tempState.push({
         id: payload.id,
         pair: payload.pair,
       });
     }
-
+    console.log('kek')
     setPairList({ ...pairList, pairList: tempState })
-
-    // console.log('pairList >>> ', name, pairList)
   }
 
   const isShow = dayType !== EDayType.SPECIAL;
