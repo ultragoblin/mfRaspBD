@@ -85,13 +85,15 @@ export default function raspData(
 ) {
   switch (action.type) {
     case raspDataEnum.SET_DATA:
-      return state;
+      return action.payload;
     case raspDataEnum.SET_DAY:
-      // let temp = state;
-      // temp.day[action.payload.id - 1] = {
-      //   id: action.payload.id,
-      //   pairList:
-      // }
+      console.log('entered')
+      state.day.forEach((day) => {
+        if (day.id === action.payload.id) {
+          day.pairList = action.payload.pairList;
+        }
+      })
+      console.log(state);
       return state;
     default:
       return state;

@@ -7,6 +7,7 @@ import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import { DayType } from "../../../utils/days";
 import { pairListT, raspDayT } from "../../../Redux/reducers/raspData";
 import { isArray } from "util";
+import {useActions} from "../../../hooks/useActions";
 
 export enum EDayType {
   SPECIAL = "special",
@@ -19,7 +20,9 @@ export interface SubjectTableProps {
 
 const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   const rd = useTypedSelector((state) => state.raspData);
+  const {setDay} = useActions();
   useEffect(() => {
+    console.log("RD")
     console.log(name ,rd)
   }, [rd.day])
 
@@ -30,7 +33,9 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   });
   
   useEffect(() => {
+    console.log("PL")
     console.log(name ,pairList)
+    setDay(pairList);
   }, [pairList])
 
   const [dayType, setDayType] = useState<EDayType>(EDayType.COMMON);
@@ -49,7 +54,6 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
       let tempArr: pairListT[] = pairList.pairList;
       tempArr.push(payload);
       setPairList({ ...pairList, pairList: tempArr })
-      // console.log('changed >>> ', pairList)
       return;
     }
     // flag - совпадение итемов по id
@@ -70,14 +74,13 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
 
       return item;
     });
-    console.log('tempState >>> ',tempState)
     if (!flag) {
       tempState.push({
         id: payload.id,
         pair: payload.pair,
       });
     }
-    console.log('kek')
+
     setPairList({ ...pairList, pairList: tempState })
   }
 
