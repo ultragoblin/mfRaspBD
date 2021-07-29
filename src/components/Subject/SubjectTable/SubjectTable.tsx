@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./SubjectTable.module.scss";
 import Naming from "./Naming";
 import Row from "./Row";
@@ -6,6 +6,7 @@ import Header from "./Header";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 import { DayType } from "../../../utils/days";
 import { pairListT, raspDayT } from "../../../Redux/reducers/raspData";
+import { isArray } from "util";
 
 export enum EDayType {
   SPECIAL = "special",
@@ -17,6 +18,11 @@ export interface SubjectTableProps {
 }
 
 const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
+  const rd = useTypedSelector((state) => state.raspData);
+  useEffect(() => {
+    console.log(name ,rd)
+  }, [rd])
+
   const [pairList, setPairList] = useState<raspDayT>({
     pairList: [],
     id: id,
@@ -30,7 +36,21 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   };
 
   const pairListHandler = (payload: pairListT) => {
+    if (Object.keys(payload.pair).length === 0) {
+      return;
+    }
+
+    if (pairList.pairList.length === 0) {
+      let tempArr: pairListT[] = pairList.pairList;
+      tempArr.push(payload);
+      setPairList({ ...pairList, pairList: tempArr })
+      console.log('changed >>> ', pairList)
+      return;
+    }
+
+    // console.log("HANDLER")
     let flag = false;
+
     let tempState = pairList.pairList.map((item) => {
       if (flag) {
         return item;
@@ -46,7 +66,6 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
 
       return item;
     });
-
     if (!flag) {
       tempState.push({
         id: payload.id,
@@ -55,6 +74,8 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
     }
 
     setPairList({ ...pairList, pairList: tempState })
+
+    // console.log('pairList >>> ', name, pairList)
   }
 
   const isShow = dayType !== EDayType.SPECIAL;

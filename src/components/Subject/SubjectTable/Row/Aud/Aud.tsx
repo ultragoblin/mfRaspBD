@@ -1,18 +1,20 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import styles from "./Aud.module.scss";
-import { AudOptions } from "../Row";
+import { AudOptions, autocompleteNamings } from "../Row";
 
 export interface AudProps {
+  handleFunc: (event: any,value: any, subID: string) => void,
   addStyles?: React.CSSProperties;
   options: AudOptions[];
 }
 
-const Aud = ({ options, addStyles }: AudProps) => {
+const Aud = ({ options, addStyles, handleFunc }: AudProps) => {
   const [added, setAdded] = useState<boolean>(false);
+  const {first, second} = autocompleteNamings._aud;
 
   const handleChange = () => {
     setAdded(!added);
@@ -25,6 +27,8 @@ const Aud = ({ options, addStyles }: AudProps) => {
       }`}
     >
       <Autocomplete
+        id={first}
+        onChange={(event, value) => handleFunc(event, value, first)}
         style={addStyles}
         options={options}
         getOptionLabel={(option) => option.aud}
@@ -34,6 +38,8 @@ const Aud = ({ options, addStyles }: AudProps) => {
       />
       {added ? (
         <Autocomplete
+          id={second}
+          onChange={(event, value) => handleFunc(event, value, second)}
           style={{ marginLeft: 4 }}
           options={options}
           getOptionLabel={(option) => option.aud}

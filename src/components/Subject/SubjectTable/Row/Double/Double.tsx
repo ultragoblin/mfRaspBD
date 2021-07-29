@@ -8,6 +8,10 @@ import Aud from "../Aud";
 const Double = ({ state, timer, handler, number, options: {subGroup, aud, teacher, subject} }: RowChildProps) => {
   const { AUD, SUBJECT, TIMER, SUBGROUP, CHECKBOX, NUMBER, TEACHER } = RowWidth;
 
+  const handleChange = () => {
+
+  }
+
   return (
     <>
       <tr className="tr">
@@ -41,7 +45,7 @@ const Double = ({ state, timer, handler, number, options: {subGroup, aud, teache
           />
         </td>
         <td width={AUD} className="td">
-          <Aud options={aud} />
+          <Aud handleFunc={handleChange} options={aud} />
         </td>
         <td width={SUBGROUP} className="td">
           <Subgroup options={subGroup} />
@@ -70,7 +74,7 @@ const Double = ({ state, timer, handler, number, options: {subGroup, aud, teache
           />
         </td>
         <td width={AUD} className="td__dobule">
-          <Aud options={aud} />
+          <Aud handleFunc={handleChange} options={aud} />
         </td>
         <td width={SUBGROUP} className="td__dobule">
           <Subgroup options={subGroup} />
