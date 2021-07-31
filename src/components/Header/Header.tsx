@@ -1,10 +1,12 @@
 import CustomSelect, { CustomSelectInterface } from "../CustomSelect/CustomSelect";
+import { Link } from "react-router-dom";
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import PrintIcon from '@material-ui/icons/Print';
 import StorageIcon from '@material-ui/icons/Storage';
 import Button from "@material-ui/core/Button";
 import styles from "./Header.module.scss";
 import CustomRadio, { radioType } from "../CustomRadio/CustomRadio";
+import routing from "../../utils/path/routing";
 
 const selectWidth: number = 167;
 
@@ -114,7 +116,7 @@ const Header = () => {
                 <CustomRadio {...radio}/>
             </div>
             <div className={styles.header__buttons}>
-                <Button startIcon={<StorageIcon />} variant="contained">База данных</Button>
+                <Link to={routing.database}><Button startIcon={<StorageIcon />} variant="contained">База данных</Button></Link>
                 <Button startIcon={<PrintIcon />} variant="contained">Печать</Button>
                 <Button style={{backgroundColor: '#007DFF'}} startIcon={<DirectionsRunIcon />} variant="contained" color="primary">
                     Выход

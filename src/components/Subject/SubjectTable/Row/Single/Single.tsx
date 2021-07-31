@@ -71,6 +71,7 @@ const Single = ({
       </td>
       <td width={SUBGROUP} className="td">
         <Autocomplete
+
           id={_subgroup}
           onChange={(event, value) => handleChange(event, value, _subgroup)}
           options={subGroup}

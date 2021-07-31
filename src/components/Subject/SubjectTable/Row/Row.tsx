@@ -120,12 +120,16 @@ const audOptions: AudOptions[] = [
 
 const subGroupOptions: SubGroupOptions[] = [
   {
-    subgroup: "1",
+    subgroup: "—",
     subgroupid: 1
   },
   {
-    subgroup: "2",
+    subgroup: "|",
     subgroupid: 2
+  },
+  {
+    subgroup: "||",
+    subgroupid: 3
   }
 ]
 

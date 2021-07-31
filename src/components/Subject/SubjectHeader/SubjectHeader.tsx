@@ -27,7 +27,7 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
           variant="contained"
           color="secondary"
         >
-          Сбросить
+          Отменить
         </Button>
         <Button onClick={collectData} style={{ backgroundColor: '#007DFF' }} startIcon={<SaveIcon/>} variant="contained" color="primary">
           Сохранить

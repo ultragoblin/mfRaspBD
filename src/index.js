@@ -1,12 +1,12 @@
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {Provider} from "react-redux";
-import {store} from "./Redux";
 import React from "react";
 import ReactDOM from "react-dom";
 import Rasp from "./pages/Rasp/Rasp.tsx";
 import reportWebVitals from "./reportWebVitals";
 import Database from "./pages/Database/Database";
 import routing from "./utils/path/routing";
+import {store} from "./Redux";
 import "./index.css";
 
 ReactDOM.render(
