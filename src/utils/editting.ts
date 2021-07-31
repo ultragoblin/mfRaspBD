@@ -4,12 +4,14 @@ import { autocompleteNamings } from "../components/Subject/SubjectTable/Row/Row"
 import errorLog from "./Logs/Error";
 
 const editAud = (
+  event: any,
   value: any,
   subID: string,
   row: pairT | {},
   stateFunc: React.Dispatch<React.SetStateAction<{} | pairT>>
 ) => {
   let id: number | null = null;
+  const { _aud } = autocompleteNamings;
 
   //                        ADD                        //
 
@@ -28,34 +30,45 @@ const editAud = (
   //  Switch (selectID === aud-1) then arr[0] = selectValue
   //         (selectID === aud-2) then arr.push(selectValue)
 
-  //                        DEL                        //
-  
+  //                        DEL                        ////                        DEL                        //
+    // Switch (subID === aud-1) then
+    //  Switch (arr.length === 1) then arr = []
+    //         (arr.length === 2) then arr = [null, ???]
+    //        (subID === aud-2) then
+    //  Switch (arr.length === 1) then arr = []
+    //         (arr.length === 2) then [???, null]
 
+  // Switch (subID === aud-1) then
+  //  Switch (arr.length === 1) then arr = []
+  //         (arr.length === 2) then arr = [null, ???]
+  //        (subID === aud-2) then
+  //  Switch (arr.length === 1) then arr = []
+  //         (arr.length === 2) then [???, null]
+
+  // @ts-ignore
+  let prevAud = row?.aud;
 
   if (value) {
     id = value['audid'];
     // Добавление в селект
     if (Object.keys(row).includes('aud')) { // NOT empty CASE
-      // @ts-ignore
-      let prevAud = row?.aud;
-
       switch (prevAud.length) {
         case 1:
           switch (subID) {
-            case autocompleteNamings._aud.first:
+            case _aud.first:
               prevAud[0] = id;
               break;
-            case autocompleteNamings._aud.second:
+            case _aud.second:
               prevAud.push(id);
               break;
           }
           break;
         case 2:
           switch (subID) {
-            case autocompleteNamings._aud.first:
+            case _aud.first:
               prevAud[0] = id;
               break;
-            case autocompleteNamings._aud.second:
+            case _aud.second:
               prevAud[1] = id;
               break;
           }
@@ -67,10 +80,10 @@ const editAud = (
       stateFunc({ aud: prevAud });
     } else {  // empty CASE
       switch (subID) {
-        case autocompleteNamings._aud.first:
+        case _aud.first:
           stateFunc({ aud: [id] });
           break;
-        case autocompleteNamings._aud.second:
+        case _aud.second:
           stateFunc({ aud: [null, id] });
           break;
         default:
@@ -80,7 +93,39 @@ const editAud = (
     }
   } else {
     // удаление из селекта
-    stateFunc({ ...row, [subID.split('-')[0]]: [] })
+    switch (subID) {
+      case _aud.first:
+        switch (prevAud.length) {
+          case 1:
+            prevAud = [];
+            break;
+          case 2:
+            prevAud[0] = null;
+            break;
+          default:
+            errorLog('aud delete error');
+            break;
+        }
+        break;
+      case _aud.second:
+        switch (prevAud.length) {
+          case 1:
+            prevAud = [];
+            break;
+          case 2:
+            prevAud[1] = null;
+            break;
+          default:
+            errorLog('aud delete error');
+            break;
+        }
+        break;
+      default:
+        errorLog('aud delete error');
+        break;
+    }
+
+    stateFunc({ ...row, [subID.split('-')[0]]: prevAud });
   }
 }
 
