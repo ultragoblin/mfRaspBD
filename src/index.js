@@ -1,21 +1,26 @@
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from "react-redux";
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Provider} from "react-redux";
+import {store} from "./Redux";
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import Rasp from "./pages/Rasp/Rasp.tsx";
-import { store } from "./Redux";
 import reportWebVitals from "./reportWebVitals";
+import Database from "./pages/Database/Database";
+import routing from "./utils/path/routing";
+import "./index.css";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <Rasp />
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById("root")
+    <React.StrictMode>
+        <BrowserRouter>
+            <Provider store={store}>
+                <Switch>
+                    <Route exact path={routing.rasp} component={Rasp}/>
+                    <Route exact path={routing.database} component={Database}/>
+                </Switch>
+            </Provider>
+        </BrowserRouter>
+    </React.StrictMode>,
+    document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
