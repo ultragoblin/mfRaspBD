@@ -30,13 +30,13 @@ const editAud = (
   //  Switch (selectID === aud-1) then arr[0] = selectValue
   //         (selectID === aud-2) then arr.push(selectValue)
 
-  //                        DEL                        ////                        DEL                        //
-    // Switch (subID === aud-1) then
-    //  Switch (arr.length === 1) then arr = []
-    //         (arr.length === 2) then arr = [null, ???]
-    //        (subID === aud-2) then
-    //  Switch (arr.length === 1) then arr = []
-    //         (arr.length === 2) then [???, null]
+  //                        DEL                        //
+  // Switch (subID === aud-1) then
+  //  Switch (arr.length === 1) then arr = []
+  //         (arr.length === 2) then arr = [null, ???]
+  //        (subID === aud-2) then
+  //  Switch (arr.length === 1) then arr = []
+  //         (arr.length === 2) then [???, null]
 
   // Switch (subID === aud-1) then
   //  Switch (arr.length === 1) then arr = []

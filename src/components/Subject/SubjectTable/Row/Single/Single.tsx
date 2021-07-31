@@ -30,7 +30,6 @@ const Single = ({
   }
 
   useEffect(() => {
-    console.log(singleRow)
     stateFunc(singleRow)
   }, [singleRow])
 
