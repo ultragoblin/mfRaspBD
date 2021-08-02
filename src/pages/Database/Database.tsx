@@ -54,7 +54,6 @@ const Database = () => {
             <TabPanel index={6} value={value}>
                 kek6
             </TabPanel>
-            <div>Database page</div>
         </>
     )
 }

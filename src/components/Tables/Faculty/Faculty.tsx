@@ -1,5 +1,4 @@
-import React from "react";
-import clsx from 'clsx';
+import React, {useEffect, useState} from "react";
 import {createStyles, lighten, makeStyles, Theme,} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,14 +7,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import {TablePagination} from "@material-ui/core";
+import Searcher from "../../Searcher/Searcher";
+import nullClearer from "../../../utils/nullClearer";
 
 interface FacultyData {
     id: number,
@@ -43,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: theme.spacing(2),
         },
         table: {
-            minWidth: 750,
+            minWidth: 1400,
         },
         visuallyHidden: {
             border: 0,
@@ -57,6 +55,43 @@ const useStyles = makeStyles((theme: Theme) =>
             width: 1,
         },
     }),
+);
+
+const useToolbarStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            paddingLeft: theme.spacing(2),
+            paddingRight: theme.spacing(1),
+        },
+        highlight:
+            theme.palette.type === 'light'
+                ? {
+                    color: theme.palette.secondary.main,
+                    backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+                }
+                : {
+                    color: theme.palette.text.primary,
+                    backgroundColor: theme.palette.secondary.dark,
+                },
+        title: {},
+    }),
+);
+
+const useTableHeaderStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        header: {
+            backgroundColor: '#F0F0F0'
+        },
+        deleteCell: {
+            position: 'relative',
+            zIndex: 2
+        },
+        deleteBtn: {
+            position: 'absolute',
+            top: 5,
+            right: 15
+        }
+    })
 );
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -98,20 +133,19 @@ interface HeadCell {
 
 const headCells: HeadCell[] = [
     {id: "group", numeric: false, label: 'Группа'},
-    {id: 'caf', numeric: true, label: 'Кафедра'},
-    {id: 'year', numeric: true, label: 'Год поступления'},
+    {id: 'caf', numeric: false, label: 'Кафедра'},
+    {id: 'year', numeric: false, label: 'Год поступления'},
 ];
 
-// Глянуть почему не выделят по id
 const rows = [
-    createData(1,'К1-73Б', 'К3', 2010),
-    createData(2,'К1-73Б', 'К1', 2010),
-    createData(3,'К333-23Б', 'К2', 2010),
-    createData(4,'К122-73Б', 'К3', 20101),
-    createData(5,'К6-73Б', 'К3', 2010),
-    createData(6,'К7-26Б', 'К1', 2010),
-    createData(7,'К39-23Б', 'К2', 2010),
-    createData(8,'К32-73Б', 'К3', 20101),
+    createData(1, 'К1-73Б', 'К3', 2010),
+    createData(2, 'К1-73Б', 'К1', 2010),
+    createData(3, 'К333-23Б', 'К2', 2010),
+    createData(4, 'К122-73Б', 'К3', 20101),
+    createData(5, 'К6-73Б', 'К3', 2010),
+    createData(6, 'К7-26Б', 'К1', 2010),
+    createData(7, 'К39-23Б', 'К2', 2010),
+    createData(8, 'К32-73Б', 'К3', 20101),
 ];
 
 interface EnhancedTableProps {
@@ -124,13 +158,14 @@ interface EnhancedTableProps {
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
+    const classes = useTableHeaderStyles();
     const {onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} = props;
     const createSortHandler = (property: keyof FacultyData) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
     };
 
     return (
-        <TableHead>
+        <TableHead className={classes.header}>
             <TableRow>
                 <TableCell padding="checkbox">
                     <Checkbox
@@ -140,8 +175,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                         inputProps={{'aria-label': 'select all desserts'}}
                     />
                 </TableCell>
-                {headCells.map((headCell) => (
-                    <TableCell
+                {headCells.map((headCell, index) => {
+                    let isLastItem = index !== headCells.length - 1;
+
+                    return <TableCell
+                        className={!isLastItem ? classes.deleteCell : ''}
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
                         sortDirection={orderBy === headCell.id ? order : false}
@@ -153,63 +191,56 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                         >
                             {headCell.label}
                         </TableSortLabel>
+                        {isLastItem || !(numSelected > 0) ? null : <IconButton className={classes.deleteBtn}>
+                            <DeleteOutlinedIcon/>
+                        </IconButton>}
                     </TableCell>
-                ))}
+                })}
             </TableRow>
         </TableHead>
     );
 }
 
-const useToolbarStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            paddingLeft: theme.spacing(2),
-            paddingRight: theme.spacing(1),
-        },
-        highlight:
-            theme.palette.type === 'light'
-                ? {
-                    color: theme.palette.secondary.main,
-                    backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-                }
-                : {
-                    color: theme.palette.text.primary,
-                    backgroundColor: theme.palette.secondary.dark,
-                },
-        title: {
-            flex: '1 1 100%',
-        },
-    }),
-);
-
 interface EnhancedTableToolbarProps {
     numSelected: number;
+    searcherState: string,
+    searcherSet: React.Dispatch<React.SetStateAction<string>>
 }
 
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-    const classes = useToolbarStyles();
-    const {numSelected} = props;
+const EnhancedTableToolbar = ({searcherSet, searcherState, numSelected}: EnhancedTableToolbarProps) => {
+    // const classes = useToolbarStyles();
+
+    const handleSearcherChange = (e: any): void => {
+        searcherSet(e.target.value);
+    }
 
     return (
-        <Toolbar
-            className={clsx(classes.root, {
-                [classes.highlight]: numSelected > 0,
-            })}
-        >
-            {numSelected > 0 ? (
-                <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-                    {numSelected} Выбрано
-                </Typography>
-            ) : null}
-            {numSelected > 0 ? (
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <DeleteIcon/>
-                    </IconButton>
-                </Tooltip>
-            ) : null}
-        </Toolbar>
+        <>
+            <Searcher state={searcherState} setState={handleSearcherChange}/>
+            {/*<Toolbar*/}
+            {/*    className={clsx(classes.root, {*/}
+            {/*        [classes.highlight]: numSelected > 0,*/}
+            {/*    })}*/}
+            {/*>*/}
+            {/*    {numSelected > 0 ? (*/}
+            {/*        <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">*/}
+            {/*            {numSelected} Выбрано*/}
+            {/*        </Typography>*/}
+            {/*    ) : null}*/}
+            {/*    {numSelected > 0 ? (*/}
+            {/*        <Tooltip title="Delete">*/}
+            {/*            <IconButton aria-label="delete">*/}
+            {/*                <DeleteIcon/>*/}
+            {/*            </IconButton>*/}
+            {/*        </Tooltip>*/}
+            {/*    ) : null}*/}
+            {/*</Toolbar>*/}
+        </>
     );
+}
+
+export interface FacultyProps {
+    rowsPerPage: number,
 }
 
 const Faculty = () => {
@@ -218,8 +249,32 @@ const Faculty = () => {
     const [orderBy, setOrderBy] = React.useState<keyof FacultyData>('group');
     const [selected, setSelected] = React.useState<string[]>([]);
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [searcher, setSearcher] = useState<string>('');
+    const [dataRows, setDataRows] = useState<FacultyData[]>([]);
+
+    useEffect(() => {
+        setDataRows(rows);
+    }, [])
+
+    useEffect(() => {
+        if (searcher.length > 0) {
+            let tempArr = dataRows.map((item) => {
+                if (item?.group.includes(searcher)) {
+                    return item;
+                } else {
+                    return null;
+                }
+            });
+
+            // @ts-ignore
+            nullClearer(tempArr)
+            // @ts-ignore
+            setDataRows(tempArr);
+        } else {
+            setDataRows(rows);
+        }
+    }, [searcher])
 
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof FacultyData) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -229,7 +284,7 @@ const Faculty = () => {
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.group);
+            const newSelecteds = rows.map((n) => String(n.id));
             setSelected(newSelecteds);
             return;
         }
@@ -266,27 +321,26 @@ const Faculty = () => {
         setPage(0);
     };
 
-    const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setDense(event.target.checked);
-    };
-
-    const isSelected = (name: string) => selected.indexOf(name) !== -1;
+    const isSelected = (name: number) => selected.indexOf(String(name)) !== -1;
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
-                <EnhancedTableToolbar numSelected={selected.length}/>
+                <EnhancedTableToolbar
+                    searcherSet={setSearcher}
+                    searcherState={searcher}
+                    numSelected={selected.length}
+                />
                 <TableContainer>
                     <Table
                         className={classes.table}
                         aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
+                        size='medium'
                         aria-label="enhanced table"
                     >
                         <EnhancedTableHead
-                            // classes={classes}
                             numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
@@ -295,10 +349,10 @@ const Faculty = () => {
                             rowCount={rows.length}
                         />
                         <TableBody>
-                            {stableSort(rows, getComparator(order, orderBy))
+                            {stableSort(dataRows, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.group);
+                                    const isItemSelected = isSelected(row.id);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
@@ -320,19 +374,29 @@ const Faculty = () => {
                                             <TableCell component="th" id={labelId} scope="row" padding="none">
                                                 {row.group}
                                             </TableCell>
-                                            <TableCell align="right">{row.caf}</TableCell>
-                                            <TableCell align="right">{row.year}</TableCell>
+                                            <TableCell align="left">{row.caf}</TableCell>
+                                            <TableCell align="left">{row.year}</TableCell>
                                         </TableRow>
                                     );
                                 })}
                             {emptyRows > 0 && (
-                                <TableRow style={{height: (dense ? 33 : 53) * emptyRows}}>
+                                <TableRow style={{height: (53) * emptyRows}}>
                                     <TableCell colSpan={6}/>
                                 </TableRow>
                             )}
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <TablePagination
+                    labelRowsPerPage={"Количество строк на странице"}
+                    rowsPerPageOptions={[10, 25, 50, 75, 100]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onChangePage={handleChangePage}
+                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
             </Paper>
         </div>
     );
