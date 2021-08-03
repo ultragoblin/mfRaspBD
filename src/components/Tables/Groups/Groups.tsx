@@ -15,19 +15,19 @@ import {TablePagination} from "@material-ui/core";
 import Searcher from "../../Searcher/Searcher";
 import nullClearer from "../../../utils/nullClearer";
 
-interface FacultyData {
+interface GroupsData {
     id: number,
     group: string,
     caf: string,
     year: number
 }
 
-function createData(
+function createGroupData(
     id: number,
     group: string,
     caf: string,
     year: number
-): FacultyData {
+): GroupsData {
     return {id, group, caf, year};
 }
 
@@ -130,7 +130,7 @@ function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
 }
 
 interface HeadCell {
-    id: keyof FacultyData;
+    id: keyof GroupsData;
     label: string;
     numeric: boolean;
 }
@@ -142,19 +142,19 @@ const headCells: HeadCell[] = [
 ];
 
 const rows = [
-    createData(1, 'К1-73Б', 'К3', 2010),
-    createData(2, 'К1-73Б', 'К1', 2010),
-    createData(3, 'К333-23Б', 'К2', 2010),
-    createData(4, 'К122-73Б', 'К3', 20101),
-    createData(5, 'К6-73Б', 'К3', 2010),
-    createData(6, 'К7-26Б', 'К1', 2010),
-    createData(7, 'К39-23Б', 'К2', 2010),
-    createData(8, 'К32-73Б', 'К3', 20101),
+    createGroupData(1, 'К1-73Б', 'К3', 2010),
+    createGroupData(2, 'К1-73Б', 'К1', 2010),
+    createGroupData(3, 'К333-23Б', 'К2', 2010),
+    createGroupData(4, 'К122-73Б', 'К3', 20101),
+    createGroupData(5, 'К6-73Б', 'К3', 2010),
+    createGroupData(6, 'К7-26Б', 'К1', 2010),
+    createGroupData(7, 'К39-23Б', 'К2', 2010),
+    createGroupData(8, 'К32-73Б', 'К3', 20101),
 ];
 
 interface EnhancedTableProps {
     numSelected: number;
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof FacultyData) => void;
+    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof GroupsData) => void;
     onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
     order: Order;
     orderBy: string;
@@ -164,7 +164,7 @@ interface EnhancedTableProps {
 function EnhancedTableHead(props: EnhancedTableProps) {
     const classes = useTableHeaderStyles();
     const {onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} = props;
-    const createSortHandler = (property: keyof FacultyData) => (event: React.MouseEvent<unknown>) => {
+    const createSortHandler = (property: keyof GroupsData) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
     };
 
@@ -248,15 +248,15 @@ export interface FacultyProps {
     rowsPerPage: number,
 }
 
-const Faculty = () => {
+const Groups = () => {
     const classes = useStyles();
     const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof FacultyData>('group');
+    const [orderBy, setOrderBy] = React.useState<keyof GroupsData>('group');
     const [selected, setSelected] = React.useState<string[]>([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [searcher, setSearcher] = useState<string>('');
-    const [dataRows, setDataRows] = useState<FacultyData[]>([]);
+    const [dataRows, setDataRows] = useState<GroupsData[]>([]);
 
     useEffect(() => {
         setDataRows(rows);
@@ -281,7 +281,7 @@ const Faculty = () => {
         }
     }, [searcher])
 
-    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof FacultyData) => {
+    const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof GroupsData) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
@@ -317,7 +317,7 @@ const Faculty = () => {
         setSelected(newSelected);
     };
 
-    const handleChangeBtn = (event: any, data: FacultyData) => {
+    const handleChangeBtn = (event: any, data: GroupsData) => {
         console.log(event.target)
     }
 
@@ -436,4 +436,4 @@ const Faculty = () => {
     );
 }
 
-export default Faculty;
+export default Groups;
