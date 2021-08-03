@@ -90,7 +90,7 @@ const Database = () => {
             <IconButton disabled={modal.isOpen} onClick={handleModalAdd} style={{padding: 0}}>
                 <AddCircleIcon style={{color: '#2196F3', width: 56, height: 56}}/>
             </IconButton>
-            <CustomModal modal={modal} closeFunc={handleModalClose} title={'kek'}/>
+            <CustomModal tabNumber={value} modal={modal} closeFunc={handleModalClose}/>
         </>
     )
 }

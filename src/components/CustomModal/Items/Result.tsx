@@ -1,11 +1,11 @@
 export interface ResultProps {
-    text: string
+    text: string | undefined
 };
 
 const Result = ({text}: ResultProps) => {
     return (
         <p>
-            {text}
+            Результат: {text}
         </p>
     )
 };

@@ -5,11 +5,12 @@ import errorLog from "../../../utils/Logs/Error";
 import CustomAutocomplete from "../Items/CustomAutocomplete";
 import {TGroupModal} from "../CustomModal";
 import CustomInput from "../Items/CustomInput";
-import Result from "../Items/Result";
-import Buttons from "../Items/Buttons";
 import {calculateRes} from "../../../utils/calculateRes";
+import Result from "../Items/Result";
 
 export interface GroupsProps {
+    state: TGroupModal,
+    setState: React.Dispatch<React.SetStateAction<TGroupModal>>,
     mode: EModalMode | null
 }
 
@@ -31,30 +32,23 @@ export const gradeOptions: string[] = [
     'Специалитет'
 ];
 
-const Groups = ({mode}: GroupsProps) => {
+const Groups = ({mode, state, setState}: GroupsProps) => {
     const [title, setTitle] = useState<string>('');
-    const [data, setData] = useState<TGroupModal>({
-        caf: '',
-        groupNumber: '',
-        res: '',
-        year: '',
-        grade: ''
-    });
 
     const handleSetData = (e: any, options: string[], id: string, fieldValue: any): void => {
-        let temp = data;
+        let temp = state;
 
         if (e.target.value === undefined) {
-            temp = {...data, [id]: ''};
+            temp = {...state, [id]: ''};
             const res: string = calculateRes(temp);
-            return setData({...temp, res});
+            return setState({...temp, res});
         }
 
-        const value: string = fieldValue;
+        const value: string = fieldValue ? fieldValue : e?.target?.value;
         const name: string = id;
         temp = {...temp, [name]: value}
         const res: string = calculateRes(temp);
-        return setData({...data, [name]: value, res})
+        return setState({...state, [name]: value, res})
     };
 
     useEffect(() => {
@@ -72,8 +66,8 @@ const Groups = ({mode}: GroupsProps) => {
     }, [])
 
     useEffect(() => {
-        console.table(data);
-    }, [data])
+        console.table(state);
+    }, [state])
 
     return (
         <>
@@ -82,8 +76,7 @@ const Groups = ({mode}: GroupsProps) => {
             <CustomAutocomplete id='year' label='Год поступления' options={yearOptions} stateFun={handleSetData}/>
             <CustomAutocomplete id='grade' label='Уровень обучения' options={gradeOptions} stateFun={handleSetData}/>
             <CustomInput id='groupNumber' label='Номер группы' stateFun={handleSetData}/>
-            <Result text={data.res}/>
-            <Buttons/>
+            <Result text={state.res}/>
         </>
     )
 };
