@@ -54,6 +54,10 @@ const useStyles = makeStyles((theme: Theme) =>
             top: 20,
             width: 1,
         },
+        changeBtn: {
+            color: '#2196F3',
+            cursor: 'pointer'
+        }
     }),
 );
 
@@ -176,10 +180,9 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                     />
                 </TableCell>
                 {headCells.map((headCell, index) => {
-                    let isLastItem = index !== headCells.length - 1;
 
                     return <TableCell
-                        className={!isLastItem ? classes.deleteCell : ''}
+                        style={{padding: '23px 0 17px 0'}}
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
                         sortDirection={orderBy === headCell.id ? order : false}
@@ -191,11 +194,13 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                         >
                             {headCell.label}
                         </TableSortLabel>
-                        {isLastItem || !(numSelected > 0) ? null : <IconButton className={classes.deleteBtn}>
-                            <DeleteOutlinedIcon/>
-                        </IconButton>}
                     </TableCell>
                 })}
+                <TableCell className={classes.deleteCell}>
+                    <IconButton className={classes.deleteBtn}>
+                        <DeleteOutlinedIcon/>
+                    </IconButton>
+                </TableCell>
             </TableRow>
         </TableHead>
     );
@@ -312,6 +317,10 @@ const Faculty = () => {
         setSelected(newSelected);
     };
 
+    const handleChangeBtn = (event: any, data: FacultyData) => {
+        console.log(event.target)
+    }
+
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -358,7 +367,7 @@ const Faculty = () => {
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.id)}
+                                            // onClick={(event) => handleClick(event, row.id)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
@@ -371,11 +380,36 @@ const Faculty = () => {
                                                     inputProps={{'aria-labelledby': labelId}}
                                                 />
                                             </TableCell>
-                                            <TableCell component="th" id={labelId} scope="row" padding="none">
+                                            <TableCell
+                                                onClick={(event) => handleClick(event, row.id)}
+                                                style={{width: '15%'}}
+                                                component="th"
+                                                id={labelId}
+                                                scope="row"
+                                                padding="none">
                                                 {row.group}
                                             </TableCell>
-                                            <TableCell align="left">{row.caf}</TableCell>
-                                            <TableCell align="left">{row.year}</TableCell>
+                                            <TableCell
+                                                onClick={(event) => handleClick(event, row.id)}
+                                                style={{width: '12%'}}
+                                                align="left"
+                                                padding="none">
+                                                {row.caf}
+                                            </TableCell>
+                                            <TableCell
+                                                onClick={(event) => handleClick(event, row.id)}
+                                                style={{width: '20%'}}
+                                                align="left"
+                                                padding="none">
+                                                {row.year}
+                                            </TableCell>
+                                            <TableCell
+                                                onClick={(event) => handleChangeBtn(event, row)}
+                                                className={classes.changeBtn}
+                                                align="left"
+                                                padding="none">
+                                                Изменить
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}
