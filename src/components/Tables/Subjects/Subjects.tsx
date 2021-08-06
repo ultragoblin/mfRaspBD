@@ -36,7 +36,7 @@ interface HeadCell {
 }
 
 const headCells: HeadCell[] = [
-  { id: "subject", numeric: false, label: 'Группа' },
+  { id: "subject", numeric: false, label: 'Предмет' },
 ];
 
 const rows = [
