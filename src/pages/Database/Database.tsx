@@ -4,6 +4,10 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CustomTabs from "../../components/CustomTabs/CustomTabs";
 import Groups from "../../components/Tables/Groups/Groups";
 import CustomModal from "../../components/CustomModal/CustomModal";
+import Subjects from "../../components/Tables/Subjects/Subjects";
+import Schedule from "../../components/Tables/Schedule/Schedule";
+import Teachers from "../../components/Tables/Teachers/Teachers";
+import Auds from "../../components/Tables/Auds/Auds";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -12,7 +16,7 @@ interface TabPanelProps {
 };
 
 export enum ETabsNaming {
-  SCHEDULE,
+  SCHEDULE= 1,
   GROUPS,
   SUBJECTS,
   TEACHERS,
@@ -79,17 +83,20 @@ const Database = () => {
   return (
     <>
       <CustomTabs tabValue={value} tabFunc={setValue}/>
-      <TabPanel index={1} value={value}>
+      <TabPanel index={ETabsNaming.SCHEDULE} value={value}>
+        <Schedule/>
+      </TabPanel>
+      <TabPanel index={ETabsNaming.GROUPS} value={value}>
         <Groups/>
       </TabPanel>
-      <TabPanel index={2} value={value}>
-        kek2
+      <TabPanel index={ETabsNaming.SUBJECTS} value={value}>
+        <Subjects/>
       </TabPanel>
-      <TabPanel index={3} value={value}>
-        kek3
+      <TabPanel index={ETabsNaming.TEACHERS} value={value}>
+        <Teachers/>
       </TabPanel>
-      <TabPanel index={4} value={value}>
-        kek4
+      <TabPanel index={ETabsNaming.AUDS} value={value}>
+        <Auds/>
       </TabPanel>
       <IconButton disabled={modal.isOpen} onClick={handleModalAdd} style={{ padding: 0 }}>
         <AddCircleIcon style={{ color: '#2196F3', width: 56, height: 56 }}/>

@@ -27,6 +27,7 @@ const CustomTabs = ({tabValue, tabFunc}: CustomTabsProps) => {
                     aria-label="full width tabs example"
                 >
                     <Link className={styles.arrow} to={routing.rasp}><img src="/arrow-back.svg" alt=""/></Link>
+                    <Tab label="Расписание"/>
                     <Tab label="Группы"/>
                     <Tab label="Предметы"/>
                     <Tab label="Преподаватели"/>
