@@ -67,24 +67,33 @@ export default function data(
 ) {
   switch (action.type) {
     case EData.GET_FULL_LIST:
-      console.log('started');
+      // console.log('started');
       return <TData>{
         ...state,
-        loading: true
+        fullList: {
+          ...state.fullList,
+          loading: true
+        }
       };
     case EData.ERROR_FULL_LIST:
-      console.log('error', action.error);
+      // console.log('error', action.error);
       return <TData><unknown>{
-        data: [],
-        loading: false,
-        error: action.error
+        ...state,
+        fullList: {
+          data: [],
+          loading: false,
+          error: action.error
+        },
       }
     case EData.SUCCESS_FULL_LIST:
-      console.log('success', action.payload)
+      // console.log('success', action.payload)
       return <TData><unknown>{
-        data: action.payload,
-        loading: false,
-        error: '',
+        ...state,
+        fullList: {
+          data: action.payload,
+          loading: false,
+          error: '',
+        },
       }
     default:
       return state;

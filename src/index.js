@@ -8,15 +8,18 @@ import Database from "./pages/Database/Database";
 import routing from "./utils/path/routing";
 import {store} from "./Redux";
 import "./index.css";
+import AppWrapper from "./components/AppWrapper";
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
             <Provider store={store}>
-                <Switch>
-                    <Route exact path={routing.rasp} component={Rasp}/>
-                    <Route exact path={routing.database} component={Database}/>
-                </Switch>
+                <AppWrapper>
+                    <Switch>
+                        <Route exact path={routing.rasp} component={Rasp}/>
+                        <Route exact path={routing.database} component={Database}/>
+                    </Switch>
+                </AppWrapper>
             </Provider>
         </BrowserRouter>
     </React.StrictMode>,
