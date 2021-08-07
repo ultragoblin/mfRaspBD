@@ -1,10 +1,10 @@
+import {useEffect} from "react";
 import Header from "../../components/Header";
 import SubjectHeader from "../../components/Subject/SubjectHeader";
 import SubjectTable from "../../components/Subject/SubjectTable";
 import "./Rasp.scss";
 import days from "../../utils/days";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {useEffect} from "react";
 
 const group: string = "Группа К3-63Б";
 

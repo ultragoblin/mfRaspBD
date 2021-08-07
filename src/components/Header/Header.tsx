@@ -8,7 +8,6 @@ import styles from "./Header.module.scss";
 import CustomRadio, { radioType } from "../CustomRadio/CustomRadio";
 import routing from "../../utils/path/routing";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-import { useActions } from "../../hooks/useActions";
 import { useEffect, useState } from "react";
 
 const selectWidth: number = 167;
@@ -102,6 +101,11 @@ const radio: radioType = {
   }
 }
 
+type TYearOptionsValue = {
+  year: number,
+  year_id: number
+}
+
 type TOptions = {
   value: string,
   placeholder: string
@@ -115,7 +119,6 @@ const Header = () => {
     select: 'id__select_year'
   }
   useEffect(() => {
-    console.log("HEHEHEH >>>", fullList)
     let yearOp: TOptions[] = [];
     let temp: TOptions;
     fullList?.fullList?.data.forEach((year) => {
@@ -123,10 +126,8 @@ const Header = () => {
         value: String(year.year),
         placeholder: String(year.year)
       }
-      console.log('temp >>> ',temp)
       yearOp.push(temp)
     })
-    console.log(yearOp)
     setYearOptions(yearOp);
   }, [])
 
