@@ -3,10 +3,11 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Modal } from "@material-ui/core";
 import Groups from "./Groups/Groups";
 import { ETabsNaming, TModal } from "../../pages/Database/Database";
-import Auds from "../Tables/Auds/Auds";
 import Schedule from "./Schedule/Schedule";
 import Subjects from "./Subjects/Subjects";
 import Buttons from "./Items/Buttons";
+import Teacher from "./Teacher/Teacher";
+import Auds from "./Auds/Auds";
 
 export interface CustomModalProps {
   tabNumber: ETabsNaming,
@@ -53,7 +54,11 @@ export type TTeacherModal = {
   lastName?: string,
   firstName?: string,
   patronymic?: string
-}
+};
+
+export type TAudModal = {
+  aud?: number
+};
 
 const CustomModal = ({ tabNumber, api, closeFunc, modal }: CustomModalProps) => {
   const classes = useStyles();
@@ -72,6 +77,9 @@ const CustomModal = ({ tabNumber, api, closeFunc, modal }: CustomModalProps) => 
     firstName: '',
     lastName: ''
   });
+  const [audModalData, setAudModalData] = React.useState<TAudModal>({
+    aud: 0
+  });
 
   const switchModals = (): JSX.Element => {
     switch (tabNumber) {
@@ -82,9 +90,9 @@ const CustomModal = ({ tabNumber, api, closeFunc, modal }: CustomModalProps) => 
       case ETabsNaming.SUBJECTS:
         return <Subjects state={subjectModalData} setState={setSubjectModalData} mode={modal.mode}/>;
       case ETabsNaming.TEACHERS:
-        // return <Teachers/>;
+        return <Teacher state={teacherModalData} setState={setTeacherModalData} mode={modal.mode}/>;
       case ETabsNaming.AUDS:
-        return <Auds/>;
+        return <Auds state={audModalData} setState={setAudModalData} mode={modal.mode}/>;
       default:
         break;
     }
@@ -103,8 +111,8 @@ const CustomModal = ({ tabNumber, api, closeFunc, modal }: CustomModalProps) => 
         <>
           <div className={classes.paper}>
             {switchModals()}
+            <Buttons/>
           </div>
-          <Buttons/>
         </>
       </Modal>
     </div>

@@ -118,8 +118,8 @@ const Subjects = () => {
 
   useEffect(() => {
     if (searcher.length > 0) {
-      let tempArr = dataRows.map((item) => {
-        if (item?.subject.includes(searcher)) {
+      let tempArr = rows.map((item) => {
+        if (item?.subject.toLowerCase().includes(searcher)) {
           return item;
         } else {
           return null;

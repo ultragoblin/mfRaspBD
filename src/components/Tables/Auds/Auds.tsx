@@ -115,9 +115,9 @@ const Auds = () => {
 
     useEffect(() => {
         if (searcher.length > 0) {
-            let tempArr = dataRows.map((item) => {
+            let tempArr = rows.map((item) => {
                 const stringifyItem = String(item.aud);
-                if (stringifyItem.includes(searcher)) {
+                if ((stringifyItem).toLowerCase().includes(searcher)) {
                     return item;
                 } else {
                     return null;

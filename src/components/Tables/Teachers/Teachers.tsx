@@ -115,14 +115,13 @@ const Teachers = () => {
 
   useEffect(() => {
     if (searcher.length > 0) {
-      let tempArr = dataRows.map((item) => {
-        if (item?.teacher.includes(searcher)) {
+      let tempArr = rows.map((item) => {
+        if (item?.teacher.toLowerCase().includes(searcher)) {
           return item;
         } else {
           return null;
         }
       });
-
       // @ts-ignore
       nullClearer(tempArr)
       // @ts-ignore
@@ -130,7 +129,14 @@ const Teachers = () => {
     } else {
       setDataRows(rows);
     }
+
   }, [searcher])
+
+
+  useEffect(() => {
+    console.log('kek')
+    console.log(rows);
+  }, [rows])
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {

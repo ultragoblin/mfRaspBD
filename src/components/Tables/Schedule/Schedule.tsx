@@ -126,8 +126,8 @@ const Schedule = () => {
 
   useEffect(() => {
     if (searcher.length > 0) {
-      let tempArr = dataRows.map((item) => {
-        if (item?.year.includes(searcher)) {
+      let tempArr = rows.map((item) => {
+        if (item?.year.toLowerCase().includes(searcher)) {
           return item;
         } else {
           return null;

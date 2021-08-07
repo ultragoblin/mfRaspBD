@@ -260,8 +260,8 @@ const Groups = () => {
 
   useEffect(() => {
     if (searcher.length > 0) {
-      let tempArr = dataRows.map((item) => {
-        if (item?.group.includes(searcher)) {
+      let tempArr = rows.map((item) => {
+        if (item?.group.toLowerCase().includes(searcher)) {
           return item;
         } else {
           return null;
