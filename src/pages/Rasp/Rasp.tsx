@@ -3,10 +3,23 @@ import SubjectHeader from "../../components/Subject/SubjectHeader";
 import SubjectTable from "../../components/Subject/SubjectTable";
 import "./Rasp.scss";
 import days from "../../utils/days";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
+import { useActions } from "../../hooks/useActions";
+import { useEffect } from "react";
 
 const group: string = "Группа К3-63Б";
 
 function Rasp() {
+  const data = useTypedSelector((store) => store.data);
+  const {getFullList} = useActions();
+
+  useEffect(() => {
+    getFullList();
+  }, [])
+
+  useEffect(() => {
+    console.log('data >>> ', data);
+  }, [data])
 
   return (
     <div className="App">
