@@ -21,12 +21,14 @@ export type TDataSemesters = {
   fac_name: string
 };
 
+type TFullListData = {
+  semesters: TDataSemesters[],
+  year: number,
+  year_id: number
+};
+
 export type TFullList = {
-  data: {
-    semesters: TDataSemesters[]
-    year: number,
-    year_id: number
-  },
+  data: TFullListData[],
   error: string,
   loading: boolean
 }
@@ -37,11 +39,7 @@ export type TData = {
 
 const initialState: TData = {
   fullList: {
-    data: {
-      semesters: [],
-      year: 0,
-      year_id: 0
-    },
+    data: [],
     error: '',
     loading: false
   }
@@ -70,20 +68,20 @@ export default function data(
   switch (action.type) {
     case EData.GET_FULL_LIST:
       console.log('started');
-      return {
+      return <TData>{
         ...state,
         loading: true
       };
     case EData.ERROR_FULL_LIST:
       console.log('error', action.error);
-      return {
+      return <TData><unknown>{
         data: [],
         loading: false,
         error: action.error
       }
     case EData.SUCCESS_FULL_LIST:
       console.log('success', action.payload)
-      return {
+      return <TData><unknown>{
         data: action.payload,
         loading: false,
         error: '',

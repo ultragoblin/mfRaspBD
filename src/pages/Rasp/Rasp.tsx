@@ -11,7 +11,7 @@ const group: string = "Группа К3-63Б";
 
 function Rasp() {
   const data = useTypedSelector((store) => store.data);
-  const {getFullList} = useActions();
+  const { getFullList } = useActions();
 
   useEffect(() => {
     getFullList();
@@ -21,19 +21,19 @@ function Rasp() {
     console.log('data >>> ', data);
   }, [data])
 
-  return (
-    <div className="App">
-      <div className="App__container">
-        <Header/>
-        <SubjectHeader name={group}/>
-        <div className={"tables__container"}>
-          {
-            days.map((day) => <SubjectTable day={day} key={day.id}/>)
-          }
-        </div>
+  return data.fullList !== undefined ? <div className="App">
+    <div className="App__container">
+      <Header/>
+      <SubjectHeader name={group}/>
+      <div className={"tables__container"}>
+        {
+          days.map((day) => <SubjectTable day={day} key={day.id}/>)
+        }
       </div>
     </div>
-  );
+  </div> : 'kek'
+
+
 }
 
 export default Rasp;
