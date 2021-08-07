@@ -6,9 +6,10 @@ const CustomInput = ({stateFun, label, id}: InputsProps) => {
 
     return (
         <TextField
+            style={{width: "100%"}}
             id={id}
             // @ts-ignore
-            onChange={(event, value) => stateFun(event, [], id, value)}
+            onChange={(event, value) => stateFun(event, id, value)}
             label={label}
             variant="outlined"/>
     )

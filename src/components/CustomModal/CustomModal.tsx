@@ -3,10 +3,10 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Modal } from "@material-ui/core";
 import Groups from "./Groups/Groups";
 import { ETabsNaming, TModal } from "../../pages/Database/Database";
-import Schedule from "../Tables/Schedule/Schedule";
-import Subjects from "../Tables/Subjects/Subjects";
-import Teachers from "../Tables/Teachers/Teachers";
 import Auds from "../Tables/Auds/Auds";
+import Schedule from "./Schedule/Schedule";
+import Subjects from "./Subjects/Subjects";
+import Buttons from "./Items/Buttons";
 
 export interface CustomModalProps {
   tabNumber: ETabsNaming,
@@ -18,7 +18,7 @@ export interface CustomModalProps {
 export interface InputsProps {
   id: string,
   label: string,
-  stateFun: (e: any, options: string[], id: string, fieldValue: any) => void,
+  stateFun: (e: any, id: string, fieldValue: any) => void,
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -80,9 +80,9 @@ const CustomModal = ({ tabNumber, api, closeFunc, modal }: CustomModalProps) => 
       case ETabsNaming.GROUPS:
         return <Groups state={groupModalData} setState={setGroupModalData} mode={modal.mode}/>;
       case ETabsNaming.SUBJECTS:
-        return <Subjects/>;
+        return <Subjects state={subjectModalData} setState={setSubjectModalData} mode={modal.mode}/>;
       case ETabsNaming.TEACHERS:
-        return <Teachers/>;
+        // return <Teachers/>;
       case ETabsNaming.AUDS:
         return <Auds/>;
       default:
@@ -104,7 +104,7 @@ const CustomModal = ({ tabNumber, api, closeFunc, modal }: CustomModalProps) => 
           <div className={classes.paper}>
             {switchModals()}
           </div>
-          {/*<Buttons/>*/}
+          <Buttons/>
         </>
       </Modal>
     </div>

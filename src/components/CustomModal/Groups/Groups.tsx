@@ -8,7 +8,7 @@ import CustomInput from "../Items/CustomInput";
 import {calculateRes} from "../../../utils/calculateRes";
 import Result from "../Items/Result";
 
-export interface GroupsProps {
+interface GroupsProps {
     state: TGroupModal,
     setState: React.Dispatch<React.SetStateAction<TGroupModal>>,
     mode: EModalMode | null
@@ -35,7 +35,7 @@ export const gradeOptions: string[] = [
 const Groups = ({mode, state, setState}: GroupsProps) => {
     const [title, setTitle] = useState<string>('');
 
-    const handleSetData = (e: any, options: string[], id: string, fieldValue: any): void => {
+    const handleSetData = (e: any, id: string, fieldValue: any, options?: string[]): void => {
         let temp = state;
 
         if (e.target.value === undefined) {
