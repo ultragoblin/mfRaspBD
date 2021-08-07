@@ -16,7 +16,7 @@ interface TabPanelProps {
 };
 
 export enum ETabsNaming {
-  SCHEDULE= 1,
+  SCHEDULE = 1,
   GROUPS,
   SUBJECTS,
   TEACHERS,

@@ -41,13 +41,12 @@ function createScheduleData(
 interface HeadCell {
   id: keyof ScheduleData;
   label: string;
-  numeric: boolean;
 }
 
 const headCells: HeadCell[] = [
-  { id: "year", numeric: false, label: 'Год обучения' },
-  { id: "semestr", numeric: false, label: 'Семестр' },
-  { id: "status", numeric: false, label: 'Статус' },
+  { id: "year", label: 'Год обучения' },
+  { id: "semestr", label: 'Семестр' },
+  { id: "status",  label: 'Статус' },
 ];
 
 const rows = [
@@ -90,7 +89,6 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           return <TableCell
             style={{ padding: '23px 0 17px 0' }}
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
