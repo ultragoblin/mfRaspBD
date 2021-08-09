@@ -26,9 +26,16 @@ export type TAudOptions = {
   audid: number
 }
 
-export type SubGroupOptions = {
+export type TSubGroupOptions = {
   subgroup: string,
   subgroupid: number
+}
+
+export type IEveryOptions = {
+  subject: TSubjectOptions[],
+  teacher: TTeacherOptions[],
+  aud: TAudOptions[],
+  subGroup: TSubGroupOptions[]
 }
 
 ///////////////////
@@ -105,7 +112,8 @@ export type TAdmListsData = {
     options: TSubjectOptions[],
     val: TAdmSubjectList[]
   },
-  group: TAdmGroupList[]
+  group: TAdmGroupList[],
+  subgroup: TSubGroupOptions[]
 };
 
 export type TAdmLists = {
@@ -142,6 +150,7 @@ const initialState: TData = {
         options: [],
         val: []
       },
+      subgroup: []
     },
     error: '',
     loading: false
@@ -238,7 +247,7 @@ export default function data(
         }
       }
     case EData.SUCCESS_ADM_LISTS:
-      return <TData><unknown>{
+      return <TData>{
         ...state,
         admLists: {
           data: action.payload,

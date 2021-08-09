@@ -39,7 +39,21 @@ export const getAdmLists = () => {
       teacher: {
         options: [],
         val: []
-      }
+      },
+      subgroup: [
+        {
+          subgroup: "—",
+          subgroupid: 1
+        },
+        {
+          subgroup: "|",
+          subgroupid: 2
+        },
+        {
+          subgroup: "||",
+          subgroupid: 3
+        }
+      ]
     };
 
     dispatch({ type: EData.GET_ADM_LISTS });

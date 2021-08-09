@@ -4,12 +4,13 @@ import TextField from "@material-ui/core/TextField";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import styles from "./Aud.module.scss";
-import { AudOptions, autocompleteNamings } from "../Row";
+import { autocompleteNamings } from "../Row";
+import { TAudOptions } from "../../../../../Redux/reducers/data";
 
 export interface AudProps {
   handleFunc: (event: any,value: any, subID: string) => void,
   addStyles?: React.CSSProperties;
-  options: AudOptions[];
+  options: TAudOptions[];
 }
 
 const Aud = ({ options, addStyles, handleFunc }: AudProps) => {

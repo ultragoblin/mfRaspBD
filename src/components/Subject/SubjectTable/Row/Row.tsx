@@ -4,6 +4,7 @@ import Double from "./Double";
 import "./Row.scss";
 import { pairListT, pairT } from "../../../../Redux/reducers/raspData";
 import { useTypedSelector } from "../../../../hooks/useTypedSelector";
+import { IEveryOptions } from "../../../../Redux/reducers/data";
 
 type TNamings = {
   _subject: string,
@@ -35,15 +36,6 @@ export enum RowWidth {
   SUBGROUP = 124
 }
 
-export type OptionsTypes = TeacherOptions | SubGroupOptions | SubjectOptions | AudOptions;
-
-export type IEveryOptions = {
-  subject: SubjectOptions[],
-  teacher: TeacherOptions[],
-  aud: AudOptions[],
-  subGroup: SubGroupOptions[]
-}
-
 export interface RowProps {
   number: number;
   timer: string;
@@ -60,68 +52,14 @@ export interface RowChildProps extends RowProps {
   options: IEveryOptions;
 }
 
-// ! Сюда подгрузим список предметов
-const subjOptions: SubjectOptions[] = [
-  {
-    subject: 'kek',
-    subjectid: 1
-  },
-  {
-    subject: 'eltex',
-    subjectid: 2
-  },
-  {
-    subject: 'matan',
-    subjectid: 3
-  }
-];
-
-const teacherOptions: TeacherOptions[] = [
-  {
-    teacher: "1/2ektov",
-    teacherid: 1
-  },
-  {
-    teacher: "afanas",
-    teacherid: 2
-  }
-]
-
-const audOptions: AudOptions[] = [
-  {
-    aud: "394",
-    audid: 34
-  },
-  {
-    aud: "232",
-    audid: 22
-  }
-]
-
-const subGroupOptions: SubGroupOptions[] = [
-  {
-    subgroup: "—",
-    subgroupid: 1
-  },
-  {
-    subgroup: "|",
-    subgroupid: 2
-  },
-  {
-    subgroup: "||",
-    subgroupid: 3
-  }
-]
-
-const everyOptions: IEveryOptions = {
-  subject: subjOptions,
-  teacher: teacherOptions,
-  aud: audOptions,
-  subGroup: subGroupOptions
-}
-
 const Row = ({ number, timer, stateFunc }: RowParentProps) => {
-
+  const data = useTypedSelector((store) => store.data.admLists.data)
+  const [everyOptions, setEveryOptions] = useState<IEveryOptions>({
+    aud: [],
+    teacher: [],
+    subGroup: [],
+    subject: []
+  });
   const [rowState, setRowState] = useState<pairListT>({
     pair: [],
     id: number - 1
@@ -139,6 +77,20 @@ const Row = ({ number, timer, stateFunc }: RowParentProps) => {
     }
 
   }, [isCollecting])
+
+  useEffect(() => {
+    setEveryOptions(prevState => {
+      return {
+        subject: data.subject.options,
+        teacher: data.teacher.options,
+        aud: data.aud.options,
+        subGroup: data.subgroup
+      };
+    });
+  }, [data])
+
+  useEffect(() => {
+  }, [everyOptions])
 
   const rowStateHandler = (payload: pairT | {}) => {
     setRowState({ ...rowState, pair: payload });

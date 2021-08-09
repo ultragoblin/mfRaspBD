@@ -1,10 +1,10 @@
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
-import { SubGroupOptions } from "../Row";
+import { TSubGroupOptions } from "../../../../../Redux/reducers/data";
 
 export interface AudProps {
   styles?: React.CSSProperties;
-  options: SubGroupOptions[];
+  options: TSubGroupOptions[];
 }
 
 const Subgroup = ({ options, styles }: AudProps) => {

@@ -6,7 +6,6 @@ import { autocompleteNamings, RowChildProps, RowWidth } from "../Row";
 import Aud from "../Aud";
 import { pairT } from "../../../../../Redux/reducers/raspData";
 import { editAud, editOthersFields } from "../../../../../utils/editting";
-import { useTypedSelector } from "../../../../../hooks/useTypedSelector";
 
 const Single = ({
                   number,
