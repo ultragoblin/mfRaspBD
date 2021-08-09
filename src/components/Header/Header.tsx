@@ -9,7 +9,7 @@ import CustomRadio, { radioType } from "../CustomRadio/CustomRadio";
 import routing from "../../utils/path/routing";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useEffect, useState } from "react";
-import { TDataFac, TDataSemesters } from "../../Redux/reducers/data";
+import { TDataFac, TDataGroup, TDataSemesters } from "../../Redux/reducers/data";
 
 const selectWidth: number = 167;
 
@@ -57,6 +57,14 @@ type TRaspValue = {
   fac?: {
     options?: TOptions[],
     val?: TDataSemesters
+  },
+  caf?: {
+    options?: TOptions[],
+    val?: TDataFac
+  },
+  group?: {
+    options?: TOptions[],
+    val?: TDataGroup
   }
 }
 
@@ -68,6 +76,23 @@ const Header = () => {
     yearOptions: [],
     activeSemester: 1,
   });
+
+  const handleYearSelect = (e: any): void => {
+    fullList.data.forEach((dataItem) => {
+      if (Number(e.target.value) === dataItem.year) {
+        return setRaspSelect(prevState => {
+          return {
+            ...prevState,
+            semester: dataItem.semesters["1"],
+            year: dataItem.year,
+            year_id: dataItem.year_id
+          }
+        })
+      } else {
+        return;
+      }
+    })
+  }
 
   useEffect(() => {
     let yearOp: TOptions[] = [];
@@ -88,33 +113,7 @@ const Header = () => {
     })
   }, [])
 
-  const handleYearSelect = (e: any): void => {
-    fullList.data.forEach((dataItem) => {
-      if (Number(e.target.value) === dataItem.year) {
-        return setRaspSelect(prevState => {
-          return {
-            ...prevState,
-            semester: dataItem.semesters["1"],
-            year: dataItem.year,
-            year_id: dataItem.year_id
-          }
-        })
-      } else {
-        return;
-      }
-    })
-  }
-
-  const handleRadio = (e: any) => {
-    setRaspSelect(prevState => {
-      return {
-        ...prevState,
-        activeSemester: Number(e.target.value)
-      }
-    });
-  }
-
-  const handleFac = (e: any) => {
+  const handleFac = (e: any): void => {
     raspSelect.semester?.forEach((fac) => {
       if (fac.fac_name === e.target.value) {
         setRaspSelect(prevState => {
@@ -130,6 +129,15 @@ const Header = () => {
         return
       }
     })
+  }
+
+  const handleRadio = (e: any): void => {
+    setRaspSelect(prevState => {
+      return {
+        ...prevState,
+        activeSemester: Number(e.target.value)
+      }
+    });
   }
 
   useEffect(() => {
@@ -183,9 +191,94 @@ const Header = () => {
 
   }, [raspSelect.semester])
 
+  const handleCaf = (e: any): void => {
+    raspSelect.fac?.val?.cafs.forEach((caf) => {
+      if (Number(e.target.value) === caf.caf_name) {
+        setRaspSelect(prevState => {
+          return {
+            ...prevState,
+            caf: {
+              options: prevState.caf?.options,
+              val: caf
+            }
+          }
+        })
+      } else {
+        return;
+      }
+    })
+  }
+
   useEffect(() => {
-    console.log('active fac >>> ', raspSelect.fac?.options);
+    let cafOp: TOptions[] = [];
+    let temp: TOptions;
+    raspSelect.fac?.val?.cafs.forEach((caf) => {
+      temp = {
+        value: String(caf.caf_name),
+        placeholder: String(caf.caf_name)
+      };
+
+      cafOp.push(temp);
+    })
+
+    setRaspSelect(prevState => {
+      return {
+        ...prevState,
+        caf: {
+          options: cafOp
+        }
+      }
+    })
+
+    console.log('active fac >>> ', raspSelect.fac);
   }, [raspSelect.fac])
+
+  const handleGroup = (e: any): void => {
+    raspSelect.caf?.val?.groups.forEach((group) => {
+      if (group.grp_name === e.target.value) {
+        setRaspSelect(prevState => {
+          return {
+            ...prevState,
+            group: {
+              options: prevState.group?.options,
+              val: group
+            }
+          }
+        })
+      } else {
+        return;
+      }
+    })
+  };
+
+  useEffect(() => {
+    let groupOp: TOptions[] = [];
+    let temp: TOptions;
+    raspSelect.caf?.val?.groups.forEach((group) => {
+      temp = {
+        value: group.grp_name,
+        placeholder: group.grp_name
+      };
+
+      groupOp.push(temp);
+    });
+
+    setRaspSelect(prevState => {
+      return {
+        ...prevState,
+        group: {
+          options: groupOp
+        }
+      }
+    })
+
+    console.log('active caf >>> ', raspSelect.caf);
+  }, [raspSelect.caf])
+
+  useEffect(() => {
+
+    console.log('active group >>> ', raspSelect.group);
+  }, [raspSelect.group])
 
   return (
     <header className={styles.header}>
@@ -204,6 +297,20 @@ const Header = () => {
           label={'Факультет'}
           id={selectsIDs.fac}
         />
+        <CustomSelect
+          width={selectWidth}
+          selectItems={raspSelect.caf?.options}
+          stateFunc={handleCaf}
+          label={'Кафедра'}
+          id={selectsIDs.caf}
+        />
+        <CustomSelect
+          width={selectWidth}
+          selectItems={raspSelect.group?.options}
+          stateFunc={handleGroup}
+          label={'Группа'}
+          id={selectsIDs.group}
+          />
         <CustomRadio {...radio} handler={handleRadio}/>
       </div>
       <div className={styles.header__buttons}>
