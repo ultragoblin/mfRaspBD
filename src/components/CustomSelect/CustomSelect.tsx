@@ -4,12 +4,13 @@ import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from "@material-ui/core/MenuItem";
-import SelectorVariantsType from "../../utils/types/SelectorVariantsType";
 import "./CustomSelect.scss";
+import { TOptions } from "../Header/Header";
 
 export interface CustomSelectInterface {
     width: number,
-    selectItems: SelectorVariantsType[],
+    selectItems: TOptions[],
+    stateFunc: (e: any) => void,
     label: string,
     id: {
         label: string,
@@ -17,7 +18,7 @@ export interface CustomSelectInterface {
     }
 };
 
-const CustomSelect = ({ selectItems, width, label, id }: CustomSelectInterface) => {
+const CustomSelect = ({ selectItems, width, label, id, stateFunc}: CustomSelectInterface) => {
     const useStyles = makeStyles((theme) => ({
         formControl: {
             minWidth: width,
@@ -31,7 +32,9 @@ const CustomSelect = ({ selectItems, width, label, id }: CustomSelectInterface) 
     const classes = useStyles();
     const [select, setSelect] = useState('');
     const handleChange = (e: any) => {
+        stateFunc(e);
         setSelect(e.target.value);
+        console.log(e.target.value);
     };
 
     return (

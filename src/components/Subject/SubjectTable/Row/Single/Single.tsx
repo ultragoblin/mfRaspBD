@@ -21,7 +21,6 @@ const Single = ({
   const { _subgroup, _subject, _teacher } = autocompleteNamings;
 
   const handleChange = (event: any, value: any, subID: string) => {
-
     if (subID.includes('aud')) {
       editAud(event, value, subID, singleRow, setSingleRow);
     } else {
@@ -71,7 +70,6 @@ const Single = ({
       </td>
       <td width={SUBGROUP} className="td">
         <Autocomplete
-
           id={_subgroup}
           onChange={(event, value) => handleChange(event, value, _subgroup)}
           options={subGroup}

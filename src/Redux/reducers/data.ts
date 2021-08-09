@@ -21,8 +21,11 @@ export type TDataSemesters = {
   fac_name: string
 };
 
-type TFullListData = {
-  semesters: TDataSemesters[],
+export type TFullListData = {
+  semesters: {
+    1: TDataSemesters[],
+    2: TDataSemesters[]
+  },
   year: number,
   year_id: number
 };
@@ -86,7 +89,6 @@ export default function data(
         },
       }
     case EData.SUCCESS_FULL_LIST:
-      // console.log('success', action.payload)
       return <TData><unknown>{
         ...state,
         fullList: {

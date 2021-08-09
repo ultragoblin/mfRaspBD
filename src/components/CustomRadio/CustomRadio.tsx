@@ -33,7 +33,7 @@ const CustomRadio = ({ value, label, handler }: radioType) => {
 
   const handleChange = (e: any) => {
     setVal(e.target.value);
-    handler(e.target.value);
+    handler(e);
   };
 
   return (
