@@ -1,15 +1,17 @@
 import {useActions} from "../hooks/useActions";
 import {ReactChildren, useEffect} from "react";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 
 export interface AppWrapperProps {
     children: JSX.Element
 }
 
 const AppWrapper = ({children}: AppWrapperProps) => {
-    const { getFullList } = useActions();
+    const { getFullList, getAdmLists } = useActions();
 
     useEffect(() => {
         getFullList();
+        getAdmLists();
     }, [])
 
     return <>

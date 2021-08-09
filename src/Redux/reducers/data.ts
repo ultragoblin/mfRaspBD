@@ -1,7 +1,10 @@
 enum EData {
   GET_FULL_LIST,
   ERROR_FULL_LIST,
-  SUCCESS_FULL_LIST
+  SUCCESS_FULL_LIST,
+  GET_ADM_LISTS,
+  ERROR_ADM_LISTS,
+  SUCCESS_ADM_LISTS
 };
 
 export type TDataGroup = {
@@ -36,8 +39,51 @@ export type TFullList = {
   loading: boolean
 }
 
+///////////////////////////////////////////////////////////
+
+export type TAdmGroupList = {
+  cafid: number,
+  id: number,
+  number: number,
+  stageid: number,
+  startyear: number
+};
+
+type TAdmAudList = {
+  id: number,
+  name: string
+};
+
+type TAdmSubjectList = {
+  id: number,
+  name: string,
+  nameshort: string
+};
+
+type TAdmTeacherList = {
+  fullname: string,
+  id: number,
+  name: string
+};
+
+export type TAdmListsData = {
+  teacher: TAdmTeacherList[],
+  aud: TAdmAudList[],
+  subject: TAdmSubjectList[],
+  group: TAdmGroupList[]
+};
+
+export type TAdmLists = {
+  data: TAdmListsData[],
+  error: string,
+  loading: boolean
+};
+
+/////////////////////////////////////////////////////
+
 export type TData = {
-  fullList: TFullList
+  fullList: TFullList,
+  admLists: TAdmLists,
 };
 
 const initialState: TData = {
@@ -45,8 +91,15 @@ const initialState: TData = {
     data: [],
     error: '',
     loading: false
+  },
+  admLists: {
+    data: [],
+    error: '',
+    loading: false
   }
 };
+
+// Actions for full list //
 
 type getFullList = {
   type: EData.GET_FULL_LIST
@@ -62,7 +115,30 @@ type errorFullList = {
   error: string
 };
 
-export type DataAction = getFullList | successFullList | errorFullList;
+///////////////////////////////////////////////////////////////////////
+
+// Actions for admLists //
+
+type getAdmLists = {
+  type: EData.GET_ADM_LISTS
+};
+
+type successAdmLists = {
+  type: EData.SUCCESS_ADM_LISTS,
+  payload: TAdmListsData
+};
+
+type errorAdmLists = {
+  type: EData.ERROR_ADM_LISTS,
+  error: string
+};
+
+// Creating types actions //
+
+type fullListActions = getFullList | successFullList | errorFullList;
+type admListsActions = getAdmLists | successAdmLists | errorAdmLists;
+
+export type DataAction = fullListActions | admListsActions;
 
 export default function data(
   state: TData = initialState,
@@ -70,7 +146,6 @@ export default function data(
 ) {
   switch (action.type) {
     case EData.GET_FULL_LIST:
-      // console.log('started');
       return <TData>{
         ...state,
         fullList: {
@@ -79,8 +154,7 @@ export default function data(
         }
       };
     case EData.ERROR_FULL_LIST:
-      // console.log('error', action.error);
-      return <TData><unknown>{
+      return <TData>{
         ...state,
         fullList: {
           data: [],
@@ -96,6 +170,32 @@ export default function data(
           loading: false,
           error: '',
         },
+      }
+    case EData.GET_ADM_LISTS:
+      return <TData>{
+        ...state,
+        admLists: {
+          ...state.admLists,
+          loading: true
+        }
+      }
+    case EData.ERROR_ADM_LISTS:
+      return <TData>{
+        ...state,
+        admLists: {
+          data: [],
+          error: action.error,
+          loading: false
+        }
+      }
+    case EData.SUCCESS_ADM_LISTS:
+      return <TData><unknown>{
+        ...state,
+        admLists: {
+          data: action.payload,
+          error: '',
+          loading: false
+        }
       }
     default:
       return state;
