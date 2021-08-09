@@ -9,7 +9,7 @@ import CustomRadio, { radioType } from "../CustomRadio/CustomRadio";
 import routing from "../../utils/path/routing";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useEffect, useState } from "react";
-import { TDataSemesters } from "../../Redux/reducers/data";
+import { TDataFac, TDataSemesters } from "../../Redux/reducers/data";
 
 const selectWidth: number = 167;
 
@@ -49,67 +49,25 @@ export type TOptions = {
 }
 
 type TRaspValue = {
-  arr: TOptions[],
-  semesters: {
-    1: TDataSemesters[],
-    2: TDataSemesters[]
-  },
+  yearOptions: TOptions[],
+  activeSemester: number,
+  semester?: TDataSemesters[],
   year?: number,
   year_id?: number,
-  active: number
+  fac?: {
+    options?: TOptions[],
+    val?: TDataSemesters
+  }
 }
 
 const Header = () => {
+
   const fullList = useTypedSelector((store) => store.data.fullList);
+
   const [raspSelect, setRaspSelect] = useState<TRaspValue>({
-    semesters: {
-      1: [],
-      2: []
-    },
-    arr: [],
-    active: 1
+    yearOptions: [],
+    activeSemester: 1,
   });
-
-  const handleYearSelect = (e: any): void => {
-
-    fullList.data.forEach((dataItem) => {
-      if (Number(e.target.value) === dataItem.year) {
-        return setRaspSelect(prevState => {
-          return {
-            ...prevState,
-            semesters: dataItem.semesters,
-            year: dataItem.year,
-            year_id: dataItem.year_id
-          }
-        })
-      } else {
-        return;
-      }
-    })
-  }
-
-  const handleRadio = (e: any) => {
-    setRaspSelect(prevState => {
-      return {
-        ...prevState,
-        active: Number(e.target.value)
-      }
-    });
-  }
-
-  useEffect(() => {
-    console.log('radio >>> ', raspSelect.active)
-    switch (raspSelect.active) {
-      case 1:
-        console.log(fullList.data[0].semesters["1"]);
-        break;
-      case 2:
-        console.log(fullList.data[0].semesters["2"]);
-        break;
-      default:
-        break;
-    }
-  }, [raspSelect.active])
 
   useEffect(() => {
     let yearOp: TOptions[] = [];
@@ -125,10 +83,109 @@ const Header = () => {
     setRaspSelect(prevState => {
       return {
         ...prevState,
-        arr: yearOp
+        yearOptions: yearOp
       }
     })
   }, [])
+
+  const handleYearSelect = (e: any): void => {
+    fullList.data.forEach((dataItem) => {
+      if (Number(e.target.value) === dataItem.year) {
+        return setRaspSelect(prevState => {
+          return {
+            ...prevState,
+            semester: dataItem.semesters["1"],
+            year: dataItem.year,
+            year_id: dataItem.year_id
+          }
+        })
+      } else {
+        return;
+      }
+    })
+  }
+
+  const handleRadio = (e: any) => {
+    setRaspSelect(prevState => {
+      return {
+        ...prevState,
+        activeSemester: Number(e.target.value)
+      }
+    });
+  }
+
+  const handleFac = (e: any) => {
+    raspSelect.semester?.forEach((fac) => {
+      if (fac.fac_name === e.target.value) {
+        setRaspSelect(prevState => {
+          return {
+            ...prevState,
+            fac: {
+              options: prevState.fac?.options,
+              val: fac
+            }
+          }
+        })
+      } else {
+        return
+      }
+    })
+  }
+
+  useEffect(() => {
+    fullList.data.forEach((year) => {
+      if (raspSelect.year === year.year) {
+        switch (raspSelect.activeSemester) {
+          case 1:
+            setRaspSelect(prevState => {
+              return {
+                ...prevState,
+                semester: year.semesters["1"]
+              }
+            })
+            break;
+          case 2:
+            setRaspSelect(prevState => {
+              return {
+                ...prevState,
+                semester: year.semesters["2"]
+              }
+            })
+            break;
+          default:
+            break;
+        }
+      }
+    })
+
+  }, [raspSelect.activeSemester, raspSelect.year])
+
+  useEffect(() => {
+    let facOp: TOptions[] = [];
+    let temp: TOptions;
+    raspSelect.semester?.forEach((fac) => {
+      temp = {
+        value: fac.fac_name,
+        placeholder: fac.fac_name
+      };
+
+      facOp.push(temp);
+    });
+
+    setRaspSelect(prevState => {
+      return {
+        ...prevState,
+        fac: {
+          options: facOp
+        }
+      }
+    });
+
+  }, [raspSelect.semester])
+
+  useEffect(() => {
+    console.log('active fac >>> ', raspSelect.fac?.options);
+  }, [raspSelect.fac])
 
   return (
     <header className={styles.header}>
@@ -136,20 +193,18 @@ const Header = () => {
         <CustomSelect
           width={selectWidth}
           stateFunc={handleYearSelect}
-          selectItems={raspSelect.arr}
+          selectItems={raspSelect.yearOptions}
           label={'Учебный год'}
           id={selectsIDs.year}
         />
-        {/*{*/}
-        {/*    selects.map((select) => <CustomSelect*/}
-        {/*        key={select.label}*/}
-        {/*        width={select.width}*/}
-        {/*        selectItems={select.selectItems}*/}
-        {/*        label={select.label}*/}
-        {/*        id={select.id}*/}
-        {/*    />)*/}
-        {/*}*/}
-        <CustomRadio {...radio} handler={handleRadio} />
+        <CustomSelect
+          width={selectWidth}
+          selectItems={raspSelect.fac?.options}
+          stateFunc={handleFac}
+          label={'Факультет'}
+          id={selectsIDs.fac}
+        />
+        <CustomRadio {...radio} handler={handleRadio}/>
       </div>
       <div className={styles.header__buttons}>
         <Link to={routing.database}><Button startIcon={<StorageIcon/>} variant="contained">База данных</Button></Link>
