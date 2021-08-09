@@ -30,38 +30,7 @@ export type raspDataT = {
 }
 
 const initialState: raspDataT = {
-  "day": [
-    {
-      "pairList": [],
-      "id": 1,
-      "special_day": false
-    },
-    {
-      "pairList": [],
-      "id": 2,
-      "special_day": false
-    },
-    {
-      "pairList": [],
-      "id": 3,
-      "special_day": false
-    },
-    {
-      "pairList": [],
-      "id": 4,
-      "special_day": false
-    },
-    {
-      "pairList": [],
-      "id": 5,
-      "special_day": false
-    },
-    {
-      "pairList": [],
-      "id": 6,
-      "special_day": false
-    }
-  ],
+  day: [],
   group: 0,
   semestr: 0,
   year: 0

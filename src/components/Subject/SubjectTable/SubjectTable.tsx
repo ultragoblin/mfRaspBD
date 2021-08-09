@@ -8,6 +8,7 @@ import { DayType } from "../../../utils/days";
 import { pairListT, raspDayT } from "../../../Redux/reducers/raspData";
 import { isArray } from "util";
 import {useActions} from "../../../hooks/useActions";
+import { IEveryOptions } from "./Row/Row";
 
 export enum EDayType {
   SPECIAL = "special",
@@ -18,12 +19,19 @@ export interface SubjectTableProps {
   day: DayType
 }
 
+const everyOptions: IEveryOptions = {
+  subject: subjOptions,
+  teacher: teacherOptions,
+  aud: audOptions,
+  subGroup: subGroupOptions
+}
+
 const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   const rd = useTypedSelector((state) => state.raspData);
   const {setDay} = useActions();
   useEffect(() => {
-    // console.log("RD")
-    // console.log(name ,rd)
+    console.log("RD")
+    console.log(name ,rd)
   }, [rd.day])
 
   const [pairList, setPairList] = useState<raspDayT>({
@@ -33,8 +41,8 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   });
   
   useEffect(() => {
-    // console.log("PL")
-    // console.log(name ,pairList)
+    console.log("PL")
+    console.log(name ,pairList)
     setDay(pairList);
   }, [pairList])
 

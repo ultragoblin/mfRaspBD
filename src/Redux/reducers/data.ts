@@ -1,3 +1,5 @@
+import { TOptions } from "../../components/Header/Header";
+
 enum EData {
   GET_FULL_LIST,
   ERROR_FULL_LIST,
@@ -6,6 +8,30 @@ enum EData {
   ERROR_ADM_LISTS,
   SUCCESS_ADM_LISTS
 };
+
+// options types //
+
+export type TTeacherOptions = {
+  teacher: string,
+  teacherid: number
+}
+
+export type TSubjectOptions = {
+  subject: string,
+  subjectid: number
+}
+
+export type TAudOptions = {
+  aud: string,
+  audid: number
+}
+
+export type SubGroupOptions = {
+  subgroup: string,
+  subgroupid: number
+}
+
+///////////////////
 
 export type TDataGroup = {
   grp_id: number,
@@ -49,32 +75,41 @@ export type TAdmGroupList = {
   startyear: number
 };
 
-type TAdmAudList = {
+export type TAdmAudList = {
   id: number,
   name: string
 };
 
-type TAdmSubjectList = {
+export type TAdmSubjectList = {
   id: number,
   name: string,
   nameshort: string
 };
 
-type TAdmTeacherList = {
+export type TAdmTeacherList = {
   fullname: string,
   id: number,
   name: string
 };
 
 export type TAdmListsData = {
-  teacher: TAdmTeacherList[],
-  aud: TAdmAudList[],
-  subject: TAdmSubjectList[],
+  teacher: {
+    options: TTeacherOptions[],
+    val: TAdmTeacherList[],
+  },
+  aud: {
+    options: TAudOptions[],
+    val: TAdmAudList[]
+  },
+  subject: {
+    options: TSubjectOptions[],
+    val: TAdmSubjectList[]
+  },
   group: TAdmGroupList[]
 };
 
 export type TAdmLists = {
-  data: TAdmListsData[],
+  data: TAdmListsData,
   error: string,
   loading: boolean
 };
@@ -93,7 +128,21 @@ const initialState: TData = {
     loading: false
   },
   admLists: {
-    data: [],
+    data: {
+      group: [],
+      teacher: {
+        options: [],
+        val: []
+      },
+      aud: {
+        options: [],
+        val: []
+      },
+      subject: {
+        options: [],
+        val: []
+      },
+    },
     error: '',
     loading: false
   }
@@ -183,7 +232,7 @@ export default function data(
       return <TData>{
         ...state,
         admLists: {
-          data: [],
+          data: {},
           error: action.error,
           loading: false
         }

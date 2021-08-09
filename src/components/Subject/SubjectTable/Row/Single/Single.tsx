@@ -6,6 +6,7 @@ import { autocompleteNamings, RowChildProps, RowWidth } from "../Row";
 import Aud from "../Aud";
 import { pairT } from "../../../../../Redux/reducers/raspData";
 import { editAud, editOthersFields } from "../../../../../utils/editting";
+import { useTypedSelector } from "../../../../../hooks/useTypedSelector";
 
 const Single = ({
                   number,
@@ -16,6 +17,7 @@ const Single = ({
                   options: { subGroup, aud, teacher, subject }
                 }: RowChildProps) => {
 
+  // const options = useTypedSelector((store) => store.data.admLists.data);
   const [singleRow, setSingleRow] = useState<pairT | {}>({});
   const { AUD, SUBJECT, TIMER, SUBGROUP, CHECKBOX, NUMBER, TEACHER } = RowWidth;
   const { _subgroup, _subject, _teacher } = autocompleteNamings;

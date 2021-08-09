@@ -35,26 +35,6 @@ export enum RowWidth {
   SUBGROUP = 124
 }
 
-export type TeacherOptions = {
-  teacher: string,
-  teacherid: number
-}
-
-export type SubjectOptions = {
-  subject: string,
-  subjectid: number
-}
-
-export type AudOptions = {
-  aud: string,
-  audid: number
-}
-
-export type SubGroupOptions = {
-  subgroup: string,
-  subgroupid: number
-}
-
 export type OptionsTypes = TeacherOptions | SubGroupOptions | SubjectOptions | AudOptions;
 
 export type IEveryOptions = {
@@ -141,6 +121,7 @@ const everyOptions: IEveryOptions = {
 }
 
 const Row = ({ number, timer, stateFunc }: RowParentProps) => {
+
   const [rowState, setRowState] = useState<pairListT>({
     pair: [],
     id: number - 1
