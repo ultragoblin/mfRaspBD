@@ -11,10 +11,11 @@ export interface SubjectHeaderInteface {
 }
 
 const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
-  const { collectData } = useActions();
+  const { collectData, clearData } = useActions();
   const isCol = useTypedSelector((state) => state.collectData.collecting)
 
   useEffect(() => {
+    clearData();
     console.log('...', isCol)
   }, [isCol])
 

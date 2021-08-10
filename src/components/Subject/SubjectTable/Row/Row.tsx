@@ -79,13 +79,11 @@ const Row = ({ number, timer, stateFunc }: RowParentProps) => {
   }, [isCollecting])
 
   useEffect(() => {
-    setEveryOptions(prevState => {
-      return {
-        subject: data.subject.options,
-        teacher: data.teacher.options,
-        aud: data.aud.options,
-        subGroup: data.subgroup
-      };
+    setEveryOptions({
+      subject: data.subject.options,
+      teacher: data.teacher.options,
+      aud: data.aud.options,
+      subGroup: data.subgroup
     });
   }, [data])
 

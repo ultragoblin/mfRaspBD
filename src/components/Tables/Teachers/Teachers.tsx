@@ -134,7 +134,6 @@ const Teachers = () => {
 
 
   useEffect(() => {
-    console.log('kek')
     console.log(rows);
   }, [rows])
 

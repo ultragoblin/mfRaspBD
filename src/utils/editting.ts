@@ -53,6 +53,9 @@ const editAud = (
     // Добавление в селект
     if (Object.keys(row).includes('aud')) { // NOT empty CASE
       switch (prevAud.length) {
+        case 0:
+          prevAud.push(id);
+          break;
         case 1:
           switch (subID) {
             case _aud.first:
@@ -77,14 +80,32 @@ const editAud = (
           errorLog('aud add error');
           break;
       }
-      stateFunc({ aud: prevAud });
+      // stateFunc({ aud: prevAud });
+      stateFunc(prevState => {
+        return {
+          ...prevState,
+          aud: prevAud
+        }
+      });
     } else {  // empty CASE
       switch (subID) {
         case _aud.first:
-          stateFunc({ aud: [id] });
+          // stateFunc({ aud: [id] });
+          stateFunc(prevState => {
+            return {
+              ...prevState,
+              aud: [id]
+            }
+          });
           break;
         case _aud.second:
-          stateFunc({ aud: [null, id] });
+          stateFunc(prevState => {
+            return {
+              ...prevState,
+              aud: [null, id]
+            }
+          });
+          // stateFunc({ aud: [null, id] });
           break;
         default:
           errorLog('aud add error');
@@ -124,7 +145,7 @@ const editAud = (
         errorLog('aud delete error');
         break;
     }
-
+    console.log('table kek >>> ',prevAud)
     stateFunc({ ...row, [subID.split('-')[0]]: prevAud });
   }
 }

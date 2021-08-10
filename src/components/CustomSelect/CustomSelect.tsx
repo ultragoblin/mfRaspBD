@@ -34,7 +34,6 @@ const CustomSelect = ({ selectItems, width, label, id, stateFunc }: CustomSelect
   const handleChange = (e: any) => {
     stateFunc(e);
     setSelect(e.target.value);
-    console.log(e.target.value);
   };
 
   return (

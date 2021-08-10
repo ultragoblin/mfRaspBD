@@ -1,6 +1,7 @@
 enum raspDataEnum {
   SET_DATA = 'SET_DATA',
   SET_DAY = 'SET_DAY',
+  CLEAR_DATA = 'CLEAR_DATA'
 }
 
 export type pairT = {
@@ -46,7 +47,11 @@ type setDay = {
   payload: raspDayT
 }
 
-export type raspDataAction = setData | setDay;
+type clearData = {
+  type: raspDataEnum.CLEAR_DATA
+}
+
+export type raspDataAction = setData | setDay | clearData;
 
 export default function raspData(
   state: raspDataT = initialState,
@@ -62,6 +67,11 @@ export default function raspData(
         }
       })
       return state;
+    case raspDataEnum.CLEAR_DATA:
+      return {
+        ...state,
+        day: [],
+      }
     default:
       return state;
   }

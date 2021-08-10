@@ -230,7 +230,6 @@ const Header = () => {
       }
     })
 
-    console.log('active fac >>> ', raspSelect.fac);
   }, [raspSelect.fac])
 
   const handleGroup = (e: any): void => {
@@ -272,12 +271,10 @@ const Header = () => {
       }
     })
 
-    console.log('active caf >>> ', raspSelect.caf);
   }, [raspSelect.caf])
 
   useEffect(() => {
 
-    console.log('active group >>> ', raspSelect.group);
   }, [raspSelect.group])
 
   return (

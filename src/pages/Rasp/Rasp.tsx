@@ -11,10 +11,6 @@ const group: string = "Группа К3-63Б";
 function Rasp() {
     const fullList = useTypedSelector((store) => store.data.fullList);
 
-    useEffect(() => {
-        console.log('data >>> ', fullList);
-    }, [fullList])
-
     return fullList.data.length > 0 ? <div className="App">
         <div className="App__container">
             <Header/>
