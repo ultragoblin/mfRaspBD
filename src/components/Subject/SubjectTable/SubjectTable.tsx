@@ -24,14 +24,14 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   const rd = useTypedSelector((state) => state.raspData);
   const { setDay } = useActions();
   useEffect(() => {
-    console.log("RD")
-    console.log(name, rd)
-  }, [rd.day])
+    console.log("RD >>> ", name, rd)
+  }, [rd])
 
   const [pairList, setPairList] = useState<raspDayT>({
     pairList: [],
     id: id,
-    special_day: false
+    special_day: false,
+    name: name
   });
 
   useEffect(() => {

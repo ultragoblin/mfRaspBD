@@ -15,7 +15,7 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
   const isCol = useTypedSelector((state) => state.collectData.collecting)
 
   useEffect(() => {
-    clearData();
+    // clearData();
     console.log('...', isCol)
   }, [isCol])
 
