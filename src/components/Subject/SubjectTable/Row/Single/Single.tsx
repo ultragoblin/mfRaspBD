@@ -30,7 +30,15 @@ const Single = ({
   }
 
   useEffect(() => {
-    stateFunc(singleRow)
+    if (Object.keys(singleRow).length > 0) {
+      stateFunc({
+        ...singleRow,
+        week: 0
+      });
+    } else {
+      stateFunc(singleRow);
+    }
+
   }, [singleRow])
 
   return (
