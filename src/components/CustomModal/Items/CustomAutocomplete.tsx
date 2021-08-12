@@ -2,6 +2,7 @@ import React from "react";
 import { Autocomplete } from "@material-ui/lab";
 import TextField from "@material-ui/core/TextField";
 import { InputsProps } from "../CustomModal";
+import styles from './Items.module.scss';
 
 export interface CustomAutocompleteProps {
   id: string,
@@ -13,6 +14,7 @@ export interface CustomAutocompleteProps {
 const CustomAutocomplete = ({ options, id, stateFun, label }: CustomAutocompleteProps) => {
   return (
     <Autocomplete
+      className={styles.autocomplete}
       id={id}
       onChange={(event, value) => stateFun(event, id, value, options)}
       options={options}

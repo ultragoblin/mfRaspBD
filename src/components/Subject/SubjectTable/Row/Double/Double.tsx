@@ -26,7 +26,7 @@ const Double = ({
   return (
     <>
       <tr className="tr">
-        <td rowSpan={2} width={NUMBER} className="tr">
+        <td rowSpan={2} width={NUMBER} className="td">
           {number}
         </td>
         <td rowSpan={2} width={TIMER} className="td">

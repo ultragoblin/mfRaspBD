@@ -1,10 +1,12 @@
+import styles from './Items.module.scss';
+
 export interface ResultProps {
     text: string | undefined
 };
 
 const Result = ({text}: ResultProps) => {
     return (
-        <p>
+        <p className={styles.result}>
             Результат: {text}
         </p>
     )

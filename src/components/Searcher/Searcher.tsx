@@ -1,6 +1,7 @@
 import React from "react";
 import {TextField} from "@material-ui/core";
 import {createStyles, makeStyles} from '@material-ui/core/styles';
+import styles from './Searcher.module.scss';
 
 export interface SearcherProps {
     state: string,
@@ -34,13 +35,15 @@ const Searcher = ({state, setState}: SearcherProps) => {
     const classes = useStyles();
 
     return (
-        <TextField
-            value={state}
-            onChange={setState}
-            className={classes.input}
-            id="standard-basic"
-            label="Поиск"
-        />
+        <div className={styles.searcher}>
+            <TextField
+                value={state}
+                onChange={setState}
+                className={classes.input}
+                id="standard-basic"
+                label="Поиск"
+            />
+        </div>
     )
 }
 

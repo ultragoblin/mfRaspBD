@@ -18,13 +18,14 @@ const CustomTabs = ({tabValue, tabFunc}: CustomTabsProps) => {
 
     return (
         <header>
-            <Paper style={{paddingLeft: '260px'}}>
+            <Paper className={styles.paper}>
                 <Tabs
                     value={tabValue}
                     onChange={handleChange}
                     indicatorColor="primary"
                     textColor="primary"
                     aria-label="full width tabs example"
+                    className={styles.tabs}
                 >
                     <Link className={styles.arrow} to={routing.rasp}><img src="/arrow-back.svg" alt=""/></Link>
                     <Tab label="Расписание"/>

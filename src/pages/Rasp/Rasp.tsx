@@ -21,7 +21,9 @@ function Rasp() {
                 }
             </div>
         </div>
-    </div> : 'loading';
+    </div> : <div className="Spinner">
+        <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </div>;
 
 }
 
