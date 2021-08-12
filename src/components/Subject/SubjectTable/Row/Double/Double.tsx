@@ -1,98 +1,166 @@
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Checkbox from "@material-ui/core/Checkbox";
 import TextField from "@material-ui/core/TextField";
-import { RowChildProps, RowWidth } from "../Row";
-import Subgroup from "../Subgroup";
+import {autocompleteNamings, DoubleRowProps, RowWidth} from "../Row";
 import Aud from "../Aud";
-import { useState } from "react";
-import { pairT } from "../../../../../Redux/reducers/raspData";
+import React, {useEffect, useState} from "react";
+import {pairT} from "../../../../../Redux/reducers/raspData";
+import {editAud, editOthersFields} from "../../../../../utils/editting";
 
 const Double = ({
-                  state,
-                  timer,
-                  handler,
-                  stateFunc,
-                  number,
-                  options: { subGroup, aud, teacher, subject }
-                }: RowChildProps) => {
+                    state,
+                    timer,
+                    handler,
+                    stateFuncFirstRow,
+                    stateFuncSecondRow,
+                    number,
+                    options: {subGroup, aud, teacher, subject}
+                }: DoubleRowProps) => {
 
-  const { AUD, SUBJECT, TIMER, SUBGROUP, CHECKBOX, NUMBER, TEACHER } = RowWidth;
-  const [doubleRow, setDoubleRow] = useState<pairT | {}>({});
+    const {AUD, SUBJECT, TIMER, SUBGROUP, CHECKBOX, NUMBER, TEACHER} = RowWidth;
+    const {_subgroup, _subject, _teacher} = autocompleteNamings;
+    const [firstRow, setFirstRow] = useState<pairT | {}>({});
+    const [secondRow, setSecondRow] = useState<pairT | {}>({});
 
-  const handleChange = () => {
+    const handleChangeFirstRow = (event: any, value: any, subID: string) => {
+        if (subID.includes('aud')) {
+            editAud(event, value, subID, firstRow, setFirstRow);
+        } else {
+            editOthersFields(event, value, subID, firstRow, setFirstRow);
+        }
+    }
 
-  }
+    const handleChangeSecondRow = (event: any, value: any, subID: string) => {
+        if (subID.includes('aud')) {
+            editAud(event, value, subID, secondRow, setSecondRow);
+        } else {
+            editOthersFields(event, value, subID, secondRow, setSecondRow);
+        }
+    }
 
-  return (
-    <>
-      <tr className="tr">
-        <td rowSpan={2} width={NUMBER} className="td">
-          {number}
-        </td>
-        <td rowSpan={2} width={TIMER} className="td">
-          {timer}
-        </td>
-        <td rowSpan={2} width={CHECKBOX} className="td">
-          <Checkbox color="primary" checked={state} onChange={handler}/>
-        </td>
-        <td width={SUBJECT} className="td">
-          <Autocomplete
-            options={subject}
-            style={{ width: SUBJECT }}
-            getOptionLabel={(option) => option.subject}
-            renderInput={(params) => (
-              <TextField {...params} label="" variant="outlined"/>
-            )}
-          />
-        </td>
-        <td width={TEACHER} className="td">
-          <Autocomplete
-            options={teacher}
-            getOptionLabel={(option) => option.teacher}
-            style={{ width: TEACHER }}
-            renderInput={(params) => (
-              <TextField {...params} label="" variant="outlined"/>
-            )}
-          />
-        </td>
-        <td width={AUD} className="td">
-          <Aud handleFunc={handleChange} options={aud}/>
-        </td>
-        <td width={SUBGROUP} className="td">
-          <Subgroup options={subGroup}/>
-        </td>
-      </tr>
+    useEffect(() => {
 
-      <tr>
-        <td width={SUBJECT} className="td__dobule">
-          <Autocomplete
-            options={subject}
-            style={{ width: SUBJECT }}
-            getOptionLabel={(option) => option.subject}
-            renderInput={(params) => (
-              <TextField {...params} label="" variant="outlined"/>
-            )}
-          />
-        </td>
-        <td width={TEACHER} className="td__dobule">
-          <Autocomplete
-            options={teacher}
-            getOptionLabel={(option) => option.teacher}
-            style={{ width: TEACHER }}
-            renderInput={(params) => (
-              <TextField {...params} label="" variant="outlined"/>
-            )}
-          />
-        </td>
-        <td width={AUD} className="td__dobule">
-          <Aud handleFunc={handleChange} options={aud}/>
-        </td>
-        <td width={SUBGROUP} className="td__dobule">
-          <Subgroup options={subGroup}/>
-        </td>
-      </tr>
-    </>
-  );
+        console.log('row changed >>>', firstRow, secondRow)
+    }, [firstRow, secondRow])
+
+    useEffect(() => {
+        if (Object.keys(firstRow).length > 0) {
+            stateFuncFirstRow({
+                ...firstRow,
+                week: 1
+            });
+        } else {
+            stateFuncFirstRow(firstRow)
+        }
+
+    }, [firstRow])
+
+    useEffect(() => {
+        if (Object.keys(secondRow).length > 0) {
+            stateFuncSecondRow({
+                ...secondRow,
+                week: 2
+            });
+        } else {
+            stateFuncSecondRow(secondRow)
+        }
+
+    }, [secondRow])
+
+    return (
+        <>
+            <tr className="tr">
+                <td rowSpan={2} width={NUMBER} className="td">
+                    {number}
+                </td>
+                <td rowSpan={2} width={TIMER} className="td">
+                    {timer}
+                </td>
+                <td rowSpan={2} width={CHECKBOX} className="td">
+                    <Checkbox color="primary" checked={state} onChange={handler}/>
+                </td>
+                <td width={SUBJECT} className="td">
+                    <Autocomplete
+                        onChange={(event, value) => handleChangeFirstRow(event, value, _subject)}
+                        id={_subject}
+                        options={subject}
+                        style={{width: SUBJECT}}
+                        getOptionLabel={(option) => option.subject}
+                        renderInput={(params) => (
+                            <TextField {...params} label="" variant="outlined"/>
+                        )}
+                    />
+                </td>
+                <td width={TEACHER} className="td">
+                    <Autocomplete
+                        onChange={(event, value) => handleChangeFirstRow(event, value, _teacher)}
+                        id={_teacher}
+                        options={teacher}
+                        getOptionLabel={(option) => option.teacher}
+                        style={{width: TEACHER}}
+                        renderInput={(params) => (
+                            <TextField {...params} label="" variant="outlined"/>
+                        )}
+                    />
+                </td>
+                <td width={AUD} className="td">
+                    <Aud handleFunc={handleChangeFirstRow} options={aud}/>
+                </td>
+                <td width={SUBGROUP} className="td">
+                    <Autocomplete
+                        onChange={(event, value) => handleChangeFirstRow(event, value, _subgroup)}
+                        id={_subgroup}
+                        options={subGroup}
+                        getOptionLabel={(option) => option.subgroup}
+                        renderInput={(params) => (
+                            <TextField {...params} label="" variant="outlined"/>
+                        )}
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td width={SUBJECT} className="td__dobule">
+                    <Autocomplete
+                        onChange={(event, value) => handleChangeSecondRow(event, value, _subject)}
+                        id={_subject}
+                        options={subject}
+                        style={{width: SUBJECT}}
+                        getOptionLabel={(option) => option.subject}
+                        renderInput={(params) => (
+                            <TextField {...params} label="" variant="outlined"/>
+                        )}
+                    />
+                </td>
+                <td width={TEACHER} className="td__dobule">
+                    <Autocomplete
+                        onChange={(event, value) => handleChangeSecondRow(event, value, _teacher)}
+                        id={_teacher}
+                        options={teacher}
+                        getOptionLabel={(option) => option.teacher}
+                        style={{width: TEACHER}}
+                        renderInput={(params) => (
+                            <TextField {...params} label="" variant="outlined"/>
+                        )}
+                    />
+                </td>
+                <td width={AUD} className="td__dobule">
+                    <Aud handleFunc={handleChangeSecondRow} options={aud}/>
+                </td>
+                <td width={SUBGROUP} className="td__dobule">
+                    <Autocomplete
+                        onChange={(event, value) => handleChangeSecondRow(event, value, _subgroup)}
+                        id={_subgroup}
+                        options={subGroup}
+                        getOptionLabel={(option) => option.subgroup}
+                        renderInput={(params) => (
+                            <TextField {...params} label="" variant="outlined"/>
+                        )}
+                    />
+                </td>
+            </tr>
+        </>
+    );
 };
 
 export default Double;

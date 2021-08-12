@@ -48,8 +48,16 @@ export interface RowParentProps extends RowProps {
 export interface RowChildProps extends RowProps {
   state: boolean;
   handler: () => void;
-  stateFunc: (payload: pairT | {}) => void
   options: IEveryOptions;
+}
+
+export interface SingleRowProps extends RowChildProps {
+  stateFunc: (payload: pairT | {}) => void,
+}
+
+export interface DoubleRowProps extends RowChildProps {
+  stateFuncFirstRow: (payload: pairT | {}) => void,
+  stateFuncSecondRow: (payload: pairT | {}) => void,
 }
 
 const Row = ({ number, timer, stateFunc }: RowParentProps) => {
@@ -87,19 +95,35 @@ const Row = ({ number, timer, stateFunc }: RowParentProps) => {
     });
   }, [data])
 
-  const rowStateHandler = (payload: pairT | {}) => {
+  const rowStateHandlerSingle = (payload: pairT | {}): void => {
     const newPairs: (pairT | {})[] = [];
     if (Object.keys(payload).length > 0) {
       newPairs.push(payload)
     }
-    console.log('row handler', payload, 'arr >>> ', newPairs)
 
     setRowState({ ...rowState, pair: newPairs  });
   }
 
+  const rowStateHandlerSecond = (payload: pairT | {}): void => {
+    const newPairs: (pairT | {})[] = rowState.pair;
+    newPairs[1] = payload;
+    console.log('double row handlerSECOND >>>', newPairs)
+
+    setRowState({...rowState, pair: newPairs})
+  }
+
+  const rowStateHandlerFirst = (payload: pairT | {}): void => {
+    const newPairs: (pairT | {})[] = rowState.pair;
+    newPairs[0] = payload;
+
+    console.log('double row handlerFIRST >>>', newPairs)
+
+    setRowState({...rowState, pair: newPairs})
+  }
+
   return !double ? (
     <Single
-      stateFunc={rowStateHandler}
+      stateFunc={rowStateHandlerSingle}
       handler={doubleHandler}
       number={number}
       timer={timer}
@@ -108,7 +132,8 @@ const Row = ({ number, timer, stateFunc }: RowParentProps) => {
     />
   ) : (
     <Double
-      stateFunc={rowStateHandler}
+      stateFuncFirstRow={rowStateHandlerFirst}
+      stateFuncSecondRow={rowStateHandlerSecond}
       handler={doubleHandler}
       number={number}
       timer={timer}

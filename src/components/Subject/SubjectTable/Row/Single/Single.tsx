@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Checkbox from "@material-ui/core/Checkbox";
 import TextField from "@material-ui/core/TextField";
-import { autocompleteNamings, RowChildProps, RowWidth } from "../Row";
+import {autocompleteNamings, RowChildProps, RowWidth, SingleRowProps} from "../Row";
 import Aud from "../Aud";
 import { pairT } from "../../../../../Redux/reducers/raspData";
 import { editAud, editOthersFields } from "../../../../../utils/editting";
@@ -14,7 +14,7 @@ const Single = ({
                   handler,
                   stateFunc,
                   options: { subGroup, aud, teacher, subject }
-                }: RowChildProps) => {
+                }: SingleRowProps) => {
 
   // const options = useTypedSelector((store) => store.data.admLists.data);
   const [singleRow, setSingleRow] = useState<pairT | {}>({});
