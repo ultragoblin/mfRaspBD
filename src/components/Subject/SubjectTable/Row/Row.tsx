@@ -72,9 +72,7 @@ const Row = ({ number, timer, stateFunc }: RowParentProps) => {
   };
 
   useEffect(() => {
-    console.log('change collect', isCollecting)
     if (isCollecting) {
-      console.log('RD settings', rowState)
       stateFunc(rowState);
     }
 
@@ -90,8 +88,13 @@ const Row = ({ number, timer, stateFunc }: RowParentProps) => {
   }, [data])
 
   const rowStateHandler = (payload: pairT | {}) => {
-    console.log('row handler', payload)
-    setRowState({ ...rowState, pair: payload  });
+    const newPairs: (pairT | {})[] = [];
+    if (Object.keys(payload).length > 0) {
+      newPairs.push(payload)
+    }
+    console.log('row handler', payload, 'arr >>> ', newPairs)
+
+    setRowState({ ...rowState, pair: newPairs  });
   }
 
   return !double ? (

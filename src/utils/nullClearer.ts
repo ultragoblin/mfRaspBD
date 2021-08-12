@@ -3,7 +3,6 @@ const nullClearer = (arr: any[]): any[] => {
 
     while (index !== -1) {
         index = arr.indexOf(null, 0);
-        console.log(index);
         arr.splice(index, 1);
     }
 

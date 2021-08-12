@@ -18,9 +18,7 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
   useEffect(() => {
     if (collectingDataState.sendReq) {
       let json = JSON.stringify(raspData);
-      console.log("COL >>> ", raspData)
-      console.log("COL FINAL JSON >>> ", json)
-      console.log('COL fetch started >>>')
+      console.log('sending json >>>', raspData,json)
       fetch('https://mf.bmstu.ru/rasp/api/adm/group', {
         method: "POST",
         headers: {
@@ -32,7 +30,6 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
         .catch((error) => console.log('COL fetch >>> ', error))
     }
 
-    console.log('...', collectingDataState)
   }, [collectingDataState])
 
   return (

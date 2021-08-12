@@ -14,10 +14,6 @@ const AppWrapper = ({children}: AppWrapperProps) => {
         getAdmLists();
     }, [])
 
-    useEffect(() => {
-        console.log('FL from app Wrapper>>> ',fl)
-    }, [fl])
-
     return <>
         {children}
     </>

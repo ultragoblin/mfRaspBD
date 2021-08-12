@@ -159,7 +159,7 @@ const Schedule = () => {
   };
 
   const handleChangeBtn = (event: any, data: ScheduleData) => {
-    console.log(event.target)
+    // console.log(event.target)
   }
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);

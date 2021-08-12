@@ -145,7 +145,6 @@ const editAud = (
         errorLog('aud delete error');
         break;
     }
-    console.log('table kek >>> ',prevAud)
     stateFunc({ ...row, [subID.split('-')[0]]: prevAud });
   }
 }

@@ -65,10 +65,6 @@ const Groups = ({mode, state, setState}: GroupsProps) => {
         }
     }, [])
 
-    useEffect(() => {
-        console.table(state);
-    }, [state])
-
     return (
         <>
             <Title text={title}/>

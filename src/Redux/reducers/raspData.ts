@@ -13,7 +13,7 @@ export type pairT = {
 }
 
 export type pairListT = {
-  pair: pairT[] | {},
+  pair: (pairT | {})[],
   id: number,
   pairTime?: string
 }
@@ -63,7 +63,6 @@ export default function raspData(
     case raspDataEnum.SET_DATA:
       return action.payload;
     case raspDataEnum.SET_DAY:
-      console.log('action', action.payload.pairList)
       let newState: raspDataT = state;
       let isInData: boolean = false;
       newState.day = newState.day.map((dayItem) => {
@@ -81,7 +80,6 @@ export default function raspData(
         dayItem.pairList = dayItem.pairList.filter((pairs) => Object.keys(pairs).length > 0);
         return dayItem;
       })
-      console.log("FINAL >>>", newState);
 
       return {
         ...newState

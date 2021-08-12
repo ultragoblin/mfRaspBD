@@ -32,7 +32,6 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   });
 
   useEffect(() => {
-    console.log("PL >>> ", name, pairList)
     setDay(pairList);
   }, [pairList])
 
@@ -62,7 +61,6 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   };
 
   const pairListHandler = (payload: pairListT) => {
-    console.log("loaded", payload)
     if (Object.keys(payload.pair).length > 0) {
       tempPairList.push({
         ...payload,

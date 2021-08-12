@@ -80,7 +80,6 @@ const Header = () => {
   const handleYearSelect = (e: any): void => {
     fullList.data.forEach((dataItem) => {
       if (Number(e.target.value) === dataItem.year) {
-        console.log('id year >>> ',dataItem.year_id)
         return setRaspSelect(prevState => {
           return {
             ...prevState,
@@ -133,7 +132,6 @@ const Header = () => {
   }
 
   const handleRadio = (e: any): void => {
-    console.log(' id semestr >>> ', e.target.value)
     setRaspSelect(prevState => {
       return {
         ...prevState,
@@ -237,7 +235,6 @@ const Header = () => {
   const handleGroup = (e: any): void => {
     raspSelect.caf?.val?.groups.forEach((group) => {
       if (group.grp_name === e.target.value) {
-        console.log(' id group  >>>  ', group.grp_id)
         setRaspSelect(prevState => {
           return {
             ...prevState,

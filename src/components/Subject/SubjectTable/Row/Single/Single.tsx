@@ -30,7 +30,6 @@ const Single = ({
   }
 
   useEffect(() => {
-    console.log('give id', singleRow)
     if (Object.keys(singleRow).length > 0) {
       stateFunc({
         ...singleRow,
@@ -39,8 +38,6 @@ const Single = ({
     } else {
       stateFunc({...singleRow});
     }
-
-    console.log('FL >>> ',singleRow)
 
   }, [singleRow])
 
