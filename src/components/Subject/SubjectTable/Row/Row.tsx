@@ -72,7 +72,9 @@ const Row = ({ number, timer, stateFunc }: RowParentProps) => {
   };
 
   useEffect(() => {
+    console.log('change collect', isCollecting)
     if (isCollecting) {
+      console.log('RD settings', rowState)
       stateFunc(rowState);
     }
 
@@ -83,15 +85,13 @@ const Row = ({ number, timer, stateFunc }: RowParentProps) => {
       subject: data.subject.options,
       teacher: data.teacher.options,
       aud: data.aud.options,
-      subGroup: data.subgroup
+      subGroup: data.subgroup.options
     });
   }, [data])
 
-  useEffect(() => {
-  }, [everyOptions])
-
   const rowStateHandler = (payload: pairT | {}) => {
-    setRowState({ ...rowState, pair: payload });
+    console.log('row handler', payload)
+    setRowState({ ...rowState, pair: payload  });
   }
 
   return !double ? (

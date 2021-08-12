@@ -28,14 +28,14 @@ export type raspDayT = {
 export type raspDataT = {
   day: raspDayT[],
   group: number,
-  semestr: number,
+  semester: number,
   year: number
 }
 
 const initialState: raspDataT = {
   day: [],
   group: 8612,
-  semestr: 1,
+  semester: 1,
   year: 6
 }
 
@@ -63,7 +63,7 @@ export default function raspData(
     case raspDataEnum.SET_DATA:
       return action.payload;
     case raspDataEnum.SET_DAY:
-      console.log('RD payload >>>', action.payload.pairList);
+      console.log('action', action.payload.pairList)
       let newState: raspDataT = state;
       let isInData: boolean = false;
       newState.day = newState.day.map((dayItem) => {
@@ -82,17 +82,6 @@ export default function raspData(
         return dayItem;
       })
       console.log("FINAL >>>", newState);
-      if (action.payload.name === "Суббота") {
-        // console.log("FINAL JSON >>> ", JSON.stringify(newState))
-        // console.log('fetch started >>>')
-        // fetch('https://mf.bmstu.ru/rasp/api/adm/group', {
-        //   method: "POST",
-        //   headers: {
-        //     'Content-Type': 'text/plain',
-        //   },
-        //   body: JSON.stringify(newState)
-        // }).then((v) => console.log('fetch >>> ',v)).catch((error) => console.log('fetch >>> ', error))
-      }
 
       return {
         ...newState

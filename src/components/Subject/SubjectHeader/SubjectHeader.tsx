@@ -1,22 +1,21 @@
+import { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import AutorenewIcon from "@material-ui/icons/Autorenew";
 import SaveIcon from "@material-ui/icons/Save";
 import styles from "./SubjectHeader.module.scss";
 import { useActions } from "../../../hooks/useActions";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
-import { useEffect } from "react";
 
 export interface SubjectHeaderInteface {
   name: string;
 }
 
 const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
-  const { collectData, clearData } = useActions();
+  const { collectData } = useActions();
   const raspData = useTypedSelector((store) => store.raspData);
   const collectingDataState = useTypedSelector((state) => state.collectData)
 
   useEffect(() => {
-    // clearData();
     if (collectingDataState.sendReq) {
       let json = JSON.stringify(raspData);
       console.log("COL >>> ", raspData)
@@ -29,7 +28,7 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
         },
         body: json
       })
-        .then((v) => console.log('COL fetch >>> ',v))
+        .then((v) => console.log('COL fetch >>> ', v))
         .catch((error) => console.log('COL fetch >>> ', error))
     }
 

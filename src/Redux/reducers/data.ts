@@ -99,6 +99,11 @@ export type TAdmTeacherList = {
   name: string
 };
 
+export type TAdmSubgroupList = {
+  id: number,
+  name: string
+};
+
 export type TAdmListsData = {
   teacher: {
     options: TTeacherOptions[],
@@ -113,7 +118,10 @@ export type TAdmListsData = {
     val: TAdmSubjectList[]
   },
   group: TAdmGroupList[],
-  subgroup: TSubGroupOptions[]
+  subgroup: {
+    options: TSubGroupOptions[],
+    val: TAdmSubgroupList[]
+  }
 };
 
 export type TAdmLists = {
@@ -150,7 +158,10 @@ const initialState: TData = {
         options: [],
         val: []
       },
-      subgroup: []
+      subgroup: {
+        options: [],
+        val: []
+      }
     },
     error: '',
     loading: false

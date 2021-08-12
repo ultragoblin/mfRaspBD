@@ -3,20 +3,19 @@ import {
   DataAction,
   EData,
   TAdmAudList,
-  TAdmListsData,
+  TAdmListsData, TAdmSubgroupList,
   TAdmSubjectList,
   TAdmTeacherList,
-  TAudOptions,
+  TAudOptions, TSubGroupOptions,
   TSubjectOptions,
   TTeacherOptions
 } from "../reducers/data";
-import api from "../../utils/api/api";
-import { TOptions } from "../../components/Header/Header";
+import api, { authDefault } from "../../utils/api/api";
 
 export const getFullList = () => {
   return (dispatch: Dispatch<DataAction>) => {
     dispatch({ type: EData.GET_FULL_LIST });
-    return fetch(api.fullList)
+    return fetch(api.fullList, authDefault)
       .then((response) => response.json())
       .catch((error) => dispatch({ type: EData.ERROR_FULL_LIST, error }))
       .then((ok) => dispatch({ type: EData.SUCCESS_FULL_LIST, payload: ok }))
@@ -40,24 +39,14 @@ export const getAdmLists = () => {
         options: [],
         val: []
       },
-      subgroup: [
-        {
-          subgroup: "—",
-          subgroupid: 1
-        },
-        {
-          subgroup: "|",
-          subgroupid: 2
-        },
-        {
-          subgroup: "||",
-          subgroupid: 3
-        }
-      ]
+      subgroup: {
+        options: [],
+        val: []
+      }
     };
 
     dispatch({ type: EData.GET_ADM_LISTS });
-    fetch(api.admLists.aud)
+    fetch(api.admLists.aud, authDefault)
       .then((response) => response.json())
       .catch((error) => {
         requestError = true;
@@ -85,7 +74,7 @@ export const getAdmLists = () => {
         }));
       });
 
-    fetch(api.admLists.teacher)
+    fetch(api.admLists.teacher, authDefault)
       .then((response) => response.json())
       .catch((error) => {
         requestError = true;
@@ -99,7 +88,21 @@ export const getAdmLists = () => {
         }));
       });
 
-    fetch(api.admLists.group)
+    fetch(api.admLists.subgroup, authDefault)
+      .then((response) => response.json())
+      .catch((error) => {
+        requestError = true;
+        return dispatch({ type: EData.ERROR_ADM_LISTS, error: `adm subgroup = ${error}` })
+      })
+      .then((okSubgroup) => {
+        admLists.subgroup.val = okSubgroup;
+        return okSubgroup.forEach((subgroup: TAdmSubgroupList) => admLists.subgroup.options.push(<TSubGroupOptions>{
+          subgroup: subgroup.name,
+          subgroupid: subgroup.id
+        }))
+      });
+
+    fetch(api.admLists.group, authDefault)
       .then((response) => response.json())
       .catch((error) => {
         requestError = true;

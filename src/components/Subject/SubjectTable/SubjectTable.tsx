@@ -23,9 +23,6 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   const timings = useTypedSelector((state) => state.timing);
   const rd = useTypedSelector((state) => state.raspData);
   const { setDay } = useActions();
-  useEffect(() => {
-    console.log("RD >>> ", name, rd)
-  }, [rd])
 
   const [pairList, setPairList] = useState<raspDayT>({
     pairList: [],
@@ -65,15 +62,16 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   };
 
   const pairListHandler = (payload: pairListT) => {
+    console.log("loaded", payload)
     if (Object.keys(payload.pair).length > 0) {
       tempPairList.push({
-        pair: payload,
-        id: payload.id,
-        pairTime: payload.pairTime
+        ...payload,
+        id: payload.id + 1
       });
       setPairList(prevState => {
         return {
           ...prevState,
+          id: payload.id + 1,
           pairList: tempPairList
         }
       });
