@@ -65,13 +65,19 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   };
 
   const pairListHandler = (payload: pairListT) => {
-    tempPairList.push(payload.pair as pairListT);
-    setPairList(prevState => {
-      return {
-        ...prevState,
-        pairList: tempPairList
-      }
-    });
+    if (Object.keys(payload.pair).length > 0) {
+      tempPairList.push({
+        pair: payload,
+        id: payload.id,
+        pairTime: payload.pairTime
+      });
+      setPairList(prevState => {
+        return {
+          ...prevState,
+          pairList: tempPairList
+        }
+      });
+    }
   }
 
   return (

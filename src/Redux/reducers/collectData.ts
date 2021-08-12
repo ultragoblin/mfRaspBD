@@ -4,11 +4,13 @@ enum collectDataEnum {
 }
 
 export type collectDataT = {
-  collecting : boolean
+  collecting : boolean,
+  sendReq: boolean
 }
 
 const initialState: collectDataT = {
-  collecting: false
+  collecting: false,
+  sendReq: false
 }
 
 type collectData = {
@@ -28,11 +30,13 @@ export default function raspData(
   switch (action.type) {
     case collectDataEnum.COLLECT_DATA:
       return {
-        collecting: true
+        collecting: true,
+        sendReq: false
       }
     case collectDataEnum.STOP_COLLECT_DATA:
       return {
-        collecting: false
+        collecting: false,
+        sendReq: true
       }
     default:
       return state;

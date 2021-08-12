@@ -63,7 +63,7 @@ export default function raspData(
     case raspDataEnum.SET_DATA:
       return action.payload;
     case raspDataEnum.SET_DAY:
-      console.log(state.group)
+      console.log('RD payload >>>', action.payload.pairList);
       let newState: raspDataT = state;
       let isInData: boolean = false;
       newState.day = newState.day.map((dayItem) => {
@@ -82,15 +82,16 @@ export default function raspData(
         return dayItem;
       })
       console.log("FINAL >>>", newState);
-
       if (action.payload.name === "Суббота") {
-        fetch('https://mf.bmstu.ru/rasp/api/adm/group', {
-          method: "POST",
-          headers: {
-            'Content-Type': 'text/plain',
-          },
-          body: JSON.stringify(newState)
-        }).then((v) => console.log('fetch >>> ',v)).catch((error) => console.log('fetch >>> ', error))
+        // console.log("FINAL JSON >>> ", JSON.stringify(newState))
+        // console.log('fetch started >>>')
+        // fetch('https://mf.bmstu.ru/rasp/api/adm/group', {
+        //   method: "POST",
+        //   headers: {
+        //     'Content-Type': 'text/plain',
+        //   },
+        //   body: JSON.stringify(newState)
+        // }).then((v) => console.log('fetch >>> ',v)).catch((error) => console.log('fetch >>> ', error))
       }
 
       return {

@@ -12,12 +12,29 @@ export interface SubjectHeaderInteface {
 
 const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
   const { collectData, clearData } = useActions();
-  const isCol = useTypedSelector((state) => state.collectData.collecting)
+  const raspData = useTypedSelector((store) => store.raspData);
+  const collectingDataState = useTypedSelector((state) => state.collectData)
 
   useEffect(() => {
     // clearData();
-    console.log('...', isCol)
-  }, [isCol])
+    if (collectingDataState.sendReq) {
+      let json = JSON.stringify(raspData);
+      console.log("COL >>> ", raspData)
+      console.log("COL FINAL JSON >>> ", json)
+      console.log('COL fetch started >>>')
+      fetch('https://mf.bmstu.ru/rasp/api/adm/group', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: json
+      })
+        .then((v) => console.log('COL fetch >>> ',v))
+        .catch((error) => console.log('COL fetch >>> ', error))
+    }
+
+    console.log('...', collectingDataState)
+  }, [collectingDataState])
 
   return (
     <div className={styles.header}>
