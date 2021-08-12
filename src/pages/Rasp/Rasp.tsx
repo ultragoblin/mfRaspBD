@@ -10,6 +10,12 @@ const group: string = "Группа К3-63Б";
 
 function Rasp() {
     const fullList = useTypedSelector((store) => store.data.fullList);
+    const tables = useTypedSelector((store) => store.raspData);
+
+    useEffect(() => {
+        console.log('tables >>>', tables)
+    }, [tables])
+
 
     return fullList.data.length > 0 ? <div className="App">
         <div className="App__container">

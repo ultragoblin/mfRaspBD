@@ -10,6 +10,8 @@ import routing from "../../utils/path/routing";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { useEffect, useState } from "react";
 import { TDataFac, TDataGroup, TDataSemesters } from "../../Redux/reducers/data";
+import {TGetGroupRasp} from "../../utils/api/api";
+import {useActions} from "../../hooks/useActions";
 
 const selectWidth: number = 167;
 
@@ -69,7 +71,7 @@ type TRaspValue = {
 }
 
 const Header = () => {
-
+  const {setData} = useActions();
   const fullList = useTypedSelector((store) => store.data.fullList);
 
   const [raspSelect, setRaspSelect] = useState<TRaspValue>({
@@ -274,8 +276,18 @@ const Header = () => {
   }, [raspSelect.caf])
 
   useEffect(() => {
+    console.log('raspSelect >>> ',raspSelect)
 
-  }, [raspSelect.group])
+    if (raspSelect.group?.val && raspSelect.year_id && raspSelect.activeSemester) {
+      const query: TGetGroupRasp = {
+        groupID: raspSelect.group.val.grp_id,
+        yearID: raspSelect.year_id,
+        semester: raspSelect.activeSemester
+      }
+      setData(query);
+    }
+
+  }, [raspSelect.group?.val])
 
   return (
     <header className={styles.header}>

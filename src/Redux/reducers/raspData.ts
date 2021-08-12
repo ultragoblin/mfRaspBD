@@ -61,6 +61,7 @@ export default function raspData(
 ) {
   switch (action.type) {
     case raspDataEnum.SET_DATA:
+      console.log('payload tables? >>> ',action.payload)
       return action.payload;
     case raspDataEnum.SET_DAY:
       console.log('payload table >>> ',action.payload)

@@ -18,7 +18,7 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
   useEffect(() => {
     if (collectingDataState.sendReq) {
       let json = JSON.stringify(raspData);
-      console.log('sending json >>>', raspData,json)
+      console.log('sending json >>>', raspData,'jsonnn >>>>' ,json)
       fetch('https://mf.bmstu.ru/rasp/api/adm/group', {
         method: "POST",
         headers: {
