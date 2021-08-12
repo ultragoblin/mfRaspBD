@@ -14,6 +14,7 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { TablePagination } from "@material-ui/core";
 import Searcher from "../../Searcher/Searcher";
 import nullClearer from "../../../utils/nullClearer";
+import { handleSelectClick } from "../tableFuncs";
 
 interface GroupsData {
   id: number,
@@ -372,6 +373,7 @@ const Groups = () => {
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
+                          onClick={(event) => handleSelectClick(event, row.id, selected, setSelected)}
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />

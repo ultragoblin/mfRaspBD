@@ -17,8 +17,7 @@ interface TabPanelProps {
 };
 
 export enum ETabsNaming {
-  SCHEDULE = 1,
-  GROUPS,
+  GROUPS = 1,
   SUBJECTS,
   TEACHERS,
   AUDS
@@ -86,9 +85,9 @@ const Database = () => {
       <CustomTabs tabValue={value} tabFunc={setValue}/>
 
       <div className="wrapper">
-        <TabPanel index={ETabsNaming.SCHEDULE} value={value}>
-          <Schedule/>
-        </TabPanel>
+        {/*<TabPanel index={ETabsNaming.SCHEDULE} value={value}>*/}
+        {/*  <Schedule/>*/}
+        {/*</TabPanel>*/}
         <TabPanel index={ETabsNaming.GROUPS} value={value}>
           <Groups/>
         </TabPanel>

@@ -28,7 +28,7 @@ const CustomTabs = ({tabValue, tabFunc}: CustomTabsProps) => {
                     className={styles.tabs}
                 >
                     <Link className={styles.arrow} to={routing.rasp}><img src="/arrow-back.svg" alt=""/></Link>
-                    <Tab label="Расписание"/>
+                    {/*<Tab label="Расписание"/>*/}
                     <Tab label="Группы"/>
                     <Tab label="Предметы"/>
                     <Tab label="Преподаватели"/>

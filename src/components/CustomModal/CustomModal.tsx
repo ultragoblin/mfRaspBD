@@ -82,8 +82,8 @@ const CustomModal = ({ tabNumber, api, closeFunc, modal }: CustomModalProps) => 
 
   const switchModals = (): JSX.Element => {
     switch (tabNumber) {
-      case ETabsNaming.SCHEDULE:
-        return <Schedule/>;
+      // case ETabsNaming.SCHEDULE:
+      //   return <Schedule/>;
       case ETabsNaming.GROUPS:
         return <Groups state={groupModalData} setState={setGroupModalData} mode={modal.mode}/>;
       case ETabsNaming.SUBJECTS:

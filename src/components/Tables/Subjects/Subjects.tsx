@@ -189,7 +189,6 @@ const Subjects = () => {
                   return (
                     <TableRow
                       hover
-                      // onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -198,6 +197,7 @@ const Subjects = () => {
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
+                          onClick={(event) => handleSelectClick(event, row.id, selected, setSelected)}
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />

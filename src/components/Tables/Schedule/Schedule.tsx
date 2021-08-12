@@ -206,6 +206,7 @@ const Schedule = () => {
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
+                          onClick={(event) => handleSelectClick(event, row.id, selected, setSelected)}
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
