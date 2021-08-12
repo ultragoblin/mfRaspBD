@@ -1,6 +1,7 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import "./Database.scss";
 import CustomTabs from "../../components/CustomTabs/CustomTabs";
 import Groups from "../../components/Tables/Groups/Groups";
 import CustomModal from "../../components/CustomModal/CustomModal";
@@ -83,24 +84,29 @@ const Database = () => {
   return (
     <>
       <CustomTabs tabValue={value} tabFunc={setValue}/>
-      <TabPanel index={ETabsNaming.SCHEDULE} value={value}>
-        <Schedule/>
-      </TabPanel>
-      <TabPanel index={ETabsNaming.GROUPS} value={value}>
-        <Groups/>
-      </TabPanel>
-      <TabPanel index={ETabsNaming.SUBJECTS} value={value}>
-        <Subjects/>
-      </TabPanel>
-      <TabPanel index={ETabsNaming.TEACHERS} value={value}>
-        <Teachers/>
-      </TabPanel>
-      <TabPanel index={ETabsNaming.AUDS} value={value}>
-        <Auds/>
-      </TabPanel>
+
+      <div className="wrapper">
+        <TabPanel index={ETabsNaming.SCHEDULE} value={value}>
+          <Schedule/>
+        </TabPanel>
+        <TabPanel index={ETabsNaming.GROUPS} value={value}>
+          <Groups/>
+        </TabPanel>
+        <TabPanel index={ETabsNaming.SUBJECTS} value={value}>
+          <Subjects/>
+        </TabPanel>
+        <TabPanel index={ETabsNaming.TEACHERS} value={value}>
+          <Teachers/>
+        </TabPanel>
+        <TabPanel index={ETabsNaming.AUDS} value={value}>
+          <Auds/>
+        </TabPanel>
+      </div>
+      
       <IconButton disabled={modal.isOpen} onClick={handleModalAdd} style={{ padding: 0 }}>
         <AddCircleIcon style={{ color: '#2196F3', width: 56, height: 56 }}/>
       </IconButton>
+
       <CustomModal tabNumber={value} modal={modal} closeFunc={handleModalClose}/>
     </>
   )
