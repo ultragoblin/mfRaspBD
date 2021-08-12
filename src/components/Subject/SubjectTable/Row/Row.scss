@@ -3,17 +3,28 @@
   border: #d2d2d2 1px solid;
 }
 
-.tr,
-.td {
-  background-color: #ffffff;
-}
-
 table {
   border-collapse: collapse;
 }
 
 .td {
   padding: 4px;
+}
+
+.tr,
+.td {
+  background-color: #ffffff;
+}
+
+.td:first-child {
+  padding: 10px;
+  text-align: center;
+}
+
+.td:nth-child(2) {
+  padding: 10px;
+  white-space: nowrap;
+  text-align: right;
 }
 
 .td__dobule {

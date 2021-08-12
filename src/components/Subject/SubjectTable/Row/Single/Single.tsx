@@ -43,7 +43,7 @@ const Single = ({
 
   return (
     <tr className="tr">
-      <td width={NUMBER} className="tr">
+      <td width={NUMBER} className="td">
         {number}
       </td>
       <td width={TIMER} className="td">

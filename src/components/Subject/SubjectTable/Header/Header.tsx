@@ -24,11 +24,11 @@ const Header = ({ setDayTVal, dayName }: HeaderProps) => {
 
   return (
     <tr className={styles.tr}>
-      <td colSpan={2}>
-        <h2 className={styles.capton_h}>{dayName}</h2>
-      </td>
-      <td colSpan={5}>
-        <CustomRadio {...radio} />
+      <td colSpan={7}>
+        <div className={styles.header}>
+          <h2 className={styles.capton_h}>{dayName}</h2>
+          <CustomRadio {...radio} />
+        </div>
       </td>
     </tr>
   );

@@ -1,7 +1,15 @@
-.tr, .td {
-    // border: #D2D2D2 1px solid
+.tr {
+    border: #D2D2D2 1px solid
 }
 
-.tr {
-  width: 100%;
+.header {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+.capton_h {
+  width: 220px;
+  font-weight: normal;
+  line-height: 1;
 }
