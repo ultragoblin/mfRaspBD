@@ -34,7 +34,7 @@ export type raspDataT = {
 
 const initialState: raspDataT = {
   day: [],
-  group: 8612,
+  group: 8699,
   semester: 1,
   year: 6
 }
@@ -63,12 +63,16 @@ export default function raspData(
     case raspDataEnum.SET_DATA:
       return action.payload;
     case raspDataEnum.SET_DAY:
+      console.log('payload table >>> ',action.payload)
       let newState: raspDataT = state;
       let isInData: boolean = false;
       newState.day = newState.day.map((dayItem) => {
         if (dayItem.id === action.payload.id) {
           isInData = true;
-          return dayItem = action.payload;
+          console.log('payload dayItem before',dayItem)
+          dayItem = action.payload;
+          console.log('payload dayItem after',dayItem)
+          return dayItem
         } else return dayItem
       })
 
@@ -80,6 +84,8 @@ export default function raspData(
         dayItem.pairList = dayItem.pairList.filter((pairs) => Object.keys(pairs).length > 0);
         return dayItem;
       })
+
+        console.log('payload tables new state >>> ', newState)
 
       return {
         ...newState

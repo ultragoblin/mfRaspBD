@@ -64,12 +64,12 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
     if (Object.keys(payload.pair).length > 0) {
       tempPairList.push({
         ...payload,
-        id: payload.id + 1
+        id: id
       });
       setPairList(prevState => {
         return {
           ...prevState,
-          id: payload.id + 1,
+          id: id,
           pairList: tempPairList
         }
       });
