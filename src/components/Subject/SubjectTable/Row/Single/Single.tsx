@@ -57,6 +57,7 @@ const Single = ({
           id={_subject}
           onChange={(event, value) => handleChange(event, value, _subject)}
           options={subject}
+          style={{ width: SUBJECT }}
           getOptionLabel={(option) => option.subject}
           renderInput={(params) => (
             <TextField {...params} label="" variant="outlined"/>
@@ -69,6 +70,7 @@ const Single = ({
           onChange={(event, value) => handleChange(event, value, _teacher)}
           options={teacher}
           getOptionLabel={(option) => option.teacher}
+          style={{ width: TEACHER }}
           renderInput={(params) => (
             <TextField {...params} name='teacher' label="" variant="outlined"/>
           )}

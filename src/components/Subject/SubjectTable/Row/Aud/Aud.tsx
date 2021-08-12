@@ -51,7 +51,7 @@ const Aud = ({ options, addStyles, handleFunc }: AudProps) => {
       ) : (
         ""
       )}
-      <div className="icon">
+      <div className={styles.icon}>
         {added ? (
           <RemoveIcon style={{ color: '#FF505F' }} onClick={handleChange} />
         ) : (
