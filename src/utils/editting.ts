@@ -8,7 +8,8 @@ const editAud = (
   value: any,
   subID: string,
   row: pairT | {},
-  stateFunc: React.Dispatch<React.SetStateAction<{} | pairT>>
+  stateFunc: React.Dispatch<React.SetStateAction<{} | pairT>>,
+  index: number
 ) => {
   let id: number | null = null;
   const { _aud } = autocompleteNamings;
@@ -155,7 +156,8 @@ const editOthersFields = (
   value: any,
   subID: string,
   row: pairT | {},
-  stateFunc: React.Dispatch<React.SetStateAction<{} | pairT>>
+  stateFunc: React.Dispatch<React.SetStateAction<{} | pairT>>,
+  index: number,
 ) => {
   let name: string = '';
   let id: number | null = null;
@@ -167,13 +169,20 @@ const editOthersFields = (
       name = key;
     }
   }
+  let newRowState = row;
+
+  console.log('test >', row)
 
   if (value) {
     // Добавление в селект
-    stateFunc({ ...row, [name]: id });
+    // @ts-ignore
+    newRowState[index][name] = id
+    stateFunc({ ...newRowState});
   } else {
     // удаление из селекта
-    stateFunc({ ...row, [subID.split('-')[0]]: null })
+    // @ts-ignore
+    newRowState[index][subID.split('-')[0]] = null;
+    stateFunc(newRowState)
   }
 }
 

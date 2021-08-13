@@ -24,14 +24,14 @@ const Single = ({
 
     const handleChange = (event: any, value: any, subID: string) => {
         if (subID.includes('aud')) {
-            editAud(event, value, subID, singleRow, setSingleRow);
+            editAud(event, value, subID, singleRow, setSingleRow, 0);
         } else {
-            editOthersFields(event, value, subID, singleRow, setSingleRow);
+            editOthersFields(event, value, subID, singleRow, setSingleRow, 0);
         }
     }
 
     useEffect(() => {
-        console.log("ROWWW", singleRow)
+        console.log("ROWWW", singleRow, 'pairs', pair, JSON.stringify(singleRow))
 
         if (Object.keys(singleRow).length > 0) {
             stateFunc({
@@ -43,6 +43,11 @@ const Single = ({
         }
 
     }, [singleRow])
+
+    useEffect(() => {
+        console.log("ROWWW", singleRow, 'pairs', pair)
+
+    },[])
 
     return (
         <tr className="tr">
