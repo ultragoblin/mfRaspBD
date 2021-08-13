@@ -122,7 +122,6 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
         });
 
         setDouble(pair.length === 2);
-        console.log(defaultValuesSingle)
     }, [])
 
     const doubleHandler = (): void => {
@@ -142,6 +141,14 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
             newPairs.push(payload)
         }
 
+        console.log(`test handle row=${number}`, {
+            ...rowState,
+            pair: newPairs
+        }, ' >>> mass >>> ', newPairs, '\n payload >>>', payload, '\n payload jsonify \n >>> ', JSON.stringify((payload)), ' \n json >>>', JSON.stringify({
+            ...rowState,
+            pair: newPairs
+        }))
+
         setRowState({...rowState, pair: newPairs});
     }
 
@@ -149,7 +156,8 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
         const newPairs: (pairT | {})[] = rowState.pair;
         newPairs[1] = payload;
 
-        setRowState({...rowState, pair: newPairs})
+        // @ts-ignore
+        setRowState({...rowState, pair: payload})
     }
 
     const rowStateHandlerFirst = (payload: pairT | {}): void => {

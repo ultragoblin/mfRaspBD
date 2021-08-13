@@ -13,7 +13,7 @@ function Rasp() {
     const tables = useTypedSelector((store) => store.raspData);
 
     useEffect(() => {
-        console.log('tables >>>', tables)
+        console.log('tables >>>', tables, 'inJSON', JSON.stringify(tables))
     }, [tables])
 
 

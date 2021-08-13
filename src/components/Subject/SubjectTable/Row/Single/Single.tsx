@@ -31,21 +31,19 @@ const Single = ({
     }
 
     useEffect(() => {
-        console.log("ROWWW", singleRow, 'pairs', pair, JSON.stringify(singleRow))
 
-        if (Object.keys(singleRow).length > 0) {
-            stateFunc({
-                ...singleRow,
-                week: 0
-            });
-        } else {
-            stateFunc({...singleRow});
-        }
+        // if (Object.keys(singleRow).length > 0) {
+        //     stateFunc({
+        //         ...singleRow,
+        //     });
+        // } else {
+        //     stateFunc({...singleRow});
+        // }
+        stateFunc(singleRow);
 
     }, [singleRow])
 
     useEffect(() => {
-        console.log("ROWWW", singleRow, 'pairs', pair)
 
     },[])
 

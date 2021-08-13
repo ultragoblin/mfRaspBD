@@ -41,7 +41,6 @@ const Double = ({
 
     useEffect(() => {
 
-        console.log('row changed >>>', firstRow, secondRow)
     }, [firstRow, secondRow])
 
     useEffect(() => {

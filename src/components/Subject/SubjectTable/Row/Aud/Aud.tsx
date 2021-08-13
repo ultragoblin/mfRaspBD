@@ -15,7 +15,6 @@ export interface AudProps {
 }
 
 const Aud = ({ options, addStyles, handleFunc, defaultOption }: AudProps) => {
-  console.log('rook', defaultOption.aud[1] !== -1, defaultOption.aud)
   const [added, setAdded] = useState<boolean>(defaultOption.aud[1] !== -1);
   const {first, second} = autocompleteNamings._aud;
 

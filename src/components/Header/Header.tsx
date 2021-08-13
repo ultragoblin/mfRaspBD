@@ -276,7 +276,6 @@ const Header = () => {
   }, [raspSelect.caf])
 
   useEffect(() => {
-    console.log('raspSelect >>> ',raspSelect)
 
     if (raspSelect.group?.val && raspSelect.year_id && raspSelect.activeSemester) {
       const query: TGetGroupRasp = {

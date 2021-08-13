@@ -61,18 +61,14 @@ export default function raspData(
 ) {
   switch (action.type) {
     case raspDataEnum.SET_DATA:
-      console.log('payload tables? >>> ',action.payload)
       return action.payload;
     case raspDataEnum.SET_DAY:
-      console.log('payload table >>> ',action.payload)
       let newState: raspDataT = state;
       let isInData: boolean = false;
       newState.day = newState.day.map((dayItem) => {
         if (dayItem.id === action.payload.id) {
           isInData = true;
-          console.log('payload dayItem before',dayItem)
           dayItem = action.payload;
-          console.log('payload dayItem after',dayItem)
           return dayItem
         } else return dayItem
       })
