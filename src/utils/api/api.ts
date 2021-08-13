@@ -8,6 +8,7 @@ export type TGetGroupRasp = {
 
 const api = {
     fullList: 'https://mf.bmstu.ru/rasp/api/adm/full_list',
+    pairList: 'https://mf.bmstu.ru/rasp/api/adm/pair/list',
     settings: 'https://mf.bmstu.ru/rasp/api/adm/settings',
     admLists: {
         teacher: 'https://mf.bmstu.ru/rasp/api/adm/teacher/list',

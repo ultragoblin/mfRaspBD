@@ -7,11 +7,12 @@ export interface AppWrapperProps {
 }
 
 const AppWrapper = ({children}: AppWrapperProps) => {
-    const { getFullList, getAdmLists } = useActions();
+    const { getFullList, getAdmLists, getTiming } = useActions();
     const fl = useTypedSelector((store) => store.raspData)
     useEffect(() => {
         getFullList();
         getAdmLists();
+        getTiming();
     }, [])
 
     return <>
