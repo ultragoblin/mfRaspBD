@@ -5,16 +5,18 @@ import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import styles from "./Aud.module.scss";
 import { autocompleteNamings } from "../Row";
-import { TAudOptions } from "../../../../../Redux/reducers/data";
+import {TAudOptions, TEveryDefaultOptionsSingle} from "../../../../../Redux/reducers/data";
 
 export interface AudProps {
   handleFunc: (event: any,value: any, subID: string) => void,
   addStyles?: React.CSSProperties;
   options: TAudOptions[];
+  defaultOption: TEveryDefaultOptionsSingle
 }
 
-const Aud = ({ options, addStyles, handleFunc }: AudProps) => {
-  const [added, setAdded] = useState<boolean>(false);
+const Aud = ({ options, addStyles, handleFunc, defaultOption }: AudProps) => {
+  console.log('rook', defaultOption.aud[1] !== -1, defaultOption.aud)
+  const [added, setAdded] = useState<boolean>(defaultOption.aud[1] !== -1);
   const {first, second} = autocompleteNamings._aud;
 
   const handleChange = () => {
@@ -32,6 +34,7 @@ const Aud = ({ options, addStyles, handleFunc }: AudProps) => {
         onChange={(event, value) => handleFunc(event, value, first)}
         style={addStyles}
         options={options}
+        defaultValue={options[defaultOption.aud[0]]}
         getOptionLabel={(option) => option.aud}
         renderInput={(params) => (
           <TextField {...params} label="" variant="outlined" />
@@ -43,6 +46,7 @@ const Aud = ({ options, addStyles, handleFunc }: AudProps) => {
           onChange={(event, value) => handleFunc(event, value, second)}
           style={{ marginLeft: 4 }}
           options={options}
+          defaultValue={options[defaultOption.aud[1]]}
           getOptionLabel={(option) => option.aud}
           renderInput={(params) => (
             <TextField {...params} label="" variant="outlined" />

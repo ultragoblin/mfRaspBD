@@ -34,9 +34,9 @@ export type raspDataT = {
 
 const initialState: raspDataT = {
   day: [],
-  group: 8699,
-  semester: 1,
-  year: 6
+  group: -1,
+  semester: -1,
+  year: -1
 }
 
 type setData = {

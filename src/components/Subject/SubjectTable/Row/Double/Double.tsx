@@ -14,7 +14,8 @@ const Double = ({
                     stateFuncFirstRow,
                     stateFuncSecondRow,
                     number,
-                    options: {subGroup, aud, teacher, subject}
+                    options: {subgroup, aud, teacher, subject},
+                    defaultOptions
                 }: DoubleRowProps) => {
 
     const {AUD, SUBJECT, TIMER, SUBGROUP, CHECKBOX, NUMBER, TEACHER} = RowWidth;
@@ -84,6 +85,7 @@ const Double = ({
                         onChange={(event, value) => handleChangeFirstRow(event, value, _subject)}
                         id={_subject}
                         options={subject}
+                        defaultValue={subject[defaultOptions.first.subject]}
                         style={{width: SUBJECT}}
                         getOptionLabel={(option) => option.subject}
                         renderInput={(params) => (
@@ -96,6 +98,7 @@ const Double = ({
                         onChange={(event, value) => handleChangeFirstRow(event, value, _teacher)}
                         id={_teacher}
                         options={teacher}
+                        defaultValue={teacher[defaultOptions.first.teacher]}
                         getOptionLabel={(option) => option.teacher}
                         style={{width: TEACHER}}
                         renderInput={(params) => (
@@ -104,13 +107,14 @@ const Double = ({
                     />
                 </td>
                 <td width={AUD} className="td">
-                    <Aud handleFunc={handleChangeFirstRow} options={aud}/>
+                    <Aud defaultOption={defaultOptions.first} handleFunc={handleChangeFirstRow} options={aud}/>
                 </td>
                 <td width={SUBGROUP} className="td">
                     <Autocomplete
                         onChange={(event, value) => handleChangeFirstRow(event, value, _subgroup)}
                         id={_subgroup}
-                        options={subGroup}
+                        options={subgroup}
+                        defaultValue={subgroup[defaultOptions.first.subgroup]}
                         getOptionLabel={(option) => option.subgroup}
                         renderInput={(params) => (
                             <TextField {...params} label="" variant="outlined"/>
@@ -125,6 +129,7 @@ const Double = ({
                         onChange={(event, value) => handleChangeSecondRow(event, value, _subject)}
                         id={_subject}
                         options={subject}
+                        defaultValue={subject[defaultOptions.second.subject]}
                         style={{width: SUBJECT}}
                         getOptionLabel={(option) => option.subject}
                         renderInput={(params) => (
@@ -137,6 +142,7 @@ const Double = ({
                         onChange={(event, value) => handleChangeSecondRow(event, value, _teacher)}
                         id={_teacher}
                         options={teacher}
+                        defaultValue={teacher[defaultOptions.second.teacher]}
                         getOptionLabel={(option) => option.teacher}
                         style={{width: TEACHER}}
                         renderInput={(params) => (
@@ -145,13 +151,14 @@ const Double = ({
                     />
                 </td>
                 <td width={AUD} className="td__dobule">
-                    <Aud handleFunc={handleChangeSecondRow} options={aud}/>
+                    <Aud defaultOption={defaultOptions.second} handleFunc={handleChangeSecondRow} options={aud}/>
                 </td>
                 <td width={SUBGROUP} className="td__dobule">
                     <Autocomplete
                         onChange={(event, value) => handleChangeSecondRow(event, value, _subgroup)}
                         id={_subgroup}
-                        options={subGroup}
+                        options={subgroup}
+                        defaultValue={subgroup[defaultOptions.second.subgroup]}
                         getOptionLabel={(option) => option.subgroup}
                         renderInput={(params) => (
                             <TextField {...params} label="" variant="outlined"/>

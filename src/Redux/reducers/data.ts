@@ -35,7 +35,19 @@ export type IEveryOptions = {
   subject: TSubjectOptions[],
   teacher: TTeacherOptions[],
   aud: TAudOptions[],
-  subGroup: TSubGroupOptions[]
+  subgroup: TSubGroupOptions[]
+}
+
+export type TEveryDefaultOptionsSingle = {
+  subject: number,
+  aud: number[],
+  teacher: number,
+  subgroup: number
+}
+
+export type TEveryDefaultOptionDouble = {
+  first: TEveryDefaultOptionsSingle,
+  second: TEveryDefaultOptionsSingle
 }
 
 ///////////////////

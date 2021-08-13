@@ -14,7 +14,8 @@ const Single = ({
                   state,
                   handler,
                   stateFunc,
-                  options: { subGroup, aud, teacher, subject }
+                  options: { subgroup, aud, teacher, subject },
+                  defaultOptions
                 }: SingleRowProps) => {
 
   const [singleRow, setSingleRow] = useState<pairT | {}>({});
@@ -57,7 +58,7 @@ const Single = ({
           id={_subject}
           onChange={(event, value) => handleChange(event, value, _subject)}
           options={subject}
-          defaultValue={subject[2]}
+          defaultValue={subject[defaultOptions.subject]}
           style={{ width: SUBJECT }}
           getOptionLabel={(option) => option.subject}
           renderInput={(params) => (
@@ -70,6 +71,7 @@ const Single = ({
           id={_teacher}
           onChange={(event, value) => handleChange(event, value, _teacher)}
           options={teacher}
+          defaultValue={teacher[defaultOptions.teacher]}
           getOptionLabel={(option) => option.teacher}
           style={{ width: TEACHER }}
           renderInput={(params) => (
@@ -78,13 +80,14 @@ const Single = ({
         />
       </td>
       <td width={AUD} className="td">
-        <Aud handleFunc={handleChange} options={aud}/>
+        <Aud defaultOption={defaultOptions} handleFunc={handleChange} options={aud}/>
       </td>
       <td width={SUBGROUP} className="td">
         <Autocomplete
           id={_subgroup}
           onChange={(event, value) => handleChange(event, value, _subgroup)}
-          options={subGroup}
+          options={subgroup}
+          defaultValue={subgroup[defaultOptions.subgroup]}
           getOptionLabel={(option) => option.subgroup}
           renderInput={(params) => (
             <TextField {...params} label="" variant="outlined"/>
