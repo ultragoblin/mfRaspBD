@@ -23,8 +23,7 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   const timings = useTypedSelector((state) => state.timing);
   const rd = useTypedSelector((state) => state.raspData);
   const { setDay } = useActions();
-
-  const [pairList, setPairList] = useState<raspDayT>({
+  const [raspDayTable, setRaspDayTable] = useState<raspDayT>({
     pairList: [],
     id: id,
     special_day: false,
@@ -32,15 +31,25 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   });
 
   useEffect(() => {
-    setDay(pairList);
-  }, [pairList])
+    rd.day.forEach((dayTable) => {
+      if(dayTable.id === raspDayTable.id) {
+        setRaspDayTable(dayTable);
+      }
+    })
+  }, [rd.day])
+
+  useEffect(() => {
+    // setDay(raspDayTable);
+
+    console.log('new raspLocal >>>', raspDayTable)
+  }, [raspDayTable])
 
   const dayTypeHandler = (e: any): void => {
     const val: EDayType = e.target.value;
     setDayType(val);
     switch (val) {
       case EDayType.COMMON:
-        setPairList(prevState => {
+        setRaspDayTable(prevState => {
           return {
             ...prevState,
             special_day: false
@@ -48,7 +57,7 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
         })
         break;
       case EDayType.SPECIAL:
-        setPairList(prevState => {
+        setRaspDayTable(prevState => {
           return {
             ...prevState,
             special_day: true
@@ -58,6 +67,7 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
       default:
         break;
     }
+    setDay(raspDayTable);
   };
 
   const pairListHandler = (payload: pairListT) => {
@@ -66,7 +76,7 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
         ...payload,
         id: id
       });
-      setPairList(prevState => {
+      setRaspDayTable(prevState => {
         return {
           ...prevState,
           id: id,
@@ -74,19 +84,26 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
         }
       });
     }
+
+    setDay(raspDayTable);
   }
 
   return (
     <table className={styles.table}>
       <thead>
       <Header dayName={name} dayType={dayType} setDayTVal={dayTypeHandler}/>
-      {!pairList.special_day && <Naming/>}
+      {!raspDayTable.special_day && <Naming/>}
       </thead>
       {
-        !pairList.special_day && <tbody>
-        {timings.map((timer, index) => (
-          <Row stateFunc={pairListHandler} key={timer} number={index + 1} timer={timer}/>
-        ))}
+        !raspDayTable.special_day && <tbody>
+        {
+          raspDayTable.pairList.map((pair) => {
+            return <Row stateFunc={pairListHandler} pair={pair.pair} number={pair.id} timer={pair.pairtime}/>
+          })
+        }
+        {/*{timings.map((timer, index) => (*/}
+        {/*  <Row stateFunc={pairListHandler} key={timer} number={index + 1} timer={timer}/>*/}
+        {/*))}*/}
         </tbody>
       }
 

@@ -42,7 +42,8 @@ export interface RowProps {
 }
 
 export interface RowParentProps extends RowProps {
-  stateFunc: (payload: pairListT) => void
+  stateFunc: (payload: pairListT) => void,
+  pair: ({} | pairT)[]
 }
 
 export interface RowChildProps extends RowProps {
@@ -60,24 +61,32 @@ export interface DoubleRowProps extends RowChildProps {
   stateFuncSecondRow: (payload: pairT | {}) => void,
 }
 
-const Row = ({ number, timer, stateFunc }: RowParentProps) => {
+const Row = ({ number, timer, stateFunc, pair }: RowParentProps) => {
+  const raspData = useTypedSelector((store) => store.raspData);
   const data = useTypedSelector((store) => store.data.admLists.data)
   const [everyOptions, setEveryOptions] = useState<IEveryOptions>({
-    aud: [],
-    teacher: [],
-    subGroup: [],
-    subject: []
+    aud: data.aud.options,
+    teacher: data.teacher.options,
+    subGroup: data.subgroup.options,
+    subject: data.subject.options
   });
   const [rowState, setRowState] = useState<pairListT>({
-    pair: [],
-    id: number - 1
+    pair: pair,
+    id: number - 1,
+    pairtime: timer
   });
   const [double, setDouble] = useState<boolean>(false);
   const isCollecting = useTypedSelector((state) => state.collectData.collecting)
 
   const doubleHandler = (): void => {
+
     setDouble(!double);
   };
+  useEffect(() => {
+    // console.log('inside', pair)
+    // console.log("ROW STATE >>>", rowState)
+    // setRowState()
+  }, [rowState])
 
   useEffect(() => {
     if (isCollecting) {

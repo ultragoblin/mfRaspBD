@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Checkbox from "@material-ui/core/Checkbox";
 import TextField from "@material-ui/core/TextField";
+import { useForm } from "react-hook-form";
 import {autocompleteNamings, RowChildProps, RowWidth, SingleRowProps} from "../Row";
 import Aud from "../Aud";
 import { pairT } from "../../../../../Redux/reducers/raspData";
@@ -16,7 +17,6 @@ const Single = ({
                   options: { subGroup, aud, teacher, subject }
                 }: SingleRowProps) => {
 
-  // const options = useTypedSelector((store) => store.data.admLists.data);
   const [singleRow, setSingleRow] = useState<pairT | {}>({});
   const { AUD, SUBJECT, TIMER, SUBGROUP, CHECKBOX, NUMBER, TEACHER } = RowWidth;
   const { _subgroup, _subject, _teacher } = autocompleteNamings;
@@ -57,6 +57,7 @@ const Single = ({
           id={_subject}
           onChange={(event, value) => handleChange(event, value, _subject)}
           options={subject}
+          defaultValue={subject[2]}
           style={{ width: SUBJECT }}
           getOptionLabel={(option) => option.subject}
           renderInput={(params) => (
@@ -91,7 +92,7 @@ const Single = ({
         />
       </td>
     </tr>
-  );
+  )
 };
 
 export default Single;

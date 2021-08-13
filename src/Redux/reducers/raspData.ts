@@ -15,7 +15,7 @@ export type pairT = {
 export type pairListT = {
   pair: (pairT | {})[],
   id: number,
-  pairTime?: string
+  pairtime: string
 }
 
 export type raspDayT = {
