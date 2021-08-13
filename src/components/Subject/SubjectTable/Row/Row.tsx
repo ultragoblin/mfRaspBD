@@ -54,6 +54,7 @@ export interface RowChildProps extends RowProps {
 
 export interface SingleRowProps extends RowChildProps {
     stateFunc: (payload: pairT | {}) => void,
+    pair: pairT | {}
     defaultOptions: TEveryDefaultOptionsSingle
 }
 
@@ -113,8 +114,6 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
     });
 
     useEffect(() => {
-        console.log("PAIR", pair)
-        // console.log(data.subject.options.find((subj) => subj.subjectid))
         setEveryOptions({
             subject: data.subject.options,
             teacher: data.teacher.options,
@@ -162,6 +161,7 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
 
     return !double ? (
         <Single
+            pair={pair}
             defaultOptions={defaultValuesSingle}
             stateFunc={rowStateHandlerSingle}
             handler={doubleHandler}

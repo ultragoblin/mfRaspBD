@@ -38,6 +38,7 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
   useEffect(() => {
     rd.day.forEach((dayTable) => {
       if(dayTable.id === raspDayTable.id) {
+        console.log('settim >>> ', dayTable, 'to >>>', raspDayTable)
         setRaspDayTable(dayTable);
       }
     })
@@ -60,10 +61,12 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
 
   useEffect(() => {
     if(!collect.collecting) {
-      setRowJSX({refresh: true})  
+      setRowJSX({refresh: true})
+    } else {
+      setDay(raspDayTable);
     }
     // setDay(raspDayTable);
-    console.log('new raspLocal >>>', raspDayTable)
+    console.log('setted new raspLocal >>>', raspDayTable, JSON.stringify(raspDayTable))
   }, [raspDayTable])
 
   useEffect(() => {
@@ -83,20 +86,16 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
     }
   }, [rowJSX.refresh])
 
-  useEffect(() => {
-    console.log("ROWS UPDA", rowJSX)
-  }, [rowJSX])
-
   const dayTypeHandler = (e: any): void => {
     const val: EDayType = e.target.value;
     setDayType(val);
     switch (val) {
       case EDayType.COMMON:
+        setDay({
+          ...raspDayTable,
+          special_day: false
+        });
         setRaspDayTable(prevState => {
-          setDay({
-            ...raspDayTable,
-            special_day: false
-          });
           return {
             ...prevState,
             special_day: false
@@ -104,11 +103,11 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
         });
         break;
       case EDayType.SPECIAL:
+        setDay({
+          ...raspDayTable,
+          special_day: true
+        });
         setRaspDayTable(prevState => {
-          setDay({
-            ...raspDayTable,
-            special_day: true
-          });
           return {
             ...prevState,
             special_day: true
@@ -124,18 +123,16 @@ const SubjectTable = ({ day: { name, id } }: SubjectTableProps) => {
     if (Object.keys(payload.pair).length > 0) {
       tempPairList.push({
         ...payload,
-        id: id
+        id: payload.id + 1
       });
       setRaspDayTable(prevState => {
         return {
           ...prevState,
-          id: id,
           pairList: tempPairList
         }
       });
     }
-
-    setDay(raspDayTable);
+    // console.log('payload kek',tempPairList)
   }
 
   return (

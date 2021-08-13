@@ -81,10 +81,10 @@ export default function raspData(
         newState.day.push(action.payload);
       }
 
-      newState.day = newState.day.map((dayItem) => {
-        dayItem.pairList = dayItem.pairList.filter((pairs) => Object.keys(pairs).length > 0);
-        return dayItem;
-      })
+      // newState.day = newState.day.map((dayItem) => {
+      //   dayItem.pairList = dayItem.pairList.filter((pairs) => Object.keys(pairs).length > 0);
+      //   return dayItem;
+      // })
 
         console.log('payload tables new state >>> ', newState)
 

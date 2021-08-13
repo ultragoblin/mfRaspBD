@@ -17,6 +17,7 @@ export const setData = (query: TGetGroupRasp) => {
 };
 
 export const setDay = (dayData: raspDayT) => {
+    console.log('payload kek', dayData)
     return (dispatch: Dispatch<raspDataAction>) => {
         dispatch({type: raspDataEnum.SET_DAY, payload: dayData});
     }
