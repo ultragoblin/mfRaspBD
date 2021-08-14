@@ -20,12 +20,20 @@ function Rasp() {
 
     return (fullList.data.length > 0 && timings.length > 0) ? <div className="App">
         <div className="App__container">
-            <Header/>
-            <SubjectHeader name={group}/>
-            <div className={"tables__container"}>
-                {
-                    days.map((day) => <SubjectTable day={day} key={day.id}/>)
-                }
+
+            <div className={"header__container"}>
+                <div className={"container"}>
+                    <Header/>
+                </div>
+            </div>
+
+            <div className={"container"}>
+                <SubjectHeader name={group}/>
+                <div className={"tables__container"}>
+                    {
+                        days.map((day) => <SubjectTable day={day} key={day.id}/>)
+                    }
+                </div>
             </div>
         </div>
     </div> : <div className="Spinner">
