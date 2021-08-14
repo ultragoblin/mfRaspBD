@@ -61,7 +61,8 @@ export interface SingleRowProps extends RowChildProps {
 export interface DoubleRowProps extends RowChildProps {
     stateFuncFirstRow: (payload: pairT) => void,
     stateFuncSecondRow: (payload: pairT) => void,
-    defaultOptions: TEveryDefaultOptionDouble
+    defaultOptions: TEveryDefaultOptionDouble,
+    pair: pairT[]
 }
 
 const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
@@ -75,7 +76,7 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
     });
     const [rowState, setRowState] = useState<pairListT>({
         pair: pair,
-        id: number,
+        id: number - 1,
         pairtime: timer
     });
     const [double, setDouble] = useState<boolean>(false);
@@ -122,6 +123,7 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
         });
 
         setDouble(pair.length === 2);
+
     }, [])
 
     useEffect(() => {
@@ -131,12 +133,6 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
 
     }, [isCollecting])
 
-    useEffect(() => {
-        if (rowState.id === 1) {
-            console.log('row state', rowState, 'jsonify \n \n \n >>> ', JSON.stringify(rowState))
-        }
-    }, [rowState])
-
     const doubleHandler = (): void => {
         setDouble(!double);
     };
@@ -144,13 +140,8 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
     const rowStateHandlerSingle = (payload: pairT): void => {
         const newPairs: pairT[] = [];
         if (payload && Object.keys(payload).length > 0) {
-            newPairs.push(payload)
+            newPairs.push({...payload, week: 0})
         }
-
-        // const newObj: pairListT = {
-        //     ...rowState,
-        //     pair
-        // }
 
         if (newPairs.length > 0) {
             console.log(`test handle row=${number}`, {...rowState, pair: newPairs}, ' >>> mass >>> ', newPairs, '\n payload >>>', payload, '\n payload jsonify \n >>> ', JSON.stringify((payload)), ' \n json >>>', JSON.stringify({...rowState, pair: newPairs}))
@@ -190,6 +181,7 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
         />
     ) : (
         <Double
+            pair={pair}
             defaultOptions={defaultValuesDouble}
             stateFuncFirstRow={rowStateHandlerFirst}
             stateFuncSecondRow={rowStateHandlerSecond}

@@ -15,13 +15,14 @@ const Double = ({
                     stateFuncSecondRow,
                     number,
                     options: {subgroup, aud, teacher, subject},
-                    defaultOptions
+                    defaultOptions,
+                    pair
                 }: DoubleRowProps) => {
 
     const {AUD, SUBJECT, TIMER, SUBGROUP, CHECKBOX, NUMBER, TEACHER} = RowWidth;
     const {_subgroup, _subject, _teacher} = autocompleteNamings;
-    const [firstRow, setFirstRow] = useState<pairT>({});
-    const [secondRow, setSecondRow] = useState<pairT>({});
+    const [firstRow, setFirstRow] = useState<pairT>(pair[0]);
+    const [secondRow, setSecondRow] = useState<pairT>(pair[1]);
 
     const handleChangeFirstRow = (event: any, value: any, subID: string) => {
         if (subID.includes('aud')) {
@@ -66,6 +67,13 @@ const Double = ({
         }
 
     }, [secondRow])
+
+    useEffect(() => {
+        if (!pair) {
+            setFirstRow({});
+            setSecondRow({})
+        }
+    }, [])
 
     return (
         <>

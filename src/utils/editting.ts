@@ -46,9 +46,8 @@ const editAud = (
   //  Switch (arr.length === 1) then arr = []
   //         (arr.length === 2) then [???, null]
 
-  // @ts-ignore
-  let prevAud = row.aud;
-
+  let prevAud = (row && row.aud) ? row.aud : [];
+  console.log('edit', prevAud)
   if (value && prevAud) {
     id = value['audid'];
     // Добавление в селект

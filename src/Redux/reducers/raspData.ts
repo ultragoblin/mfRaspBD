@@ -65,22 +65,18 @@ export default function raspData(
     case raspDataEnum.SET_DAY:
       let newState: raspDataT = state;
       let isInData: boolean = false;
+      let isNull: boolean = false;
       newState.day = newState.day.map((dayItem) => {
         if (dayItem.id === action.payload.id) {
           isInData = true;
           dayItem = action.payload;
-          return dayItem
-        } else return dayItem
+        }
+        return dayItem
       })
 
       if (!isInData) {
         newState.day.push(action.payload);
       }
-
-      // newState.day = newState.day.map((dayItem) => {
-      //   dayItem.pairList = dayItem.pairList.filter((pairs) => Object.keys(pairs).length > 0);
-      //   return dayItem;
-      // })
 
         console.log('payload tables new state >>> ', newState)
 
