@@ -323,8 +323,8 @@ const Header = () => {
       </div>
       <div className={styles.header__buttons}>
         <Link to={routing.database}><Button startIcon={<StorageIcon/>} variant="contained">База данных</Button></Link>
-        <Button startIcon={<PrintIcon/>} variant="contained">Печать</Button>
-        <Button style={{ backgroundColor: '#007DFF' }} startIcon={<DirectionsRunIcon/>} variant="contained" color="primary">
+        <Button startIcon={<PrintIcon/>} variant="contained" disabled>Печать</Button>
+        <Button startIcon={<DirectionsRunIcon/>} variant="contained" color="primary" disabled>
           Выход
         </Button>
       </div>

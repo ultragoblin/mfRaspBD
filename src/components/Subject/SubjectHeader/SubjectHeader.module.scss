@@ -1,8 +1,12 @@
 .header {
-    margin-top: 104px;
-    margin-bottom: 30px;
+    position: sticky;
+    top: 0;
     display: flex;
     justify-content: space-between;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    z-index: 100;
+    background-color: #fff;
 }
 
 .buttons {

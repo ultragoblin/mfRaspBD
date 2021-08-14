@@ -49,6 +49,7 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
           startIcon={<AutorenewIcon/>}
           variant="contained"
           color="secondary"
+          disabled
         >
           Отменить
         </Button>

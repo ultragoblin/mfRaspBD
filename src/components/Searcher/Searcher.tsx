@@ -41,7 +41,7 @@ const Searcher = ({state, setState}: SearcherProps) => {
                 onChange={setState}
                 className={classes.input}
                 id="standard-basic"
-                label="Поиск"
+                placeholder="Поиск"
             />
         </div>
     )
