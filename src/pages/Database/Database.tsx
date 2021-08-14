@@ -1,6 +1,8 @@
 import React from "react";
-import IconButton from "@material-ui/core/IconButton";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+// import IconButton from "@material-ui/core/IconButton";
+// import AddCircleIcon from '@material-ui/icons/AddCircle';
 import "./Database.scss";
 import CustomTabs from "../../components/CustomTabs/CustomTabs";
 import Groups from "../../components/Tables/Groups/Groups";
@@ -102,9 +104,13 @@ const Database = () => {
         </TabPanel>
       </div>
       
-      <IconButton disabled={modal.isOpen} onClick={handleModalAdd} style={{ padding: 0 }}>
+      {/* <IconButton disabled={modal.isOpen} onClick={handleModalAdd} style={{ padding: 0 }}>
         <AddCircleIcon style={{ color: '#2196F3', width: 56, height: 56 }}/>
-      </IconButton>
+      </IconButton> */}
+
+      <Fab color="primary" aria-label="add" disabled={modal.isOpen} onClick={handleModalAdd} style={{ position: "fixed", bottom: "50px", right: "50px" }}>
+        <AddIcon />
+      </Fab>
 
       <CustomModal tabNumber={value} modal={modal} closeFunc={handleModalClose}/>
     </>
