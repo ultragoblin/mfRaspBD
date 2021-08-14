@@ -43,7 +43,7 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
 
   return (
     <div className={styles.header}>
-      <h1>{name}</h1>
+      <h1>Группа {name}</h1>
       <div className={styles.buttons}>
         <Button
           startIcon={<AutorenewIcon/>}

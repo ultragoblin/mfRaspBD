@@ -8,7 +8,7 @@ import styles from "./Header.module.scss";
 import CustomRadio, { radioType } from "../CustomRadio/CustomRadio";
 import routing from "../../utils/path/routing";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TDataFac, TDataGroup, TDataSemesters } from "../../Redux/reducers/data";
 import {TGetGroupRasp} from "../../utils/api/api";
 import {useActions} from "../../hooks/useActions";
@@ -70,7 +70,11 @@ type TRaspValue = {
   }
 }
 
-const Header = () => {
+export type HeaderProps = {
+  setGroupName: React.Dispatch<React.SetStateAction<string>>
+}
+
+const Header = ({setGroupName}: HeaderProps) => {
   const {setData} = useActions();
   const fullList = useTypedSelector((store) => store.data.fullList);
 
@@ -127,8 +131,6 @@ const Header = () => {
             }
           }
         })
-      } else {
-        return
       }
     })
   }
@@ -276,14 +278,19 @@ const Header = () => {
   }, [raspSelect.caf])
 
   useEffect(() => {
+    const {group, caf, fac, year_id, activeSemester} = raspSelect;
 
-    if (raspSelect.group?.val && raspSelect.year_id && raspSelect.activeSemester) {
+    if (group?.val && year_id && activeSemester) {
       const query: TGetGroupRasp = {
-        groupID: raspSelect.group.val.grp_id,
-        yearID: raspSelect.year_id,
-        semester: raspSelect.activeSemester
+        groupID: group.val.grp_id,
+        yearID: year_id,
+        semester: activeSemester
       }
       setData(query);
+
+      if (fac?.val && caf?.val && group?.val) {
+        setGroupName(`${fac.val.fac_name}${caf.val.caf_name}-${group.val.grp_name}`);
+      }
     }
 
   }, [raspSelect.group?.val])
