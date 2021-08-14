@@ -26,8 +26,17 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
         },
         body: json
       })
-        .then((v) => console.log('COL fetch >>> ', v))
-        .catch((error) => console.log('COL fetch >>> ', error))
+        .then((v) => {
+          console.log('COL fetch ok >>> ', v);
+          if (v.status === 200) {
+            alert('Данные успешно сохранены');
+          } else {
+            alert('Произошла ошибка при сохранении данных');
+          }
+        })
+        .catch((error) => {
+          console.log('COL fetch error >>> ', error);
+        })
     }
 
   }, [collectingDataState])
