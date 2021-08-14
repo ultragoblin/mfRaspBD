@@ -66,6 +66,7 @@ const SubjectTable = ({day: {name, id}}: SubjectTableProps) => {
         } else {
             setDay(raspDayTable);
         }
+
         // setDay(raspDayTable);
     }, [raspDayTable])
 

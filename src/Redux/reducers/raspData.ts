@@ -65,7 +65,6 @@ export default function raspData(
     case raspDataEnum.SET_DAY:
       let newState: raspDataT = state;
       let isInData: boolean = false;
-      let isNull: boolean = false;
       newState.day = newState.day.map((dayItem) => {
         if (dayItem.id === action.payload.id) {
           isInData = true;
@@ -78,7 +77,38 @@ export default function raspData(
         newState.day.push(action.payload);
       }
 
-        console.log('payload tables new state >>> ', newState)
+      console.log('payload tables new state >>> ', newState)
+
+      newState.day = newState.day.map((dayItem) => {
+        dayItem.pairList = dayItem.pairList.map((pairItem) => {
+          const newPairs: pairT[] = [];
+          for (let i = 0; i < pairItem.pair.length; i++) {
+            const {subgroup, subject, teacher, aud} = pairItem.pair[i];
+            console.log('test clear', pairItem.pair[i])
+
+            if (aud === null) {
+              pairItem.pair[i].aud = [];
+            }
+
+           if (subgroup === null) {
+             delete pairItem.pair[i].subgroup;
+           }
+
+            if (subject === null || subject === null || teacher === null) {
+              console.log('test clear move')
+              // pairItem.pair[i] = {};
+              newPairs.push({});
+              // continue;
+            } else {
+              newPairs.push(pairItem.pair[i])
+            }
+          }
+          console.log('test clear new PAIRS', newPairs)
+          pairItem.pair = newPairs;
+          return pairItem;
+        })
+        return dayItem;
+      })
 
       return {
         ...newState

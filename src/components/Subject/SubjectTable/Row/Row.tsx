@@ -85,7 +85,15 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
         // @ts-ignore
         subject: everyOptions.subject.findIndex((el) => el.subjectid === pair[0]?.subject),
         // @ts-ignore
-        aud: [everyOptions.aud.findIndex((el) => el.audid === pair[0]?.aud[0]), everyOptions.aud.findIndex((el) => el.audid === pair[0]?.aud[1])],
+        aud: [everyOptions.aud.findIndex((el) => {
+            if (pair && pair[0] && pair[0].aud) {
+                return el.audid === pair[0]?.aud[0]
+            }
+        }), everyOptions.aud.findIndex((el) => {
+            if (pair && pair[0] && pair[0].aud) {
+                return el.audid === pair[0]?.aud[1]
+            }
+        })],
         // @ts-ignore
         subgroup: everyOptions.subgroup.findIndex((el) => el.subgroupid === pair[0]?.subgroup),
         // @ts-ignore
@@ -96,7 +104,15 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
             // @ts-ignore
             subject: everyOptions.subject.findIndex((el) => el.subjectid === pair[0]?.subject),
             // @ts-ignore
-            aud: [everyOptions.aud.findIndex((el) => el.audid === pair[0]?.aud[0]), everyOptions.aud.findIndex((el) => el.audid === pair[0]?.aud[1])],
+            aud: [everyOptions.aud.findIndex((el) => {
+                if (pair && pair[0] && pair[0].aud) {
+                    return el.audid === pair[0]?.aud[0]
+                }
+            }), everyOptions.aud.findIndex((el) => {
+                if (pair && pair[0] && pair[0].aud) {
+                    return el.audid === pair[0]?.aud[1]
+                }
+            })],
             // @ts-ignore
             subgroup: everyOptions.subgroup.findIndex((el) => el.subgroupid === pair[0]?.subgroup),
             // @ts-ignore
@@ -169,7 +185,10 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
 
     const rowStateHandlerSecond = (payload: pairT): void => {
         const newPairs: pairT[] = rowState.pair;
-        newPairs[1] = {...payload, week: 2};
+
+        if (payload && Object.keys(payload).length > 0) {
+            newPairs[1] = {...payload, week: 2};
+        }
 
         setRowState({...rowState, pair: newPairs})
     }
