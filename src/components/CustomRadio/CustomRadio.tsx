@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import styles from "./CustomRadio.module.scss";
 import { withStyles } from "@material-ui/core/styles";
+import { EDayType } from "../Subject/SubjectTable/SubjectTable";
 
 export type radioType = {
   label?: {
@@ -15,6 +16,7 @@ export type radioType = {
     first: string;
     second: string;
   };
+  defValue?: EDayType;
   handler: (e: any) => void;
 };
 
@@ -28,8 +30,8 @@ const BlueRadio = withStyles({
   checked: {},
 })((props) => <Radio color="default" {...props} />);
 
-const CustomRadio = ({ value, label, handler }: radioType) => {
-  const [val, setVal] = useState<string>(value.first);
+const CustomRadio = ({ value, label, handler, defValue }: radioType) => {
+  const [val, setVal] = useState<string>(defValue ? defValue : value.first);
 
   const handleChange = (e: any) => {
     setVal(e.target.value);

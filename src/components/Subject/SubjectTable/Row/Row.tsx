@@ -167,19 +167,6 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
             newPairs.push({...payload, week: 0})
         }
 
-        if (newPairs.length > 0) {
-            console.log(`test handle row=${number}`, {
-                ...rowState,
-                pair: newPairs
-            }, ' >>> mass >>> ', newPairs, '\n payload >>>', payload, '\n payload jsonify \n >>> ', JSON.stringify((payload)), ' \n json >>>', JSON.stringify({
-                ...rowState,
-                pair: newPairs
-            }))
-        }
-
-        // console.log("NEW OBJ >>>", newObj, 'JSONIFY \n \n \n \n >>> ', JSON.stringify(newObj));
-
-        // @ts-ignore
         setRowState({...rowState, pair: newPairs});
     }
 

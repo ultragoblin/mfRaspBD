@@ -12,7 +12,6 @@ const editAud = (
 ) => {
   let id: number | null = null;
   const { _aud } = autocompleteNamings;
-  console.log("ROWWW", row)
 
   //                        ADD                        //
 
@@ -47,7 +46,6 @@ const editAud = (
   //         (arr.length === 2) then [???, null]
 
   let prevAud = (row && row.aud) ? row.aud : [];
-  console.log('edit', prevAud)
   if (value && prevAud) {
     id = value['audid'];
     // Добавление в селект

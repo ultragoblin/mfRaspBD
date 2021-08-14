@@ -132,11 +132,6 @@ const Teachers = () => {
 
   }, [searcher])
 
-
-  useEffect(() => {
-    console.log(rows);
-  }, [rows])
-
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => String(n.id));

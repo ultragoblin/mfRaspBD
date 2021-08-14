@@ -27,7 +27,6 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
         body: json
       })
         .then((v) => {
-          console.log('COL fetch ok >>> ', v);
           if (v.status === 200) {
             alert('Данные успешно сохранены');
           } else {

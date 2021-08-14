@@ -6,10 +6,10 @@ import { EDayType } from "../SubjectTable";
 export interface HeaderProps {
   setDayTVal: (e: any) => void,
   dayName: string,
-  dayType: EDayType
+  dayType: EDayType,
 }
 
-const Header = ({ setDayTVal, dayName }: HeaderProps) => {
+const Header = ({ setDayTVal, dayName, dayType }: HeaderProps) => {
   const radio: radioType = {
     value: {
       first: EDayType.COMMON,
@@ -19,6 +19,7 @@ const Header = ({ setDayTVal, dayName }: HeaderProps) => {
       first: "Обычное расписание",
       second: "Особое расписание",
     },
+    defValue: dayType,
     handler: setDayTVal
   };
 

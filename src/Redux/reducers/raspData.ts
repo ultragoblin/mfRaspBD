@@ -77,14 +77,11 @@ export default function raspData(
         newState.day.push(action.payload);
       }
 
-      console.log('payload tables new state >>> ', newState)
-
       newState.day = newState.day.map((dayItem) => {
         dayItem.pairList = dayItem.pairList.map((pairItem) => {
           const newPairs: pairT[] = [];
           for (let i = 0; i < pairItem.pair.length; i++) {
             const {subgroup, subject, teacher, aud} = pairItem.pair[i];
-            console.log('test clear', pairItem.pair[i])
 
             if (aud === null) {
               pairItem.pair[i].aud = [];
@@ -95,15 +92,11 @@ export default function raspData(
            }
 
             if (subject === null || subject === null || teacher === null) {
-              console.log('test clear move')
-              // pairItem.pair[i] = {};
               newPairs.push({});
-              // continue;
             } else {
               newPairs.push(pairItem.pair[i])
             }
           }
-          console.log('test clear new PAIRS', newPairs)
           pairItem.pair = newPairs;
           return pairItem;
         })
