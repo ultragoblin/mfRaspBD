@@ -20,8 +20,8 @@ const Double = ({
 
     const {AUD, SUBJECT, TIMER, SUBGROUP, CHECKBOX, NUMBER, TEACHER} = RowWidth;
     const {_subgroup, _subject, _teacher} = autocompleteNamings;
-    const [firstRow, setFirstRow] = useState<pairT | {}>({});
-    const [secondRow, setSecondRow] = useState<pairT | {}>({});
+    const [firstRow, setFirstRow] = useState<pairT>({});
+    const [secondRow, setSecondRow] = useState<pairT>({});
 
     const handleChangeFirstRow = (event: any, value: any, subID: string) => {
         if (subID.includes('aud')) {

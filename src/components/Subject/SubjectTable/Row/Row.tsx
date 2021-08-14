@@ -43,7 +43,7 @@ export interface RowProps {
 
 export interface RowParentProps extends RowProps {
     stateFunc: (payload: pairListT) => void,
-    pair: ({} | pairT)[]
+    pair: pairT[]
 }
 
 export interface RowChildProps extends RowProps {
@@ -53,14 +53,14 @@ export interface RowChildProps extends RowProps {
 }
 
 export interface SingleRowProps extends RowChildProps {
-    stateFunc: (payload: pairT | {}) => void,
-    pair: pairT | {}
+    stateFunc: (payload: pairT) => void,
+    pair: pairT[]
     defaultOptions: TEveryDefaultOptionsSingle
 }
 
 export interface DoubleRowProps extends RowChildProps {
-    stateFuncFirstRow: (payload: pairT | {}) => void,
-    stateFuncSecondRow: (payload: pairT | {}) => void,
+    stateFuncFirstRow: (payload: pairT) => void,
+    stateFuncSecondRow: (payload: pairT) => void,
     defaultOptions: TEveryDefaultOptionDouble
 }
 
@@ -75,7 +75,7 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
     });
     const [rowState, setRowState] = useState<pairListT>({
         pair: pair,
-        id: number - 1,
+        id: number,
         pairtime: timer
     });
     const [double, setDouble] = useState<boolean>(false);
@@ -124,10 +124,6 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
         setDouble(pair.length === 2);
     }, [])
 
-    const doubleHandler = (): void => {
-        setDouble(!double);
-    };
-
     useEffect(() => {
         if (isCollecting) {
             stateFunc(rowState);
@@ -135,33 +131,51 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
 
     }, [isCollecting])
 
-    const rowStateHandlerSingle = (payload: pairT | {}): void => {
-        const newPairs: (pairT | {})[] = [];
+    useEffect(() => {
+        console.log('row state', rowState, 'jsonify \n \n \n >>> ', JSON.stringify(rowState))
+    }, [rowState])
+
+    const doubleHandler = (): void => {
+        setDouble(!double);
+    };
+
+    const rowStateHandlerSingle = (payload: pairT): void => {
+        const newPairs: pairT[] = [];
         if (Object.keys(payload).length > 0) {
             newPairs.push(payload)
         }
 
-        console.log(`test handle row=${number}`, {
+        const newObj: pairT = {
             ...rowState,
-            pair: newPairs
-        }, ' >>> mass >>> ', newPairs, '\n payload >>>', payload, '\n payload jsonify \n >>> ', JSON.stringify((payload)), ' \n json >>>', JSON.stringify({
-            ...rowState,
-            pair: newPairs
-        }))
+            pair: newPairs,
+        };
 
-        setRowState({...rowState, pair: newPairs});
+        if (newPairs.length > 0) {
+            console.log(`test handle row=${number}`, newObj, ' >>> mass >>> ', newPairs, '\n payload >>>', payload, '\n payload jsonify \n >>> ', JSON.stringify((payload)), ' \n json >>>', JSON.stringify(newObj))
+        }
+
+        console.log("NEW OBJ >>>", newObj, 'JSONIFY \n \n \n \n >>> ', JSON.stringify(newObj));
+
+        // @ts-ignore
+        setRowState(prevState => {
+            return {
+                pair: newObj,
+                id: prevState.id,
+                pairtime: prevState.pairtime
+            }
+        });
     }
 
-    const rowStateHandlerSecond = (payload: pairT | {}): void => {
-        const newPairs: (pairT | {})[] = rowState.pair;
+    const rowStateHandlerSecond = (payload: pairT): void => {
+        const newPairs: pairT[] = rowState.pair;
         newPairs[1] = payload;
 
         // @ts-ignore
         setRowState({...rowState, pair: payload})
     }
 
-    const rowStateHandlerFirst = (payload: pairT | {}): void => {
-        const newPairs: (pairT | {})[] = rowState.pair;
+    const rowStateHandlerFirst = (payload: pairT): void => {
+        const newPairs: pairT[] = rowState.pair;
         newPairs[0] = payload;
 
         setRowState({...rowState, pair: newPairs})

@@ -5,15 +5,15 @@ enum raspDataEnum {
 }
 
 export type pairT = {
-  aud: number[],
-  subgroup: number,
-  subject: number,
-  teacher: number,
-  week: number
+  aud?: number[],
+  subgroup?: number,
+  subject?: number,
+  teacher?: number,
+  week?: number
 }
 
 export type pairListT = {
-  pair: (pairT | {})[],
+  pair: pairT[],
   id: number,
   pairtime: string
 }

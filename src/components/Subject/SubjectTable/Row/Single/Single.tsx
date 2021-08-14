@@ -18,7 +18,7 @@ const Single = ({
                     pair
                 }: SingleRowProps) => {
 
-    const [singleRow, setSingleRow] = useState<pairT | {}>(pair);
+    const [singleRow, setSingleRow] = useState<pairT>(pair);
     const {AUD, SUBJECT, TIMER, SUBGROUP, CHECKBOX, NUMBER, TEACHER} = RowWidth;
     const {_subgroup, _subject, _teacher} = autocompleteNamings;
 

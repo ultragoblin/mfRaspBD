@@ -7,8 +7,8 @@ const editAud = (
   event: any,
   value: any,
   subID: string,
-  row: pairT | {},
-  stateFunc: React.Dispatch<React.SetStateAction<{} | pairT>>,
+  row: pairT,
+  stateFunc: React.Dispatch<React.SetStateAction<pairT>>,
   index: number
 ) => {
   let id: number | null = null;
@@ -155,8 +155,8 @@ const editOthersFields = (
   event: any,
   value: any,
   subID: string,
-  row: pairT | {},
-  stateFunc: React.Dispatch<React.SetStateAction<{} | pairT>>,
+  row: pairT,
+  stateFunc: React.Dispatch<React.SetStateAction<pairT>>,
   index: number
 ) => {
   let name: string = '';

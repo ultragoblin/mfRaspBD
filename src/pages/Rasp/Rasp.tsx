@@ -11,13 +11,14 @@ const group: string = "Группа К3-63Б";
 function Rasp() {
     const fullList = useTypedSelector((store) => store.data.fullList);
     const tables = useTypedSelector((store) => store.raspData);
+    const timings = useTypedSelector((store) => store.timing);
 
     useEffect(() => {
         console.log('tables >>>', tables, 'inJSON', JSON.stringify(tables))
     }, [tables])
 
 
-    return fullList.data.length > 0 ? <div className="App">
+    return (fullList.data.length > 0 && timings.length > 0) ? <div className="App">
         <div className="App__container">
             <Header/>
             <SubjectHeader name={group}/>
