@@ -8,8 +8,7 @@ const editAud = (
   value: any,
   subID: string,
   row: pairT,
-  stateFunc: React.Dispatch<React.SetStateAction<pairT>>,
-  index: number
+  stateFunc: React.Dispatch<React.SetStateAction<pairT>>
 ) => {
   let id: number | null = null;
   const { _aud } = autocompleteNamings;
@@ -48,33 +47,43 @@ const editAud = (
   //         (arr.length === 2) then [???, null]
 
   // @ts-ignore
-  let prevAud = row?.aud;
+  let prevAud = row.aud;
 
-  if (value) {
+  if (value && prevAud) {
     id = value['audid'];
     // Добавление в селект
     if (Object.keys(row).includes('aud')) { // NOT empty CASE
       switch (prevAud.length) {
         case 0:
-          prevAud.push(id);
+          if (id != null) {
+            prevAud.push(id);
+          }
           break;
         case 1:
           switch (subID) {
             case _aud.first:
-              prevAud[0] = id;
+              if (id != null) {
+                prevAud[0] = id;
+              }
               break;
             case _aud.second:
-              prevAud.push(id);
+              if (id != null) {
+                prevAud.push(id);
+              }
               break;
           }
           break;
         case 2:
           switch (subID) {
             case _aud.first:
-              prevAud[0] = id;
+              if (id != null) {
+                prevAud[0] = id;
+              }
               break;
             case _aud.second:
-              prevAud[1] = id;
+              if (id != null) {
+                prevAud[1] = id;
+              }
               break;
           }
           break;
@@ -93,6 +102,7 @@ const editAud = (
       switch (subID) {
         case _aud.first:
           // stateFunc({ aud: [id] });
+          // @ts-ignore
           stateFunc(prevState => {
             return {
               ...prevState,
@@ -101,6 +111,7 @@ const editAud = (
           });
           break;
         case _aud.second:
+          // @ts-ignore
           stateFunc(prevState => {
             return {
               ...prevState,
@@ -118,12 +129,16 @@ const editAud = (
     // удаление из селекта
     switch (subID) {
       case _aud.first:
+        // @ts-ignore
         switch (prevAud.length) {
           case 1:
             prevAud = [];
             break;
           case 2:
-            prevAud[0] = null;
+            if (prevAud) {
+              // @ts-ignore
+              prevAud[0] = null;
+            }
             break;
           default:
             errorLog('aud delete error');
@@ -131,12 +146,16 @@ const editAud = (
         }
         break;
       case _aud.second:
+        // @ts-ignore
         switch (prevAud.length) {
           case 1:
             prevAud = [];
             break;
           case 2:
-            prevAud[1] = null;
+            if (prevAud) {
+              // @ts-ignore
+              prevAud[1] = null;
+            }
             break;
           default:
             errorLog('aud delete error');
@@ -157,7 +176,6 @@ const editOthersFields = (
   subID: string,
   row: pairT,
   stateFunc: React.Dispatch<React.SetStateAction<pairT>>,
-  index: number
 ) => {
   let name: string = '';
   let id: number | null = null;

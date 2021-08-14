@@ -5,7 +5,7 @@ enum raspDataEnum {
 }
 
 export type pairT = {
-  aud?: number[],
+  aud?: number[] | null,
   subgroup?: number,
   subject?: number,
   teacher?: number,

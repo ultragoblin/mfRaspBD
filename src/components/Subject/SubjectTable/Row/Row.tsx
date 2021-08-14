@@ -54,7 +54,7 @@ export interface RowChildProps extends RowProps {
 
 export interface SingleRowProps extends RowChildProps {
     stateFunc: (payload: pairT) => void,
-    pair: pairT[]
+    pair: pairT
     defaultOptions: TEveryDefaultOptionsSingle
 }
 
@@ -132,7 +132,9 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
     }, [isCollecting])
 
     useEffect(() => {
-        console.log('row state', rowState, 'jsonify \n \n \n >>> ', JSON.stringify(rowState))
+        if (rowState.id === 1) {
+            console.log('row state', rowState, 'jsonify \n \n \n >>> ', JSON.stringify(rowState))
+        }
     }, [rowState])
 
     const doubleHandler = (): void => {
@@ -141,29 +143,23 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
 
     const rowStateHandlerSingle = (payload: pairT): void => {
         const newPairs: pairT[] = [];
-        if (Object.keys(payload).length > 0) {
+        if (payload && Object.keys(payload).length > 0) {
             newPairs.push(payload)
         }
 
-        const newObj: pairT = {
-            ...rowState,
-            pair: newPairs,
-        };
+        // const newObj: pairListT = {
+        //     ...rowState,
+        //     pair
+        // }
 
         if (newPairs.length > 0) {
-            console.log(`test handle row=${number}`, newObj, ' >>> mass >>> ', newPairs, '\n payload >>>', payload, '\n payload jsonify \n >>> ', JSON.stringify((payload)), ' \n json >>>', JSON.stringify(newObj))
+            console.log(`test handle row=${number}`, {...rowState, pair: newPairs}, ' >>> mass >>> ', newPairs, '\n payload >>>', payload, '\n payload jsonify \n >>> ', JSON.stringify((payload)), ' \n json >>>', JSON.stringify({...rowState, pair: newPairs}))
         }
 
-        console.log("NEW OBJ >>>", newObj, 'JSONIFY \n \n \n \n >>> ', JSON.stringify(newObj));
+        // console.log("NEW OBJ >>>", newObj, 'JSONIFY \n \n \n \n >>> ', JSON.stringify(newObj));
 
         // @ts-ignore
-        setRowState(prevState => {
-            return {
-                pair: newObj,
-                id: prevState.id,
-                pairtime: prevState.pairtime
-            }
-        });
+        setRowState({...rowState, pair: newPairs});
     }
 
     const rowStateHandlerSecond = (payload: pairT): void => {
@@ -183,7 +179,7 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
 
     return !double ? (
         <Single
-            pair={pair}
+            pair={pair[0]}
             defaultOptions={defaultValuesSingle}
             stateFunc={rowStateHandlerSingle}
             handler={doubleHandler}

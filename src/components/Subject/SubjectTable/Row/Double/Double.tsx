@@ -25,17 +25,17 @@ const Double = ({
 
     const handleChangeFirstRow = (event: any, value: any, subID: string) => {
         if (subID.includes('aud')) {
-            editAud(event, value, subID, firstRow, setFirstRow, 0);
+            editAud(event, value, subID, firstRow, setFirstRow);
         } else {
-            editOthersFields(event, value, subID, firstRow, setFirstRow, 0);
+            editOthersFields(event, value, subID, firstRow, setFirstRow);
         }
     }
 
     const handleChangeSecondRow = (event: any, value: any, subID: string) => {
         if (subID.includes('aud')) {
-            editAud(event, value, subID, secondRow, setSecondRow, 1);
+            editAud(event, value, subID, secondRow, setSecondRow);
         } else {
-            editOthersFields(event, value, subID, secondRow, setSecondRow, 1);
+            editOthersFields(event, value, subID, secondRow, setSecondRow);
         }
     }
 

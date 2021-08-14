@@ -24,9 +24,9 @@ const Single = ({
 
     const handleChange = (event: any, value: any, subID: string) => {
         if (subID.includes('aud')) {
-            editAud(event, value, subID, singleRow, setSingleRow, 0);
+            editAud(event, value, subID, singleRow, setSingleRow);
         } else {
-            editOthersFields(event, value, subID, singleRow, setSingleRow, 0);
+            editOthersFields(event, value, subID, singleRow, setSingleRow);
         }
     }
 
