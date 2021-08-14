@@ -106,7 +106,15 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
             // @ts-ignore
             subject: everyOptions.subject.findIndex((el) => el.subjectid === pair[1]?.subject),
             // @ts-ignore
-            aud: [everyOptions.aud.findIndex((el) => el.audid === pair[1]?.aud[0]), everyOptions.aud.findIndex((el) => el.audid === pair[1]?.aud[1])],
+            aud: [everyOptions.aud.findIndex((el) => {
+                if (pair && pair[1] && pair[1].aud) {
+                    return (el.audid) === pair[1]?.aud[0]
+                }
+            }), everyOptions.aud.findIndex((el) => {
+                if (pair && pair[1] && pair[1].aud) {
+                    return el.audid === pair[1]?.aud[1]
+                }
+            })],
             // @ts-ignore
             subgroup: everyOptions.subgroup.findIndex((el) => el.subgroupid === pair[1]?.subgroup),
             // @ts-ignore
@@ -144,7 +152,13 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
         }
 
         if (newPairs.length > 0) {
-            console.log(`test handle row=${number}`, {...rowState, pair: newPairs}, ' >>> mass >>> ', newPairs, '\n payload >>>', payload, '\n payload jsonify \n >>> ', JSON.stringify((payload)), ' \n json >>>', JSON.stringify({...rowState, pair: newPairs}))
+            console.log(`test handle row=${number}`, {
+                ...rowState,
+                pair: newPairs
+            }, ' >>> mass >>> ', newPairs, '\n payload >>>', payload, '\n payload jsonify \n >>> ', JSON.stringify((payload)), ' \n json >>>', JSON.stringify({
+                ...rowState,
+                pair: newPairs
+            }))
         }
 
         // console.log("NEW OBJ >>>", newObj, 'JSONIFY \n \n \n \n >>> ', JSON.stringify(newObj));
@@ -155,15 +169,14 @@ const Row = ({number, timer, stateFunc, pair}: RowParentProps) => {
 
     const rowStateHandlerSecond = (payload: pairT): void => {
         const newPairs: pairT[] = rowState.pair;
-        newPairs[1] = payload;
+        newPairs[1] = {...payload, week: 2};
 
-        // @ts-ignore
-        setRowState({...rowState, pair: payload})
+        setRowState({...rowState, pair: newPairs})
     }
 
     const rowStateHandlerFirst = (payload: pairT): void => {
         const newPairs: pairT[] = rowState.pair;
-        newPairs[0] = payload;
+        newPairs[0] = {...payload, week: 1};
 
         setRowState({...rowState, pair: newPairs})
     }

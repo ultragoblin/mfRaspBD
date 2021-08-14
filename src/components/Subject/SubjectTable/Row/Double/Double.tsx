@@ -45,27 +45,11 @@ const Double = ({
     }, [firstRow, secondRow])
 
     useEffect(() => {
-        if (Object.keys(firstRow).length > 0) {
-            stateFuncFirstRow({
-                ...firstRow,
-                week: 1
-            });
-        } else {
-            stateFuncFirstRow(firstRow)
-        }
-
+        stateFuncFirstRow(firstRow)
     }, [firstRow])
 
     useEffect(() => {
-        if (Object.keys(secondRow).length > 0) {
-            stateFuncSecondRow({
-                ...secondRow,
-                week: 2
-            });
-        } else {
-            stateFuncSecondRow(secondRow)
-        }
-
+        stateFuncSecondRow(secondRow)
     }, [secondRow])
 
     useEffect(() => {
