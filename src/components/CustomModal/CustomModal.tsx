@@ -39,17 +39,18 @@ export type TGroupModal = {
 };
 
 export type TSubjectModal = {
-  subject?: string
+  name?: string,
+  nameshort?: string
 };
 
 export type TTeacherModal = {
-  lastName?: string,
-  firstName?: string,
-  patronymic?: string
+  fname?: string,
+  lname?: string
+  sname?: string,
 };
 
 export type TAudModal = {
-  aud?: number
+  name?: string
 };
 
 export interface CustomModalProps {

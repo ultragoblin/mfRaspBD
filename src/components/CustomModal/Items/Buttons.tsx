@@ -28,11 +28,11 @@ export type CustomModalButtonsProps = {
 
 const Buttons = ({ tabNumber, modal, audModalData, groupModalData, subjectModalData, teacherModalData }: CustomModalButtonsProps) => {
   const classes = useStyles();
-  const { putSubjectAdm, patchSubjectAdm, putGroupAdm, putTeacherAdm, putAudAdm, patchGroupAdm } = useActions();
+  const { putSubjectAdm, patchSubjectAdm, putGroupAdm, putTeacherAdm, putAudAdm, patchGroupAdm, patchTeacherAdm, patchAudAdm } = useActions();
   const admLists = useTypedSelector((store) => store.data.admLists);
 
   const handleClickSave = () => {
-    const {mode, id} = modal;
+    const { mode, id } = modal;
     switch (tabNumber) {
       case ETabsNaming.GROUPS:
         let caf: number = -1;
@@ -58,10 +58,12 @@ const Buttons = ({ tabNumber, modal, audModalData, groupModalData, subjectModalD
           startyear: Number(groupModalData.year)
         }
 
-        console.log(JSON.stringify(data));
-
         if (mode === EModalMode.ADD) {
-          putGroupAdm(data);
+          if (data.number && data.stageid && data.cafid && data.name && data.startyear) {
+            putGroupAdm(data);
+          } else {
+            alert('Заполните все данные!')
+          }
         } else {
           if (id) {
             patchGroupAdm(data, id)
@@ -71,7 +73,11 @@ const Buttons = ({ tabNumber, modal, audModalData, groupModalData, subjectModalD
         // return mode === EModalMode.ADD ? putGroupAdm(data) : patchGroupAdm(data, id);
         break;
       case ETabsNaming.SUBJECTS:
-        return mode === EModalMode.ADD ? putSubjectAdm(subjectModalData) : patchSubjectAdm(subjectModalData)
+        return mode === EModalMode.ADD ? putSubjectAdm(subjectModalData) : patchSubjectAdm(subjectModalData);
+      case ETabsNaming.TEACHERS:
+        return mode === EModalMode.ADD ? putTeacherAdm(teacherModalData) : patchTeacherAdm(teacherModalData);
+      case ETabsNaming.AUDS:
+        return mode === EModalMode.ADD ? putAudAdm(audModalData) : patchAudAdm(audModalData);
       default:
         break;
     }

@@ -11,11 +11,25 @@ interface TeacherProps {
   mode: EModalMode | null
 }
 
-const Teacher = ({mode, setState, state}: TeacherProps) => {
+const Teacher = ({ mode, setState, state }: TeacherProps) => {
   const [title, setTitle] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target;
 
+    switch (target.id) {
+      case 'teacherInput':
+        setState({ sname: target.value });
+        break;
+      case 'teacherNameInput':
+        setState({ fname: target.value });
+        break;
+      case 'teacherLastnameInput':
+        setState({ lname: target.value });
+        break;
+      default:
+        break;
+    }
   };
 
   useEffect(() => {
@@ -36,8 +50,8 @@ const Teacher = ({mode, setState, state}: TeacherProps) => {
     <>
       <Title text={title}/>
       <CustomInput id='teacherInput' label='Фамилия' stateFun={handleChange}/>
-      {/* <CustomInput id='teacherNameInput' label='Имя' stateFun={handleChange}/> */}
-      {/* <CustomInput id='teacherLastnameInput' label='Отчество' stateFun={handleChange}/> */}
+      <CustomInput id='teacherNameInput' label='Имя' stateFun={handleChange}/>
+      <CustomInput id='teacherLastnameInput' label='Отчество' stateFun={handleChange}/>
     </>
   )
 };

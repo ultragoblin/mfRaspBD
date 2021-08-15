@@ -15,7 +15,7 @@ import {
   TTeacherOptions
 } from "../reducers/data";
 import api, { authDefault } from "../../utils/api/api";
-import { TSubjectModal } from "../../components/CustomModal/CustomModal";
+import { TAudModal, TSubjectModal, TTeacherModal } from "../../components/CustomModal/CustomModal";
 
 export const getFullList = () => {
   return (dispatch: Dispatch<DataAction>) => {
@@ -218,11 +218,14 @@ export const patchSubjectAdm = (subject: TSubjectModal) => {
       .catch((error) => {
         alert("При добавлении предмета произошла ошибка!");
       })
-      .then((ok) => dispatch({ type: EData.PATCH_SUBJECT }))
+      .then((ok) => {
+        alert("Предмет успешно отредактирован")
+        dispatch({ type: EData.PATCH_SUBJECT })
+      })
   }
 }
 
-export const putTeacherAdm = (teacher: TAdmTeacherList) => {
+export const putTeacherAdm = (teacher: TTeacherModal) => {
   return (dispatch: Dispatch<DataAction>) => {
     fetch(api.DB.teacher, {
       ...authDefault,
@@ -233,11 +236,36 @@ export const putTeacherAdm = (teacher: TAdmTeacherList) => {
       .catch((error) => {
         alert("При добавлении преподователя произошла ошибка!");
       })
-      .then((ok) => dispatch({ type: EData.PUT_TEACHER, id: ok.id }))
+      .then((ok) => {
+        if (ok.status === "OK") {
+          alert("Преподователь успешно добавлен");
+          dispatch({ type: EData.PUT_TEACHER, id: ok.id })
+        }
+      })
   }
 }
 
-export const putAudAdm = (aud: TAdmAudList) => {
+export const patchTeacherAdm = (teacher: TTeacherModal) => {
+  return (dispatch: Dispatch<DataAction>) => {
+    fetch(api.DB.teacher, {
+      ...authDefault,
+      method: "PATCH",
+      body: JSON.stringify(teacher)
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          alert('Преподователь успешно отредактирован');
+          dispatch({ type: EData.PATCH_TEACHER });
+        }
+      })
+      .catch((error) => {
+        alert("При редактировании преподователя произошла ошибка!");
+      })
+
+  }
+}
+
+export const putAudAdm = (aud: TAudModal) => {
   return (dispatch: Dispatch<DataAction>) => {
     fetch(api.DB.aud, {
       ...authDefault,
@@ -248,6 +276,28 @@ export const putAudAdm = (aud: TAdmAudList) => {
       .catch((error) => {
         alert("При добавлении аудитории произошла ошибка!");
       })
-      .then((ok) => dispatch({ type: EData.PUT_AUD, id: ok.id }))
+      .then((ok) => {
+        if (ok.status === "OK") {
+          alert('Аудитория успешно добавлена')
+          dispatch({ type: EData.PUT_AUD, id: ok })
+        }
+      })
   }
 };
+
+export const patchAudAdm = (aud: TAudModal) => {
+  return (dispatch: Dispatch<DataAction>) => {
+    fetch(api.DB.aud, {
+      ...authDefault,
+      method: "PATCH",
+      body: JSON.stringify(aud)
+    })
+      .then((response) => {
+        alert("Аудитория успешно отредактирована")
+        dispatch({ type: EData.PATCH_SUBJECT })
+      })
+      .catch((error) => {
+        alert("При добавлении аудитории произошла ошибка!");
+      })
+  }
+}

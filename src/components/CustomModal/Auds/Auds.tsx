@@ -5,17 +5,17 @@ import errorLog from "../../../utils/Logs/Error";
 import Title from "../Items/Title";
 import CustomInput from "../Items/CustomInput";
 
-interface TeacherProps {
+interface AudProps {
   state: TAudModal,
   setState: React.Dispatch<React.SetStateAction<TAudModal>>,
   mode: EModalMode | null
 }
 
-const Auds = ({ state, setState, mode }: TeacherProps) => {
+const Auds = ({ state, setState, mode }: AudProps) => {
   const [title, setTitle] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
+    setState({name: e.target.value});
   };
 
   useEffect(() => {

@@ -16,7 +16,20 @@ const Subjects = ({ mode, setState, state }: SubjectsProps) => {
   const [title, setTitle] = useState<string>('');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setState({subject: event?.target.value})
+    console.log(event.target.id);
+    switch (event.target.id) {
+      case 'subjectInput': {
+        setState({ name: event.target.value });
+        break;
+      }
+      case 'subjectShortInput': {
+        setState({ nameshort: event.target.value });
+        break;
+      }
+      default:
+        break;
+    }
+    // setState({subject: event?.target.value})
   };
 
   useEffect(() => {
@@ -37,7 +50,7 @@ const Subjects = ({ mode, setState, state }: SubjectsProps) => {
     <>
       <Title text={title}/>
       <CustomInput id='subjectInput' label='Название предмета' stateFun={handleChange}/>
-      {/* <CustomInput id='subjectShortInput' label='Сокращённое название' stateFun={handleChange}/> */}
+      <CustomInput id='subjectShortInput' label='Сокращённое название' stateFun={handleChange}/>
     </>
   )
 };

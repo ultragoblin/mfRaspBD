@@ -77,17 +77,16 @@ const Database = ({ setPage }: DatabaseProps) => {
     grade: ''
   });
   const [subjectModalData, setSubjectModalData] = React.useState<TSubjectModal>({
-    subject: '',
+    name: '',
+    nameshort: ''
   });
   const [teacherModalData, setTeacherModalData] = React.useState<TTeacherModal>({
-    patronymic: '',
-    firstName: '',
-    lastName: ''
+    lname: '',
+    fname: '',
+    sname: ''
   });
-
-
   const [audModalData, setAudModalData] = React.useState<TAudModal>({
-    aud: 0
+    name: ''
   });
   const { ADD, CHANGE } = EModalMode;
   const [modal, setModal] = React.useState<TModal>({
