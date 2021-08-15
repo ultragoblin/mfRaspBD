@@ -36,6 +36,8 @@ const Teacher = ({mode, setState, state}: TeacherProps) => {
     <>
       <Title text={title}/>
       <CustomInput id='teacherInput' label='Фамилия' stateFun={handleChange}/>
+      {/* <CustomInput id='teacherNameInput' label='Имя' stateFun={handleChange}/> */}
+      {/* <CustomInput id='teacherLastnameInput' label='Отчество' stateFun={handleChange}/> */}
     </>
   )
 };
