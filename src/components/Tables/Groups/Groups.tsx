@@ -281,12 +281,7 @@ const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTa
 
   const handleDelete = () => {
     deleteGroupAdm(Number(selected[0]));
-    console.log('selected >>> ', Number(selected[0]));
     const indexForRemove: number = savedRows.findIndex((item) => item.id === Number(selected[0]));
-    console.log('selected index >>> ', indexForRemove)
-    // const newRows = groupsDataRows.splice(0, 1);
-    console.log('selected before del >>>', savedRows);
-    console.log('selected afted del >>> ', [...savedRows.slice(0, indexForRemove), ...savedRows.slice(indexForRemove + 1, savedRows.length)]);
     setGroupsDataRows([...savedRows.slice(0, indexForRemove), ...savedRows.slice(indexForRemove + 1, savedRows.length)]);
     setSelected([]);
   }
@@ -298,11 +293,11 @@ const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTa
   };
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelecteds = savedRows.map((n) => String(n.id));
-      setSelected(newSelecteds);
-      return;
-    }
+    // if (event.target.checked) {
+    //   const newSelecteds = savedRows.map((n) => String(n.id));
+    //   setSelected(newSelecteds);
+    //   return;
+    // }
     setSelected([]);
   };
 
@@ -329,7 +324,7 @@ const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTa
       );
     }
 
-    setSelected(newSelected);
+    setSelected([newSelected[newSelected.length - 1]]);
   };
 
   const handleChangePage = (event: unknown, newPage: number) => {

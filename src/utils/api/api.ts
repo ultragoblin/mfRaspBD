@@ -7,29 +7,29 @@ export type TGetGroupRasp = {
 }
 
 const api = {
-  fullList: 'https://mf.bmstu.ru/rasp/api/adm/full_list',
-  pairList: 'https://mf.bmstu.ru/rasp/api/adm/pair/list',
-  settings: 'https://mf.bmstu.ru/rasp/api/adm/settings',
+  fullList: 'https://rasp.msfu.ru/api/adm/full_list',
+  pairList: 'https://rasp.msfu.ru/api/adm/pair/list',
+  settings: 'https://rasp.msfu.ru/api/adm/settings',
   admLists: {
-    teacher: 'https://mf.bmstu.ru/rasp/api/adm/teacher/list',
-    aud: 'https://mf.bmstu.ru/rasp/api/adm/aud/list',
-    subject: 'https://mf.bmstu.ru/rasp/api/adm/subject/list',
-    group: 'https://mf.bmstu.ru/rasp/api/adm/group/list',
-    subgroup: 'https://mf.bmstu.ru/rasp/api/adm/subgroup/list',
-    caf: 'https://mf.bmstu.ru/rasp/api/adm/caf/list',
-    stage: 'https://mf.bmstu.ru/rasp/api/adm/stage/list'
+    teacher: 'https://rasp.msfu.ru/api/adm/teacher/list',
+    aud: 'https://rasp.msfu.ru/api/adm/aud/list',
+    subject: 'https://rasp.msfu.ru/api/adm/subject/list',
+    group: 'https://rasp.msfu.ru/api/adm/group/list',
+    subgroup: 'https://rasp.msfu.ru/api/adm/subgroup/list',
+    caf: 'https://rasp.msfu.ru/api/adm/caf/list',
+    stage: 'https://rasp.msfu.ru/api/adm/stage/list'
   },
   DB: {
-    group: 'https://mf.bmstu.ru/rasp/api/adm/group',
-    subject: 'https://mf.bmstu.ru/rasp/api/adm/subject',
-    teacher: 'https://mf.bmstu.ru/rasp/api/adm/teacher',
-    aud: 'https://mf.bmstu.ru/rasp/api/adm/aud'
+    group: 'https://rasp.msfu.ru/api/adm/group',
+    subject: 'https://rasp.msfu.ru/api/adm/subject',
+    teacher: 'https://rasp.msfu.ru/api/adm/teacher',
+    aud: 'https://rasp.msfu.ru/api/adm/aud'
   },
   getGroup: ({
                groupID,
                yearID,
                semester
-             }: TGetGroupRasp) => `https://mf.bmstu.ru/rasp/api/adm/group?id=${groupID}&year=${yearID}&semester=${semester}`
+             }: TGetGroupRasp) => `https://rasp.msfu.ru/api/adm/group?id=${groupID}&year=${yearID}&semester=${semester}`
 };
 
 export const authDefault: RequestInit | undefined = {

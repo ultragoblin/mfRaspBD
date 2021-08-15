@@ -23,7 +23,7 @@ const handleSelectClick = (
     );
   }
 
-  setSelected(newSelected);
+  setSelected([newSelected[newSelected.length - 1]]);
 };
 
 const handleChangePage = (
