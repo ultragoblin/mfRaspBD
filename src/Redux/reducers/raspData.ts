@@ -87,11 +87,25 @@ export default function raspData(
               pairItem.pair[i].aud = [];
             }
 
-           if (subgroup === null) {
-             delete pairItem.pair[i].subgroup;
-           }
+            if (!teacher) {
+              Object.assign(pairItem.pair[i], {
+                teacher: null
+              })
+            }
 
-            if (subject === null || teacher === null) {
+            if (!subgroup) {
+              Object.assign(pairItem.pair[i], {
+                subgroup: null
+              })
+            }
+
+            if (!aud) {
+              Object.assign(pairItem.pair[i], {
+                aud: null
+              })
+            }
+
+            if (subject === null) {
               newPairs.push({});
             } else {
               newPairs.push(pairItem.pair[i])

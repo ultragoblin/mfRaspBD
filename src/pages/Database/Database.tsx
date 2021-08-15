@@ -85,10 +85,6 @@ const Database = () => {
     })
   }, [fullList.data])
 
-  useEffect(() => {
-    console.log(groupsDataRows)
-  }, [groupsDataRows])
-
   const handleModalAdd = (): void => {
     setModal({
       isOpen: true,
