@@ -193,13 +193,22 @@ const Database = ({ setPage }: DatabaseProps) => {
           />}
         </TabPanel>
         <TabPanel index={ETabsNaming.SUBJECTS} value={value}>
-          <Subjects subjectsDataRows={subjectsDataRows} setSubjectDataRows={setSubjectsDataRows}/>
+          {teachersDataRows.length > 0 && <Subjects
+              subjectsDataRows={subjectsDataRows}
+              setSubjectDataRows={setSubjectsDataRows}
+          />}
         </TabPanel>
         <TabPanel index={ETabsNaming.TEACHERS} value={value}>
-          <Teachers teachersDataRows={teachersDataRows} setTeachersDataRows={setTeachersDataRows}/>
+          {teachersDataRows.length > 0 && <Teachers
+              teachersDataRows={teachersDataRows}
+              setTeachersDataRows={setTeachersDataRows}
+          />}
         </TabPanel>
         <TabPanel index={ETabsNaming.AUDS} value={value}>
-          <Auds audDataRows={audDataRows} setAudDataRows={setAudDataRows}/>
+          {audDataRows.length > 0 && <Auds
+              audDataRows={audDataRows}
+              setAudDataRows={setAudDataRows}
+          />}
         </TabPanel>
       </div>
 

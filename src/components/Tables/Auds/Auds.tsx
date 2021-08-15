@@ -16,6 +16,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import { handleChangePage, handleChangeRowsPerPage, handleSelectClick, isSelected } from "../tableFuncs";
 import { TablePagination } from "@material-ui/core";
+import { GroupsData } from "../Groups/Groups";
 
 export type AudData = {
   id: number,
@@ -97,34 +98,32 @@ const Auds = ({audDataRows, setAudDataRows}: AudsTableProps) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [searcher, setSearcher] = useState<string>('');
+  const [savedRows, setSavedRows] = React.useState<AudData[]>([]);
 
   useEffect(() => {
-    setAudDataRows(audDataRows);
-  }, [])
+    setSavedRows(audDataRows);
+  }, [audDataRows])
 
   useEffect(() => {
-    if (searcher.length > 0) {
-      let tempArr = audDataRows.map((item) => {
-        const stringifyItem = String(item.aud);
-        if ((stringifyItem).toLowerCase().includes(searcher)) {
-          return item;
-        } else {
-          return null;
+    if (savedRows.length > 0) {
+      let tempArr: AudData[] = [];
+      audDataRows.forEach((item) => {
+        if (item?.aud.toLowerCase().includes((searcher.toLowerCase()))) {
+          tempArr.push(item);
         }
       });
 
-      // @ts-ignore
-      nullClearer(tempArr)
-      // @ts-ignore
-      setAudDataRows(tempArr);
-    } else {
-      setAudDataRows(audDataRows);
+      setSavedRows(tempArr);
+    } else { // Восстанавливаем стейт
+      console.log('restore?')
+      setSavedRows(audDataRows);
     }
   }, [searcher])
 
+
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = audDataRows.map((n) => String(n.id));
+      const newSelecteds = savedRows.map((n) => String(n.id));
       setSelected(newSelecteds);
       return;
     }
@@ -135,6 +134,15 @@ const Auds = ({audDataRows, setAudDataRows}: AudsTableProps) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+  };
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   const handleChangeBtn = (event: any, data: AudData) => {
@@ -164,10 +172,10 @@ const Auds = ({audDataRows, setAudDataRows}: AudsTableProps) => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={audDataRows.length}
+              rowCount={savedRows.length}
             />
             <TableBody>
-              {stableSort(audDataRows, getComparator(order, orderBy))
+              {stableSort(savedRows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id, selected);
@@ -220,11 +228,11 @@ const Auds = ({audDataRows, setAudDataRows}: AudsTableProps) => {
           labelRowsPerPage={"Количество строк на странице"}
           rowsPerPageOptions={[10, 25, 50, 75, 100]}
           component="div"
-          count={audDataRows.length}
+          count={savedRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onChangePage={(e) => handleChangePage(e, page, setPage)}
-          onChangeRowsPerPage={(e) => handleChangeRowsPerPage(e, setRowsPerPage, setPage)}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
     </div>

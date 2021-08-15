@@ -15,7 +15,6 @@ import TableToolbar from "../TableToolbar";
 import { handleChangePage, handleChangeRowsPerPage, handleSelectClick, isSelected } from "../tableFuncs";
 import { getComparator, Order, stableSort } from "../../../utils/sort";
 import { useTableBodyStyles, useTableHeaderStyles } from "../tableStyles";
-import nullClearer from "../../../utils/nullClearer";
 
 export type SubjectsData = {
   id: number,
@@ -99,29 +98,31 @@ const Subjects = ({ subjectsDataRows, setSubjectDataRows }: SubjectsTableProps) 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [searcher, setSearcher] = useState<string>('');
+  const [savedRows, setSavedRows] = React.useState<SubjectsData[]>([]);
 
   useEffect(() => {
-    if (searcher.length > 0) {
-      let tempArr = subjectsDataRows.map((item) => {
-        if (item?.subject.toLowerCase().includes(searcher)) {
-          return item;
-        } else {
-          return null;
+    setSavedRows(subjectsDataRows);
+  }, [subjectsDataRows])
+
+  useEffect(() => {
+    if (savedRows.length > 0) {
+      let tempArr: SubjectsData[] = [];
+      subjectsDataRows.forEach((item) => {
+        if (item?.subject.toLowerCase().includes((searcher.toLowerCase()))) {
+          tempArr.push(item);
         }
       });
 
-      // @ts-ignore
-      nullClearer(tempArr)
-      // @ts-ignore
-      setSubjectDataRows(tempArr);
-    } else {
-      setSubjectDataRows(subjectsDataRows);
+      setSavedRows(tempArr);
+    } else { // Восстанавливаем стейт
+      console.log('restore?')
+      setSavedRows(subjectsDataRows);
     }
   }, [searcher])
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = subjectsDataRows.map((n) => String(n.id));
+      const newSelecteds = savedRows.map((n) => String(n.id));
       setSelected(newSelecteds);
       return;
     }
@@ -132,6 +133,15 @@ const Subjects = ({ subjectsDataRows, setSubjectDataRows }: SubjectsTableProps) 
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+  };
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   const handleChangeBtn = (event: any, data: SubjectsData) => {
@@ -161,10 +171,10 @@ const Subjects = ({ subjectsDataRows, setSubjectDataRows }: SubjectsTableProps) 
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={subjectsDataRows.length}
+              rowCount={savedRows.length}
             />
             <TableBody>
-              {stableSort(subjectsDataRows, getComparator(order, orderBy))
+              {stableSort(savedRows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id, selected);
@@ -218,11 +228,11 @@ const Subjects = ({ subjectsDataRows, setSubjectDataRows }: SubjectsTableProps) 
           labelRowsPerPage={"Количество строк на странице"}
           rowsPerPageOptions={[10, 25, 50, 75, 100]}
           component="div"
-          count={subjectsDataRows.length}
+          count={savedRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onChangePage={(e) => handleChangePage(e, page, setPage)}
-          onChangeRowsPerPage={(e) => handleChangeRowsPerPage(e, setRowsPerPage, setPage)}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
     </div>

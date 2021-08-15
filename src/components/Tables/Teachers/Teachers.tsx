@@ -16,6 +16,7 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import { handleChangePage, handleChangeRowsPerPage, handleSelectClick, isSelected } from "../tableFuncs";
 import { TablePagination } from "@material-ui/core";
+import { GroupsData } from "../Groups/Groups";
 
 export type TeachersData = {
   id: number,
@@ -97,33 +98,31 @@ const Teachers = ({setTeachersDataRows, teachersDataRows}: TeacherProps) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [searcher, setSearcher] = useState<string>('');
+  const [savedRows, setSavedRows] = React.useState<TeachersData[]>([]);
 
   useEffect(() => {
-    setTeachersDataRows(teachersDataRows);
-  }, [])
+    setSavedRows(teachersDataRows);
+  }, [teachersDataRows])
 
   useEffect(() => {
-    if (searcher.length > 0) {
-      let tempArr = teachersDataRows.map((item) => {
-        if (item?.teacher.toLowerCase().includes(searcher)) {
-          return item;
-        } else {
-          return null;
+    if (savedRows.length > 0) {
+      let tempArr: TeachersData[] = [];
+      teachersDataRows.forEach((item) => {
+        if (item?.teacher.toLowerCase().includes((searcher.toLowerCase()))) {
+          tempArr.push(item);
         }
       });
-      // @ts-ignore
-      nullClearer(tempArr)
-      // @ts-ignore
-      setTeachersDataRows(tempArr);
-    } else {
-      setTeachersDataRows(teachersDataRows);
-    }
 
+      setSavedRows(tempArr);
+    } else { // Восстанавливаем стейт
+      console.log('restore?')
+      setSavedRows(teachersDataRows);
+    }
   }, [searcher])
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = teachersDataRows.map((n) => String(n.id));
+      const newSelecteds = savedRows.map((n) => String(n.id));
       setSelected(newSelecteds);
       return;
     }
@@ -139,6 +138,15 @@ const Teachers = ({setTeachersDataRows, teachersDataRows}: TeacherProps) => {
   const handleChangeBtn = (event: any, data: TeachersData) => {
     console.log(event.target)
   }
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, teachersDataRows.length - page * rowsPerPage);
 
@@ -163,10 +171,10 @@ const Teachers = ({setTeachersDataRows, teachersDataRows}: TeacherProps) => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={teachersDataRows.length}
+              rowCount={savedRows.length}
             />
             <TableBody>
-              {stableSort(teachersDataRows, getComparator(order, orderBy))
+              {stableSort(savedRows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id, selected);
@@ -220,11 +228,11 @@ const Teachers = ({setTeachersDataRows, teachersDataRows}: TeacherProps) => {
           labelRowsPerPage={"Количество строк на странице"}
           rowsPerPageOptions={[10, 25, 50, 75, 100]}
           component="div"
-          count={teachersDataRows.length}
+          count={savedRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onChangePage={(e) => handleChangePage(e, page, setPage)}
-          onChangeRowsPerPage={(e) => handleChangeRowsPerPage(e, setRowsPerPage, setPage)}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
     </div>
