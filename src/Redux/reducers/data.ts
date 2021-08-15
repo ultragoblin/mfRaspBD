@@ -69,11 +69,13 @@ export type TDataSemesters = {
   fac_name: string
 };
 
+export type TDataSem = {
+  1: TDataSemesters[],
+  2: TDataSemesters[]
+}
+
 export type TFullListData = {
-  semesters: {
-    1: TDataSemesters[],
-    2: TDataSemesters[]
-  },
+  semesters: TDataSem,
   year: number,
   year_id: number
 };

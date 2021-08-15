@@ -91,7 +91,7 @@ export default function raspData(
              delete pairItem.pair[i].subgroup;
            }
 
-            if (subject === null || subject === null || teacher === null) {
+            if (subject === null || teacher === null) {
               newPairs.push({});
             } else {
               newPairs.push(pairItem.pair[i])

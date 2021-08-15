@@ -15,8 +15,9 @@ import { TablePagination } from "@material-ui/core";
 import Searcher from "../../Searcher/Searcher";
 import nullClearer from "../../../utils/nullClearer";
 import { handleSelectClick } from "../tableFuncs";
+import { useTypedSelector } from "../../../hooks/useTypedSelector";
 
-interface GroupsData {
+export interface GroupsData {
   id: number,
   group: string,
   caf: string,
@@ -142,17 +143,6 @@ const headCells: HeadCell[] = [
   { id: 'year', numeric: false, label: 'Год поступления' },
 ];
 
-const rows = [
-  createGroupData(1, 'К1-73Б', 'К3', 2010),
-  createGroupData(2, 'К1-73Б', 'К1', 2010),
-  createGroupData(3, 'К333-23Б', 'К2', 2010),
-  createGroupData(4, 'К122-73Б', 'К3', 20101),
-  createGroupData(5, 'К6-73Б', 'К3', 2010),
-  createGroupData(6, 'К7-26Б', 'К1', 2010),
-  createGroupData(7, 'К39-23Б', 'К2', 2010),
-  createGroupData(8, 'К32-73Б', 'К3', 20101),
-];
-
 interface EnhancedTableProps {
   numSelected: number;
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof GroupsData) => void;
@@ -245,23 +235,25 @@ const EnhancedTableToolbar = ({ searcherSet, searcherState, numSelected }: Enhan
   );
 }
 
-const Groups = () => {
+export type GroupsTableProps = {
+  groupsDataRows: GroupsData[],
+  setGroupsDataRows: React.Dispatch<React.SetStateAction<GroupsData[]>>
+}
+
+
+const Groups = ({ groupsDataRows, setGroupsDataRows }: GroupsTableProps) => {
   const classes = useStyles();
+  const fullList = useTypedSelector((store) => store.data.fullList);
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof GroupsData>('group');
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [searcher, setSearcher] = useState<string>('');
-  const [dataRows, setDataRows] = useState<GroupsData[]>([]);
-
-  useEffect(() => {
-    setDataRows(rows);
-  }, [])
 
   useEffect(() => {
     if (searcher.length > 0) {
-      let tempArr = rows.map((item) => {
+      let tempArr = groupsDataRows.map((item) => {
         if (item?.group.toLowerCase().includes(searcher)) {
           return item;
         } else {
@@ -272,9 +264,9 @@ const Groups = () => {
       // @ts-ignore
       nullClearer(tempArr)
       // @ts-ignore
-      setDataRows(tempArr);
+      setGroupsDataRows(tempArr);
     } else {
-      setDataRows(rows);
+      setGroupsDataRows(groupsDataRows);
     }
   }, [searcher])
 
@@ -286,7 +278,7 @@ const Groups = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => String(n.id));
+      const newSelecteds = groupsDataRows.map((n) => String(n.id));
       setSelected(newSelecteds);
       return;
     }
@@ -329,7 +321,7 @@ const Groups = () => {
 
   const isSelected = (name: number) => selected.indexOf(String(name)) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, groupsDataRows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -352,10 +344,10 @@ const Groups = () => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={groupsDataRows.length}
             />
             <TableBody>
-              {stableSort(dataRows, getComparator(order, orderBy))
+              {stableSort(groupsDataRows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
@@ -423,7 +415,7 @@ const Groups = () => {
           labelRowsPerPage={"Количество строк на странице"}
           rowsPerPageOptions={[10, 25, 50, 75, 100]}
           component="div"
-          count={rows.length}
+          count={groupsDataRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
