@@ -9,13 +9,6 @@ import Buttons from "./Items/Buttons";
 import Teacher from "./Teacher/Teacher";
 import Auds from "./Auds/Auds";
 
-export interface CustomModalProps {
-  tabNumber: ETabsNaming,
-  modal: TModal,
-  api?: string,
-  closeFunc: () => void
-}
-
 export interface InputsProps {
   id: string,
   label: string,
@@ -59,26 +52,38 @@ export type TAudModal = {
   aud?: number
 };
 
-const CustomModal = ({ tabNumber, api, closeFunc, modal }: CustomModalProps) => {
+export interface CustomModalProps {
+  tabNumber: ETabsNaming,
+  modal: TModal,
+  closeFunc: () => void,
+
+  groupModalData: TGroupModal,
+  setGroupModalData: React.Dispatch<React.SetStateAction<TGroupModal>>,
+
+  subjectModalData: TSubjectModal,
+  setSubjectModalData: React.Dispatch<React.SetStateAction<TSubjectModal>>,
+
+  teacherModalData: TTeacherModal,
+  setTeacherModalData: React.Dispatch<React.SetStateAction<TTeacherModal>>,
+
+  audModalData: TAudModal,
+  setAudModalData: React.Dispatch<React.SetStateAction<TAudModal>>,
+}
+
+const CustomModal = ({
+                       tabNumber,
+                       closeFunc,
+                       modal,
+                       audModalData,
+                       groupModalData,
+                       setAudModalData,
+                       setGroupModalData,
+                       setSubjectModalData,
+                       setTeacherModalData,
+                       subjectModalData,
+                       teacherModalData
+                     }: CustomModalProps) => {
   const classes = useStyles();
-  const [groupModalData, setGroupModalData] = React.useState<TGroupModal>({
-    caf: '',
-    groupNumber: '',
-    res: '',
-    year: '',
-    grade: ''
-  });
-  const [subjectModalData, setSubjectModalData] = React.useState<TSubjectModal>({
-    subject: '',
-  });
-  const [teacherModalData, setTeacherModalData] = React.useState<TTeacherModal>({
-    patronymic: '',
-    firstName: '',
-    lastName: ''
-  });
-  const [audModalData, setAudModalData] = React.useState<TAudModal>({
-    aud: 0
-  });
 
   const switchModals = (): JSX.Element => {
     switch (tabNumber) {

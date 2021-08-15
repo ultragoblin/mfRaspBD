@@ -2,11 +2,13 @@ import { Dispatch } from "redux";
 import {
   DataAction,
   EData,
-  TAdmAudList,
-  TAdmListsData, TAdmSubgroupList,
+  TAdmAudList, TAdmGroupList,
+  TAdmListsData,
+  TAdmSubgroupList,
   TAdmSubjectList,
   TAdmTeacherList,
-  TAudOptions, TSubGroupOptions,
+  TAudOptions,
+  TSubGroupOptions,
   TSubjectOptions,
   TTeacherOptions
 } from "../reducers/data";
@@ -42,7 +44,8 @@ export const getAdmLists = () => {
       subgroup: {
         options: [],
         val: []
-      }
+      },
+      caf: []
     };
 
     dispatch({ type: EData.GET_ADM_LISTS });
@@ -110,8 +113,28 @@ export const getAdmLists = () => {
       })
       .then((okGroup) => admLists.group = okGroup);
 
+    fetch(api.admLists.caf, authDefault)
+      .then((response) => response.json())
+      .catch((error) => {
+        requestError = true;
+        return dispatch({type: EData.ERROR_ADM_LISTS, error: `adm caf = ${error}`});
+      })
+      .then((okCaf) => admLists.caf = okCaf);
+
     if (!requestError) {
       return dispatch({ type: EData.SUCCESS_ADM_LISTS, payload: admLists })
     }
   }
 };
+
+export const putGroupAdm = (group: TAdmGroupList) => {
+  return (dispatch: Dispatch<DataAction>) => {
+    fetch(api.DB.group, {
+      ...authDefault,
+      method: "PUT"
+    })
+      .then((response) => {
+        alert
+      })
+  }
+}

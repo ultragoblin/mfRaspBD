@@ -1,12 +1,24 @@
 import { TOptions } from "../../components/Header/Header";
 
 enum EData {
-  GET_FULL_LIST,
-  ERROR_FULL_LIST,
-  SUCCESS_FULL_LIST,
-  GET_ADM_LISTS,
-  ERROR_ADM_LISTS,
-  SUCCESS_ADM_LISTS
+  GET_FULL_LIST = 'GET_FULL_LIST',
+  ERROR_FULL_LIST = 'ERROR_FULL_LIST',
+  SUCCESS_FULL_LIST = 'SUCCESS_FULL_LIST',
+  GET_ADM_LISTS = 'GET_ADM_LISTS',
+  ERROR_ADM_LISTS = 'ERROR_ADM_LISTS',
+  SUCCESS_ADM_LISTS = 'SUCCESS_ADM_LISTS',
+  PUT_GROUP = 'PUT_GROUP',
+  PATCH_GROUP = 'PATCH_GROUP',
+  DELETE_GROUP = 'DELETE_GROUP',
+  PUT_SUBJECT = 'PUT_SUBJECT',
+  PATCH_SUBJECT = 'PUT_SUBJECT',
+  DELETE_SUBJECT = 'DELETE_SUBJECT',
+  PUT_TEACHER = 'PUT_TEACHER',
+  PATCH_TEACHER = 'PATCH_TEACHER',
+  DELETE_TEACHER = 'DELETE_TEACHER',
+  PUT_AUD = 'PUT_AUD',
+  PATCH_AUD = 'PATCH_AUD',
+  DELETE_AUD = 'PATCH_AUD'
 };
 
 // options types //
@@ -118,6 +130,14 @@ export type TAdmSubgroupList = {
   name: string
 };
 
+export type TCafList = {
+  facultyid: number,
+  id: number,
+  name: string | null,
+  nameshort: string,
+  number: number
+};
+
 export type TAdmListsData = {
   teacher: {
     options: TTeacherOptions[],
@@ -135,7 +155,8 @@ export type TAdmListsData = {
   subgroup: {
     options: TSubGroupOptions[],
     val: TAdmSubgroupList[]
-  }
+  },
+  caf: TCafList[]
 };
 
 export type TAdmLists = {
@@ -175,7 +196,8 @@ const initialState: TData = {
       subgroup: {
         options: [],
         val: []
-      }
+      },
+      caf: []
     },
     error: '',
     loading: false
@@ -216,10 +238,85 @@ type errorAdmLists = {
   error: string
 };
 
+type putGroupAdm = {
+  type: EData.PUT_GROUP,
+  group: TAdmGroupList
+};
+
+type patchGroupAdm = {
+  type: EData.PATCH_GROUP,
+  group: TAdmGroupList
+};
+
+type deleteGroupAdm = {
+  type: EData.DELETE_GROUP,
+  id: number
+};
+
+type putSubjectAdm = {
+  type: EData.PUT_SUBJECT,
+  subject: TAdmSubjectList
+};
+
+type patchSubjectAdm = {
+  type: EData.PATCH_SUBJECT,
+  subject: TAdmSubjectList
+};
+
+type deleteSubjectAdm = {
+  type: EData.DELETE_SUBJECT,
+  id: number
+};
+
+type putTeacherAdm = {
+  type: EData.PUT_TEACHER,
+  teacher: TAdmTeacherList
+};
+
+type patchTeacherAdm = {
+  type: EData.PATCH_TEACHER,
+  teacher: TAdmTeacherList
+};
+
+type deleteTeacherAdm = {
+  type: EData.DELETE_TEACHER,
+  id: number
+};
+
+type putAudAmd = {
+  type: EData.PUT_AUD,
+  aud: TAdmAudList
+};
+
+type patchAudAdm = {
+  type: EData.PATCH_AUD,
+  aud: TAdmAudList
+};
+
+type deleteAudAmd = {
+  type: EData.DELETE_AUD,
+  id: number
+};
+
 // Creating types actions //
 
 type fullListActions = getFullList | successFullList | errorFullList;
-type admListsActions = getAdmLists | successAdmLists | errorAdmLists;
+type admListsActions =
+  getAdmLists
+  | successAdmLists
+  | errorAdmLists
+  | putGroupAdm
+  | putSubjectAdm
+  | putTeacherAdm
+  | putAudAmd
+  | patchGroupAdm
+  | patchSubjectAdm
+  | patchTeacherAdm
+  | patchAudAdm
+  | deleteGroupAdm
+  | deleteSubjectAdm
+  | deleteTeacherAdm
+  | deleteAudAmd;
 
 export type DataAction = fullListActions | admListsActions;
 

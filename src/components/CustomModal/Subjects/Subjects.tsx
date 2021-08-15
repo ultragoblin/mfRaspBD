@@ -8,7 +8,7 @@ import CustomInput from "../Items/CustomInput";
 interface SubjectsProps {
   state: TSubjectModal,
   setState: React.Dispatch<React.SetStateAction<TSubjectModal>>,
-  mode: EModalMode | null
+  mode: EModalMode | null,
 }
 
 const Subjects = ({ mode, setState, state }: SubjectsProps) => {

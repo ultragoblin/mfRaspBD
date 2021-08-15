@@ -17,16 +17,9 @@ import TableBody from "@material-ui/core/TableBody";
 import { handleChangePage, handleChangeRowsPerPage, handleSelectClick, isSelected } from "../tableFuncs";
 import { TablePagination } from "@material-ui/core";
 
-type TeachersData = {
+export type TeachersData = {
   id: number,
   teacher: string
-};
-
-function createTeacherData(
-  id: number,
-  teacher: string
-): TeachersData {
-  return { id, teacher }
 };
 
 interface HeadCell {
@@ -36,14 +29,6 @@ interface HeadCell {
 
 const headCells: HeadCell[] = [
   { id: "teacher", label: 'Аудитория' },
-];
-
-const rows = [
-  createTeacherData(1, 'Препод1'),
-  createTeacherData(2, 'Препод12'),
-  createTeacherData(3, 'Препод13'),
-  createTeacherData(4, 'Препод14'),
-  createTeacherData(5, 'Препод2'),
 ];
 
 interface EnhancedTableProps {
@@ -99,7 +84,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-const Teachers = () => {
+export type TeacherProps = {
+  teachersDataRows: TeachersData[],
+  setTeachersDataRows: React.Dispatch<React.SetStateAction<TeachersData[]>>
+}
+
+const Teachers = ({setTeachersDataRows, teachersDataRows}: TeacherProps) => {
   const classes = useTableBodyStyles();
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof TeachersData>('teacher');
@@ -107,15 +97,14 @@ const Teachers = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [searcher, setSearcher] = useState<string>('');
-  const [dataRows, setDataRows] = useState<TeachersData[]>([]);
 
   useEffect(() => {
-    setDataRows(rows);
+    setTeachersDataRows(teachersDataRows);
   }, [])
 
   useEffect(() => {
     if (searcher.length > 0) {
-      let tempArr = rows.map((item) => {
+      let tempArr = teachersDataRows.map((item) => {
         if (item?.teacher.toLowerCase().includes(searcher)) {
           return item;
         } else {
@@ -125,16 +114,16 @@ const Teachers = () => {
       // @ts-ignore
       nullClearer(tempArr)
       // @ts-ignore
-      setDataRows(tempArr);
+      setTeachersDataRows(tempArr);
     } else {
-      setDataRows(rows);
+      setTeachersDataRows(teachersDataRows);
     }
 
   }, [searcher])
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => String(n.id));
+      const newSelecteds = teachersDataRows.map((n) => String(n.id));
       setSelected(newSelecteds);
       return;
     }
@@ -151,7 +140,7 @@ const Teachers = () => {
     console.log(event.target)
   }
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, teachersDataRows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -174,10 +163,10 @@ const Teachers = () => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={teachersDataRows.length}
             />
             <TableBody>
-              {stableSort(dataRows, getComparator(order, orderBy))
+              {stableSort(teachersDataRows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id, selected);
@@ -231,7 +220,7 @@ const Teachers = () => {
           labelRowsPerPage={"Количество строк на странице"}
           rowsPerPageOptions={[10, 25, 50, 75, 100]}
           component="div"
-          count={rows.length}
+          count={teachersDataRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={(e) => handleChangePage(e, page, setPage)}

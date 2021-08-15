@@ -17,16 +17,9 @@ import { getComparator, Order, stableSort } from "../../../utils/sort";
 import { useTableBodyStyles, useTableHeaderStyles } from "../tableStyles";
 import nullClearer from "../../../utils/nullClearer";
 
-type SubjectsData = {
+export type SubjectsData = {
   id: number,
   subject: string
-};
-
-function createSubjectData(
-  id: number,
-  subject: string
-): SubjectsData {
-  return { id, subject }
 };
 
 interface HeadCell {
@@ -37,15 +30,6 @@ interface HeadCell {
 
 const headCells: HeadCell[] = [
   { id: "subject", numeric: false, label: 'Предмет' },
-];
-
-const rows = [
-  createSubjectData(1, 'Элтех'),
-  createSubjectData(2, 'ЯВУ'),
-  createSubjectData(3, 'куу'),
-  createSubjectData(4, 'куе'),
-  createSubjectData(5, 'гнидотехника'),
-  createSubjectData(6, 'К1221'),
 ];
 
 interface EnhancedTableProps {
@@ -102,7 +86,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   );
 }
 
-const Subjects = () => {
+export type SubjectsTableProps = {
+  subjectsDataRows: SubjectsData[],
+  setSubjectDataRows: React.Dispatch<React.SetStateAction<SubjectsData[]>>
+}
+
+const Subjects = ({ subjectsDataRows, setSubjectDataRows }: SubjectsTableProps) => {
   const classes = useTableBodyStyles();
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof SubjectsData>('subject');
@@ -110,15 +99,10 @@ const Subjects = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [searcher, setSearcher] = useState<string>('');
-  const [dataRows, setDataRows] = useState<SubjectsData[]>([]);
-
-  useEffect(() => {
-    setDataRows(rows);
-  }, [])
 
   useEffect(() => {
     if (searcher.length > 0) {
-      let tempArr = rows.map((item) => {
+      let tempArr = subjectsDataRows.map((item) => {
         if (item?.subject.toLowerCase().includes(searcher)) {
           return item;
         } else {
@@ -129,15 +113,15 @@ const Subjects = () => {
       // @ts-ignore
       nullClearer(tempArr)
       // @ts-ignore
-      setDataRows(tempArr);
+      setSubjectDataRows(tempArr);
     } else {
-      setDataRows(rows);
+      setSubjectDataRows(subjectsDataRows);
     }
   }, [searcher])
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => String(n.id));
+      const newSelecteds = subjectsDataRows.map((n) => String(n.id));
       setSelected(newSelecteds);
       return;
     }
@@ -154,7 +138,7 @@ const Subjects = () => {
     console.log(event.target)
   }
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, subjectsDataRows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -177,10 +161,10 @@ const Subjects = () => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={subjectsDataRows.length}
             />
             <TableBody>
-              {stableSort(dataRows, getComparator(order, orderBy))
+              {stableSort(subjectsDataRows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id, selected);
@@ -234,7 +218,7 @@ const Subjects = () => {
           labelRowsPerPage={"Количество строк на странице"}
           rowsPerPageOptions={[10, 25, 50, 75, 100]}
           component="div"
-          count={rows.length}
+          count={subjectsDataRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={(e) => handleChangePage(e, page, setPage)}
