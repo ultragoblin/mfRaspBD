@@ -240,17 +240,17 @@ type errorAdmLists = {
 
 type putGroupAdm = {
   type: EData.PUT_GROUP,
-  group: TAdmGroupList
+  id: number
 };
 
 type patchGroupAdm = {
   type: EData.PATCH_GROUP,
-  group: TAdmGroupList
+  // group: TAdmGroupList
 };
 
 type deleteGroupAdm = {
   type: EData.DELETE_GROUP,
-  id: number
+  // id: number
 };
 
 type putSubjectAdm = {
@@ -260,42 +260,42 @@ type putSubjectAdm = {
 
 type patchSubjectAdm = {
   type: EData.PATCH_SUBJECT,
-  subject: TAdmSubjectList
+  // subject: TAdmSubjectList
 };
 
 type deleteSubjectAdm = {
   type: EData.DELETE_SUBJECT,
-  id: number
+  // id: number
 };
 
 type putTeacherAdm = {
   type: EData.PUT_TEACHER,
-  teacher: TAdmTeacherList
+  id: number
 };
 
 type patchTeacherAdm = {
   type: EData.PATCH_TEACHER,
-  teacher: TAdmTeacherList
+  // teacher: TAdmTeacherList
 };
 
 type deleteTeacherAdm = {
   type: EData.DELETE_TEACHER,
-  id: number
+  // id: number
 };
 
 type putAudAmd = {
   type: EData.PUT_AUD,
-  aud: TAdmAudList
+  id: number
 };
 
 type patchAudAdm = {
   type: EData.PATCH_AUD,
-  aud: TAdmAudList
+  // aud: TAdmAudList
 };
 
 type deleteAudAmd = {
   type: EData.DELETE_AUD,
-  id: number
+  // id: number
 };
 
 // Creating types actions //

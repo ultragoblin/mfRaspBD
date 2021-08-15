@@ -2,7 +2,8 @@ import { Dispatch } from "redux";
 import {
   DataAction,
   EData,
-  TAdmAudList, TAdmGroupList,
+  TAdmAudList,
+  TAdmGroupList,
   TAdmListsData,
   TAdmSubgroupList,
   TAdmSubjectList,
@@ -131,10 +132,58 @@ export const putGroupAdm = (group: TAdmGroupList) => {
   return (dispatch: Dispatch<DataAction>) => {
     fetch(api.DB.group, {
       ...authDefault,
-      method: "PUT"
+      method: "PUT",
+      body: JSON.stringify(group)
     })
-      .then((response) => {
-        alert
+      .then((response) => response.json())
+      .catch((error) => {
+        alert("При добавлении группы произошла ошибка!");
       })
+      .then((ok) => dispatch({type: EData.PUT_GROUP, id: ok.id}))
   }
 }
+
+export const putSubjectAdm = (subject: TAdmSubjectList) => {
+  return (dispatch: Dispatch<DataAction>) => {
+    fetch(api.DB.subject, {
+      ...authDefault,
+      method: "PUT",
+      body: JSON.stringify(subject)
+    })
+      .then((response) => response.json())
+      .catch((error) => {
+        alert("При добавлении предмета произошла ошибка!");
+      })
+      .then((ok) => dispatch({type: EData.PUT_SUBJECT, id: ok.id}))
+  }
+}
+
+export const putTeacherAdm = (teacher: TAdmTeacherList) => {
+  return (dispatch: Dispatch<DataAction>) => {
+    fetch(api.DB.teacher, {
+      ...authDefault,
+      method: "PUT",
+      body: JSON.stringify(teacher)
+    })
+      .then((response) => response.json())
+      .catch((error) => {
+        alert("При добавлении преподователя произошла ошибка!");
+      })
+      .then((ok) => dispatch({type: EData.PUT_TEACHER, id: ok.id}))
+  }
+}
+
+export const putAudAdm = (aud: TAdmAudList) => {
+  return (dispatch: Dispatch<DataAction>) => {
+    fetch(api.DB.teacher, {
+      ...authDefault,
+      method: "PUT",
+      body: JSON.stringify(aud)
+    })
+      .then((response) => response.json())
+      .catch((error) => {
+        alert("При добавлении аудитории произошла ошибка!");
+      })
+      .then((ok) => dispatch({type: EData.PUT_AUD, id: ok.id}))
+  }
+};
