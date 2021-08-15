@@ -19,7 +19,7 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
     if (collectingDataState.sendReq) {
       let json = JSON.stringify(raspData);
       console.log('sending json >>>', raspData,'jsonnn >>>>' ,json)
-      fetch('https://mf.bmstu.ru/rasp/api/adm/group', {
+      fetch('https://rasp.msfu.ru/api/adm/group', {
         method: "POST",
         headers: {
           'Content-Type': 'text/plain',
