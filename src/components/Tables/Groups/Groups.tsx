@@ -261,7 +261,7 @@ const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTa
 
   useEffect(() => {
     setSavedRows(groupsDataRows);
-  }, [])
+  }, [groupsDataRows])
 
   useEffect(() => {
     if (savedRows.length > 0) {
@@ -288,6 +288,7 @@ const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTa
     console.log('selected before del >>>', savedRows);
     console.log('selected afted del >>> ', [...savedRows.slice(0, indexForRemove), ...savedRows.slice(indexForRemove + 1, savedRows.length)]);
     setGroupsDataRows([...savedRows.slice(0, indexForRemove), ...savedRows.slice(indexForRemove + 1, savedRows.length)]);
+    setSelected([]);
   }
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof GroupsData) => {

@@ -51,10 +51,11 @@ const Buttons = ({ tabNumber, modal, audModalData, groupModalData, subjectModalD
         })
 
         let data: TAdmGroupList = {
-          startyear: Number(groupModalData.year),
           cafid: caf,
+          // name: groupModalData.res,
+          number: Number(groupModalData.groupNumber),
           stageid: stage,
-          number: Number(groupModalData.groupNumber)
+          startyear: Number(groupModalData.year)
         }
 
         console.log(JSON.stringify(data));
