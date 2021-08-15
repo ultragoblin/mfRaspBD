@@ -156,9 +156,9 @@ export const putGroupAdm = (group: TAdmGroupList) => {
   }
 }
 
-export const patchGroupAdm = (group: TAdmGroupList) => {
+export const patchGroupAdm = (group: TAdmGroupList, id: number) => {
   return (dispatch: Dispatch<DataAction>) => {
-    fetch(api.DB.group, {
+    fetch(`${api.DB.group}?id=${id}`, {
       ...authDefault,
       method: "PATCH",
       body: JSON.stringify(group)
@@ -167,7 +167,10 @@ export const patchGroupAdm = (group: TAdmGroupList) => {
       .catch((error) => {
         alert("При Измемении группы произошла ошибка!");
       })
-      .then((ok) => dispatch({ type: EData.PATCH_GROUP }))
+      .then((ok) => {
+        alert("Изменение группы прошло удачно");
+        return dispatch({ type: EData.PATCH_GROUP })
+      })
   }
 }
 

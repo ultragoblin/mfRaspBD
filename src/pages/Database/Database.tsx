@@ -34,7 +34,8 @@ export enum EModalMode {
 
 export type TModal = {
   isOpen: boolean,
-  mode: EModalMode | null
+  mode: EModalMode | null,
+  id?: number
 };
 
 function TabPanel(props: TabPanelProps) {
@@ -85,7 +86,7 @@ const Database = () => {
   const { ADD, CHANGE } = EModalMode;
   const [modal, setModal] = React.useState<TModal>({
     isOpen: false,
-    mode: null
+    mode: null,
   });
   const [value, setValue] = React.useState<ETabsNaming>(ETabsNaming.GROUPS);
 
@@ -150,10 +151,11 @@ const Database = () => {
     });
   }
 
-  const handleModalChange = (): void => {
+  const handleModalChange = (id: number): void => {
     setModal({
       isOpen: true,
-      mode: CHANGE
+      mode: CHANGE,
+      id: id
     });
   }
 
@@ -173,7 +175,7 @@ const Database = () => {
         {/*  <Schedule/>*/}
         {/*</TabPanel>*/}
         <TabPanel index={ETabsNaming.GROUPS} value={value}>
-          <Groups groupsDataRows={groupsDataRows} setGroupsDataRows={setGroupsDataRows}/>
+          <Groups openModalChange={handleModalChange} groupsDataRows={groupsDataRows} setGroupsDataRows={setGroupsDataRows}/>
         </TabPanel>
         <TabPanel index={ETabsNaming.SUBJECTS} value={value}>
           <Subjects subjectsDataRows={subjectsDataRows} setSubjectDataRows={setSubjectsDataRows}/>

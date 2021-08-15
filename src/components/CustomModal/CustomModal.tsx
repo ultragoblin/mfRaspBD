@@ -120,7 +120,7 @@ const CustomModal = ({
               teacherModalData={teacherModalData}
               subjectModalData={subjectModalData}
               groupModalData={groupModalData}
-              mode={modal.mode}
+              modal={modal}
               tabNumber={tabNumber}/>
           </div>
         </>

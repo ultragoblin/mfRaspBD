@@ -237,13 +237,13 @@ const EnhancedTableToolbar = ({ searcherSet, searcherState, numSelected }: Enhan
 
 export type GroupsTableProps = {
   groupsDataRows: GroupsData[],
-  setGroupsDataRows: React.Dispatch<React.SetStateAction<GroupsData[]>>
+  setGroupsDataRows: React.Dispatch<React.SetStateAction<GroupsData[]>>,
+  openModalChange: (id: number) => void
 }
 
 
-const Groups = ({ groupsDataRows, setGroupsDataRows }: GroupsTableProps) => {
+const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTableProps) => {
   const classes = useStyles();
-  const fullList = useTypedSelector((store) => store.data.fullList);
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof GroupsData>('group');
   const [selected, setSelected] = React.useState<string[]>([]);
@@ -285,8 +285,9 @@ const Groups = ({ groupsDataRows, setGroupsDataRows }: GroupsTableProps) => {
     setSelected([]);
   };
 
-  const handleChangeBtn = (event: any, data: GroupsData) => {
+  const handleChangeBtn = (event: any, id: number) => {
     console.log(event.target)
+    openModalChange(id);
   }
 
   const handleClick = (event: React.MouseEvent<unknown>, name: number) => {
@@ -394,7 +395,7 @@ const Groups = ({ groupsDataRows, setGroupsDataRows }: GroupsTableProps) => {
                         {row.year}
                       </TableCell>
                       <TableCell
-                        onClick={(event) => handleChangeBtn(event, row)}
+                        onClick={(event) => handleChangeBtn(event, row.id)}
                         className={classes.changeBtn}
                         align="left"
                         padding="none">
