@@ -2,6 +2,7 @@
   "name": "mfraspbd",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/adm",
   "dependencies": {
     "@craco/craco": "^6.1.2",
     "@material-ui/core": "^4.11.4",
