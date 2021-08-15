@@ -14,12 +14,11 @@ ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
             <Provider store={store}>
-                <AppWrapper>
-                    <Switch>
-                        <Route exact path={routing.rasp} component={Rasp}/>
-                        <Route exact path={routing.database} component={Database}/>
-                    </Switch>
-                </AppWrapper>
+                <AppWrapper/>
+                    {/*<Switch>*/}
+                    {/*    <Route exact path={routing.rasp} component={Rasp}/>*/}
+                    {/*    <Route exact path={routing.database} component={Database}/>*/}
+                    {/*</Switch>*/}
             </Provider>
         </BrowserRouter>
     </React.StrictMode>,

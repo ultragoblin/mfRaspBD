@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import { TDataFac, TDataGroup, TDataSemesters } from "../../Redux/reducers/data";
 import {TGetGroupRasp} from "../../utils/api/api";
 import {useActions} from "../../hooks/useActions";
+import { AppPages } from "../AppWrapper";
 
 const selectWidth: number = 167;
 
@@ -71,10 +72,11 @@ type TRaspValue = {
 }
 
 export type HeaderProps = {
-  setGroupName: React.Dispatch<React.SetStateAction<string>>
-}
+  setGroupName: React.Dispatch<React.SetStateAction<string>>,
+  setPage: () => void
+};
 
-const Header = ({setGroupName}: HeaderProps) => {
+const Header = ({setGroupName ,setPage}: HeaderProps) => {
   const {setData} = useActions();
   const fullList = useTypedSelector((store) => store.data.fullList);
 
@@ -329,7 +331,8 @@ const Header = ({setGroupName}: HeaderProps) => {
         <CustomRadio {...radio} handler={handleRadio}/>
       </div>
       <div className={styles.header__buttons}>
-        <Link to={routing.database}><Button startIcon={<StorageIcon/>} variant="contained">База данных</Button></Link>
+        <Button onClick={setPage} startIcon={<StorageIcon/>} variant="contained">База данных</Button>
+        {/*<Link to={routing.database}><Button startIcon={<StorageIcon/>} variant="contained">База данных</Button></Link>*/}
         <Button startIcon={<PrintIcon/>} variant="contained" disabled>Печать</Button>
         <Button startIcon={<DirectionsRunIcon/>} variant="contained" color="primary" disabled>
           Выход

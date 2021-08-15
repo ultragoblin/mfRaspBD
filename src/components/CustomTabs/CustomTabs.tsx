@@ -8,10 +8,11 @@ import routing from "../../utils/path/routing";
 
 export interface CustomTabsProps {
     tabValue: number,
-    tabFunc: React.Dispatch<React.SetStateAction<number>>
+    tabFunc: React.Dispatch<React.SetStateAction<number>>,
+    setPage: () => void
 }
 
-const CustomTabs = ({tabValue, tabFunc}: CustomTabsProps) => {
+const CustomTabs = ({tabValue, tabFunc, setPage}: CustomTabsProps) => {
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         tabFunc(newValue);
     };
@@ -27,7 +28,7 @@ const CustomTabs = ({tabValue, tabFunc}: CustomTabsProps) => {
                     aria-label="full width tabs example"
                     className={styles.tabs}
                 >
-                    <Link className={styles.arrow} to={routing.rasp}><img src="/arrow-back.svg" alt=""/></Link>
+                    <p onClick={setPage} className={styles.arrow}><img src="/arrow-back.svg" alt=""/></p>
                     {/*<Tab label="Расписание"/>*/}
                     <Tab label="Группы"/>
                     <Tab label="Предметы"/>

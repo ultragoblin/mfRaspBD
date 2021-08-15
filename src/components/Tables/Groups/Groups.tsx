@@ -278,6 +278,10 @@ const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTa
     }
   }, [searcher])
 
+  useEffect(() => {
+    console.log('group >>> ', groupsDataRows)
+  }, [groupsDataRows])
+
   const handleDelete = () => {
     deleteGroupAdm(Number(selected[0]));
     console.log('selected >>> ', Number(selected[0]));

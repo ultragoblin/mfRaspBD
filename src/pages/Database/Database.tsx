@@ -13,6 +13,7 @@ import Teachers, { TeachersData } from "../../components/Tables/Teachers/Teacher
 import Auds, { AudData } from "../../components/Tables/Auds/Auds";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import { TAdmGroupList, TDataSemesters } from "../../Redux/reducers/data";
+import { useActions } from "../../hooks/useActions";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -56,12 +57,18 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-const Database = () => {
+export type DatabaseProps = {
+  setPage: () => void
+};
+
+const Database = ({setPage}: DatabaseProps) => {
+  const admLists = useTypedSelector((store) => store.data.admLists);
+  const {getAdmLists} = useActions();
   const [groupsDataRows, setGroupsDataRows] = React.useState<GroupsData[]>([]);
   const [subjectsDataRows, setSubjectsDataRows] = React.useState<SubjectsData[]>([]);
   const [teachersDataRows, setTeachersDataRows] = React.useState<TeachersData[]>([]);
-  const [audDataRows, setAudDataRows] = React.useState<AudData[]>([]);
 
+  const [audDataRows, setAudDataRows] = React.useState<AudData[]>([]);
   const [groupModalData, setGroupModalData] = React.useState<TGroupModal>({
     caf: '',
     groupNumber: '',
@@ -77,12 +84,11 @@ const Database = () => {
     firstName: '',
     lastName: ''
   });
+
+
   const [audModalData, setAudModalData] = React.useState<TAudModal>({
     aud: 0
   });
-
-
-  const admLists = useTypedSelector((store) => store.data.admLists);
   const { ADD, CHANGE } = EModalMode;
   const [modal, setModal] = React.useState<TModal>({
     isOpen: false,
@@ -91,6 +97,12 @@ const Database = () => {
   const [value, setValue] = React.useState<ETabsNaming>(ETabsNaming.GROUPS);
 
   useEffect(() => {
+    getAdmLists();
+    console.log('fetching')
+  }, [])
+
+  useEffect(() => {
+    console.log('adm list group', admLists.data.group)
     admLists.data.group.forEach((groupItem) => {
       setGroupsDataRows(prevState => {
         if (groupItem.id && groupItem.name) {
@@ -144,6 +156,18 @@ const Database = () => {
     })
   }, [admLists.data])
 
+  useEffect(() => {
+    console.log('adm load >>> ', admLists.loading)
+  }, [admLists.loading])
+
+  useEffect(() => {
+    console.log('adm group state!', admLists.data.group);
+  }, [admLists.data.group])
+
+  useEffect(() => {
+    console.log('db >>> ', groupsDataRows)
+  }, [groupsDataRows])
+
   const handleModalAdd = (): void => {
     setModal({
       isOpen: true,
@@ -168,7 +192,7 @@ const Database = () => {
 
   return (
     admLists.data ? <>
-      <CustomTabs tabValue={value} tabFunc={setValue}/>
+      <CustomTabs setPage={setPage} tabValue={value} tabFunc={setValue}/>
 
       <div className="wrapper">
         {/*<TabPanel index={ETabsNaming.SCHEDULE} value={value}>*/}

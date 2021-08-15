@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import SubjectHeader from "../../components/Subject/SubjectHeader";
 import SubjectTable from "../../components/Subject/SubjectTable";
@@ -6,7 +6,11 @@ import "./Rasp.scss";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import { raspDayT } from "../../Redux/reducers/raspData";
 
-function Rasp() {
+export type RaspProps = {
+    setPage: () => void
+};
+
+function Rasp({setPage}: RaspProps) {
     const [groupName, setGroupName] = useState<string>('...')
     const fullList = useTypedSelector((store) => store.data.fullList);
     const tables = useTypedSelector((store) => store.raspData);
@@ -14,7 +18,7 @@ function Rasp() {
 
     return (fullList.data.length > 0 && timings.length > 0) ? <div className="App">
         <div className="App__container">
-            <Header setGroupName={setGroupName}/>
+            <Header setPage={setPage} setGroupName={setGroupName}/>
             <SubjectHeader name={groupName}/>
             <div className={"tables__container"}>
                 {
