@@ -16,6 +16,7 @@ import Searcher from "../../Searcher/Searcher";
 import nullClearer from "../../../utils/nullClearer";
 import { handleSelectClick } from "../tableFuncs";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
+import { useActions } from "../../../hooks/useActions";
 
 export interface GroupsData {
   id: number,
@@ -145,6 +146,7 @@ const headCells: HeadCell[] = [
 
 interface EnhancedTableProps {
   numSelected: number;
+  deleteFunc: () => void,
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof GroupsData) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
@@ -154,10 +156,15 @@ interface EnhancedTableProps {
 
 function EnhancedTableHead(props: EnhancedTableProps) {
   const classes = useTableHeaderStyles();
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, deleteFunc } = props;
   const createSortHandler = (property: keyof GroupsData) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
+
+  // const handleDelete = () => {
+  //   console.log('selected >>> ', selected);
+  //   deleteGroupAdm(Number(selected[0]));
+  // }
 
   return (
     <TableHead className={classes.header}>
@@ -188,7 +195,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
           </TableCell>
         })}
         <TableCell className={classes.deleteCell}>
-          <IconButton className={classes.deleteBtn}>
+          <IconButton onClick={deleteFunc} className={classes.deleteBtn}>
             <DeleteOutlinedIcon/>
           </IconButton>
         </TableCell>
@@ -244,6 +251,7 @@ export type GroupsTableProps = {
 
 const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTableProps) => {
   const classes = useStyles();
+  const { deleteGroupAdm } = useActions();
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof GroupsData>('group');
   const [selected, setSelected] = React.useState<string[]>([]);
@@ -269,6 +277,17 @@ const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTa
       setGroupsDataRows(groupsDataRows);
     }
   }, [searcher])
+
+  const handleDelete = () => {
+    deleteGroupAdm(Number(selected[0]));
+    console.log('selected >>> ', Number(selected[0]));
+    const indexForRemove: number = groupsDataRows.findIndex((item) => item.id === Number(selected[0]));
+    console.log('selected index >>> ', indexForRemove)
+    // const newRows = groupsDataRows.splice(0, 1);
+    console.log('selected before del >>>', groupsDataRows);
+    console.log('selected afted del >>> ', [...groupsDataRows.slice(0, indexForRemove), ...groupsDataRows.slice(indexForRemove + 1, groupsDataRows.length)]);
+    setGroupsDataRows([...groupsDataRows.slice(0, indexForRemove), ...groupsDataRows.slice(indexForRemove + 1, groupsDataRows.length)]);
+  }
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof GroupsData) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -340,6 +359,7 @@ const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTa
             aria-label="enhanced table"
           >
             <EnhancedTableHead
+              deleteFunc={handleDelete}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}

@@ -4,7 +4,8 @@ import {
   EData,
   TAdmAudList,
   TAdmGroupList,
-  TAdmListsData, TAdmStageList,
+  TAdmListsData,
+  TAdmStageList,
   TAdmSubgroupList,
   TAdmSubjectList,
   TAdmTeacherList,
@@ -171,6 +172,20 @@ export const patchGroupAdm = (group: TAdmGroupList, id: number) => {
         alert("Изменение группы прошло удачно");
         return dispatch({ type: EData.PATCH_GROUP })
       })
+  }
+}
+
+export const deleteGroupAdm = (id: number) => {
+  return (dispatch: Dispatch<DataAction>) => {
+    fetch(`${api.DB.group}?id=${id}`, {
+      ...authDefault,
+      method: "DELETE"
+    })
+      .then((response) => {
+        alert('Группа(ы) успешно удалены');
+        return dispatch({type: EData.DELETE_GROUP});
+      })
+      .catch((error) => alert('Произошла ошибка при удалении групп(ы)!'));
   }
 }
 
