@@ -15,7 +15,7 @@ const calculateRes = (data: TGroupModal): string => {
     };
 
     if (data.year) {
-        semestr = '222';
+        semestr = '1';
     }
 
     res = `${caf}${semestr}${data.groupNumber}${grade}`;

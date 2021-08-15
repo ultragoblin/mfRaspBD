@@ -12,7 +12,7 @@ import Schedule from "../../components/Tables/Schedule/Schedule";
 import Teachers, { TeachersData } from "../../components/Tables/Teachers/Teachers";
 import Auds, { AudData } from "../../components/Tables/Auds/Auds";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
-import { TDataSemesters } from "../../Redux/reducers/data";
+import { TAdmGroupList, TDataSemesters } from "../../Redux/reducers/data";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -90,28 +90,24 @@ const Database = () => {
   const [value, setValue] = React.useState<ETabsNaming>(ETabsNaming.GROUPS);
 
   useEffect(() => {
-    console.log(admLists.data.aud)
-    // fullList.data.forEach((item) => {
-    //   for (let key in item.semesters) {
-    //     // @ts-ignore
-    //     item.semesters[key].forEach((semesterItem: TDataSemesters) => {
-    //       semesterItem.cafs.forEach((cafItem) => {
-    //         cafItem.groups.forEach((groupsItem) => {
-    //           let group: GroupsData;
-    //           group = {
-    //             caf: semesterItem.fac_name + cafItem.caf_name,
-    //             group: semesterItem.fac_name + cafItem.caf_name + '-' + groupsItem.grp_name,
-    //             id: groupsItem.grp_id,
-    //             year: item.year
-    //           }
-    //           setGroupsDataRows(prevState => {
-    //             return [...prevState, group]
-    //           })
-    //         })
-    //       })
-    //     })
-    //   }
-    // })
+    admLists.data.group.forEach((groupItem) => {
+      setGroupsDataRows(prevState => {
+        if (groupItem.id && groupItem.name) {
+          let cafName = groupItem.name.split('-')[0];
+          let group: GroupsData;
+          group = {
+            id: groupItem.id,
+            group: groupItem.name,
+            caf: cafName,
+            year: groupItem.startyear,
+          };
+
+          return [...prevState, group];
+        }
+
+        return [...prevState]
+      })
+    })
 
     admLists.data.subject.val.forEach((subjectItem) => {
       setSubjectsDataRows(prevState => {

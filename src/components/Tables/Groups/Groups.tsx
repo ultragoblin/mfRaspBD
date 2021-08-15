@@ -21,7 +21,7 @@ export interface GroupsData {
   id: number,
   group: string,
   caf: string,
-  year: number
+  year: number,
 }
 
 function createGroupData(

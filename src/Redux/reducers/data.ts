@@ -102,7 +102,8 @@ export type TFullList = {
 
 export type TAdmGroupList = {
   cafid: number,
-  id: number,
+  id?: number,
+  name?: string,
   number: number,
   stageid: number,
   startyear: number
@@ -130,12 +131,18 @@ export type TAdmSubgroupList = {
   name: string
 };
 
-export type TCafList = {
+export type TAdmCafList = {
   facultyid: number,
   id: number,
   name: string | null,
   nameshort: string,
   number: number
+};
+
+export type TAdmStageList = {
+  id: number,
+  name: string | null,
+  suffix: string
 };
 
 export type TAdmListsData = {
@@ -156,7 +163,8 @@ export type TAdmListsData = {
     options: TSubGroupOptions[],
     val: TAdmSubgroupList[]
   },
-  caf: TCafList[]
+  caf: TAdmCafList[],
+  stage: TAdmStageList[]
 };
 
 export type TAdmLists = {
@@ -197,7 +205,8 @@ const initialState: TData = {
         options: [],
         val: []
       },
-      caf: []
+      caf: [],
+      stage: []
     },
     error: '',
     loading: false
@@ -255,7 +264,10 @@ type deleteGroupAdm = {
 
 type putSubjectAdm = {
   type: EData.PUT_SUBJECT,
-  subject: TAdmSubjectList
+  subject: {
+    id: number,
+    name: string
+  }
 };
 
 type patchSubjectAdm = {

@@ -4,7 +4,7 @@ import {
   EData,
   TAdmAudList,
   TAdmGroupList,
-  TAdmListsData,
+  TAdmListsData, TAdmStageList,
   TAdmSubgroupList,
   TAdmSubjectList,
   TAdmTeacherList,
@@ -14,6 +14,7 @@ import {
   TTeacherOptions
 } from "../reducers/data";
 import api, { authDefault } from "../../utils/api/api";
+import { TSubjectModal } from "../../components/CustomModal/CustomModal";
 
 export const getFullList = () => {
   return (dispatch: Dispatch<DataAction>) => {
@@ -46,7 +47,8 @@ export const getAdmLists = () => {
         options: [],
         val: []
       },
-      caf: []
+      caf: [],
+      stage: []
     };
 
     dispatch({ type: EData.GET_ADM_LISTS });
@@ -118,12 +120,20 @@ export const getAdmLists = () => {
       .then((response) => response.json())
       .catch((error) => {
         requestError = true;
-        return dispatch({type: EData.ERROR_ADM_LISTS, error: `adm caf = ${error}`});
+        return dispatch({ type: EData.ERROR_ADM_LISTS, error: `adm caf = ${error}` });
       })
       .then((okCaf) => admLists.caf = okCaf);
 
+    fetch(api.admLists.stage, authDefault)
+      .then((response) => response.json())
+      .catch((error) => {
+        requestError = true;
+        return dispatch({ type: EData.ERROR_ADM_LISTS, error: `adm stage = ${error}` });
+      })
+      .then((okStage: TAdmStageList[]) => admLists.stage = okStage);
+
     if (!requestError) {
-      return dispatch({ type: EData.SUCCESS_ADM_LISTS, payload: admLists })
+      return dispatch({ type: EData.SUCCESS_ADM_LISTS, payload: admLists });
     }
   }
 };
@@ -139,11 +149,29 @@ export const putGroupAdm = (group: TAdmGroupList) => {
       .catch((error) => {
         alert("При добавлении группы произошла ошибка!");
       })
-      .then((ok) => dispatch({type: EData.PUT_GROUP, id: ok.id}))
+      .then((ok) => {
+        alert("Группа успешна добавлена");
+        return dispatch({ type: EData.PUT_GROUP, id: ok.id })
+      })
   }
 }
 
-export const putSubjectAdm = (subject: TAdmSubjectList) => {
+export const patchGroupAdm = (group: TAdmGroupList) => {
+  return (dispatch: Dispatch<DataAction>) => {
+    fetch(api.DB.group, {
+      ...authDefault,
+      method: "PATCH",
+      body: JSON.stringify(group)
+    })
+      .then((response) => response.json())
+      .catch((error) => {
+        alert("При Измемении группы произошла ошибка!");
+      })
+      .then((ok) => dispatch({ type: EData.PATCH_GROUP }))
+  }
+}
+
+export const putSubjectAdm = (subject: TSubjectModal) => {
   return (dispatch: Dispatch<DataAction>) => {
     fetch(api.DB.subject, {
       ...authDefault,
@@ -154,7 +182,25 @@ export const putSubjectAdm = (subject: TAdmSubjectList) => {
       .catch((error) => {
         alert("При добавлении предмета произошла ошибка!");
       })
-      .then((ok) => dispatch({type: EData.PUT_SUBJECT, id: ok.id}))
+      .then((ok) => {
+        alert("Предмет добавлен");
+        return dispatch({ type: EData.PUT_SUBJECT, id: ok.id })
+      })
+  }
+}
+
+export const patchSubjectAdm = (subject: TSubjectModal) => {
+  return (dispatch: Dispatch<DataAction>) => {
+    fetch(api.DB.subject, {
+      ...authDefault,
+      method: "PATCH",
+      body: JSON.stringify(subject)
+    })
+      .then((response) => response.json())
+      .catch((error) => {
+        alert("При добавлении предмета произошла ошибка!");
+      })
+      .then((ok) => dispatch({ type: EData.PATCH_SUBJECT }))
   }
 }
 
@@ -169,13 +215,13 @@ export const putTeacherAdm = (teacher: TAdmTeacherList) => {
       .catch((error) => {
         alert("При добавлении преподователя произошла ошибка!");
       })
-      .then((ok) => dispatch({type: EData.PUT_TEACHER, id: ok.id}))
+      .then((ok) => dispatch({ type: EData.PUT_TEACHER, id: ok.id }))
   }
 }
 
 export const putAudAdm = (aud: TAdmAudList) => {
   return (dispatch: Dispatch<DataAction>) => {
-    fetch(api.DB.teacher, {
+    fetch(api.DB.aud, {
       ...authDefault,
       method: "PUT",
       body: JSON.stringify(aud)
@@ -184,6 +230,6 @@ export const putAudAdm = (aud: TAdmAudList) => {
       .catch((error) => {
         alert("При добавлении аудитории произошла ошибка!");
       })
-      .then((ok) => dispatch({type: EData.PUT_AUD, id: ok.id}))
+      .then((ok) => dispatch({ type: EData.PUT_AUD, id: ok.id }))
   }
 };

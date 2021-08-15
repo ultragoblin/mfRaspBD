@@ -16,13 +16,14 @@ const api = {
     subject: 'https://mf.bmstu.ru/rasp/api/adm/subject/list',
     group: 'https://mf.bmstu.ru/rasp/api/adm/group/list',
     subgroup: 'https://mf.bmstu.ru/rasp/api/adm/subgroup/list',
-    caf: 'https://mf.bmstu.ru/rasp/api/adm/caf/list'
+    caf: 'https://mf.bmstu.ru/rasp/api/adm/caf/list',
+    stage: 'https://mf.bmstu.ru/rasp/api/adm/stage/list'
   },
   DB: {
-    group: '/rasp/api/adm/group',
-    subject: '/rasp/api/adm/subject',
-    teacher: '/rasp/api/adm/teacher',
-    aud: '/rasp/api/adm/aud'
+    group: 'https://mf.bmstu.ru/rasp/api/adm/group',
+    subject: 'https://mf.bmstu.ru/rasp/api/adm/subject',
+    teacher: 'https://mf.bmstu.ru/rasp/api/adm/teacher',
+    aud: 'https://mf.bmstu.ru/rasp/api/adm/aud'
   },
   getGroup: ({
                groupID,

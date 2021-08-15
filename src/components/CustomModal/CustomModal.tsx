@@ -35,7 +35,7 @@ export type TGroupModal = {
   year?: string,
   grade?: string,
   groupNumber?: string,
-  res?: string
+  res: string
 };
 
 export type TSubjectModal = {
@@ -115,7 +115,13 @@ const CustomModal = ({
         <>
           <div className={classes.paper}>
             {switchModals()}
-            <Buttons/>
+            <Buttons
+              audModalData={audModalData}
+              teacherModalData={teacherModalData}
+              subjectModalData={subjectModalData}
+              groupModalData={groupModalData}
+              mode={modal.mode}
+              tabNumber={tabNumber}/>
           </div>
         </>
       </Modal>
