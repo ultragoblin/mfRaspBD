@@ -61,9 +61,9 @@ export type DatabaseProps = {
   setPage: () => void
 };
 
-const Database = ({setPage}: DatabaseProps) => {
+const Database = ({ setPage }: DatabaseProps) => {
   const admLists = useTypedSelector((store) => store.data.admLists);
-  const {getAdmLists} = useActions();
+  const { getAdmLists } = useActions();
   const [groupsDataRows, setGroupsDataRows] = React.useState<GroupsData[]>([]);
   const [subjectsDataRows, setSubjectsDataRows] = React.useState<SubjectsData[]>([]);
   const [teachersDataRows, setTeachersDataRows] = React.useState<TeachersData[]>([]);
@@ -102,7 +102,6 @@ const Database = ({setPage}: DatabaseProps) => {
   }, [])
 
   useEffect(() => {
-    console.log('adm list group', admLists.data.group)
     admLists.data.group.forEach((groupItem) => {
       setGroupsDataRows(prevState => {
         if (groupItem.id && groupItem.name) {
@@ -156,18 +155,6 @@ const Database = ({setPage}: DatabaseProps) => {
     })
   }, [admLists.data])
 
-  useEffect(() => {
-    console.log('adm load >>> ', admLists.loading)
-  }, [admLists.loading])
-
-  useEffect(() => {
-    console.log('adm group state!', admLists.data.group);
-  }, [admLists.data.group])
-
-  useEffect(() => {
-    console.log('db >>> ', groupsDataRows)
-  }, [groupsDataRows])
-
   const handleModalAdd = (): void => {
     setModal({
       isOpen: true,
@@ -199,7 +186,11 @@ const Database = ({setPage}: DatabaseProps) => {
         {/*  <Schedule/>*/}
         {/*</TabPanel>*/}
         <TabPanel index={ETabsNaming.GROUPS} value={value}>
-          <Groups openModalChange={handleModalChange} groupsDataRows={groupsDataRows} setGroupsDataRows={setGroupsDataRows}/>
+          {groupsDataRows.length > 0 && <Groups
+              openModalChange={handleModalChange}
+              groupsDataRows={groupsDataRows}
+              setGroupsDataRows={setGroupsDataRows}
+          />}
         </TabPanel>
         <TabPanel index={ETabsNaming.SUBJECTS} value={value}>
           <Subjects subjectsDataRows={subjectsDataRows} setSubjectDataRows={setSubjectsDataRows}/>

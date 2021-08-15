@@ -248,7 +248,6 @@ export type GroupsTableProps = {
   openModalChange: (id: number) => void
 }
 
-
 const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTableProps) => {
   const classes = useStyles();
   const { deleteGroupAdm } = useActions();
@@ -257,40 +256,38 @@ const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTa
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [searcher, setSearcher] = useState<string>('');
+  const [searcher, setSearcher] = React.useState<string>('');
+  const [savedRows, setSavedRows] = React.useState<GroupsData[]>([]);
 
   useEffect(() => {
-    if (searcher.length > 0) {
-      let tempArr = groupsDataRows.map((item) => {
-        if (item?.group.toLowerCase().includes(searcher)) {
-          return item;
-        } else {
-          return null;
+    setSavedRows(groupsDataRows);
+  }, [])
+
+  useEffect(() => {
+    if (savedRows.length > 0) {
+      let tempArr: GroupsData[] = [];
+      groupsDataRows.forEach((item) => {
+        if (item?.group.toLowerCase().includes((searcher.toLowerCase()))) {
+          tempArr.push(item);
         }
       });
 
-      // @ts-ignore
-      nullClearer(tempArr)
-      // @ts-ignore
-      setGroupsDataRows(tempArr);
-    } else {
-      setGroupsDataRows(groupsDataRows);
+      setSavedRows(tempArr);
+    } else { // Восстанавливаем стейт
+      console.log('restore?')
+      setSavedRows(groupsDataRows);
     }
   }, [searcher])
-
-  useEffect(() => {
-    console.log('group >>> ', groupsDataRows)
-  }, [groupsDataRows])
 
   const handleDelete = () => {
     deleteGroupAdm(Number(selected[0]));
     console.log('selected >>> ', Number(selected[0]));
-    const indexForRemove: number = groupsDataRows.findIndex((item) => item.id === Number(selected[0]));
+    const indexForRemove: number = savedRows.findIndex((item) => item.id === Number(selected[0]));
     console.log('selected index >>> ', indexForRemove)
     // const newRows = groupsDataRows.splice(0, 1);
-    console.log('selected before del >>>', groupsDataRows);
-    console.log('selected afted del >>> ', [...groupsDataRows.slice(0, indexForRemove), ...groupsDataRows.slice(indexForRemove + 1, groupsDataRows.length)]);
-    setGroupsDataRows([...groupsDataRows.slice(0, indexForRemove), ...groupsDataRows.slice(indexForRemove + 1, groupsDataRows.length)]);
+    console.log('selected before del >>>', savedRows);
+    console.log('selected afted del >>> ', [...savedRows.slice(0, indexForRemove), ...savedRows.slice(indexForRemove + 1, savedRows.length)]);
+    setGroupsDataRows([...savedRows.slice(0, indexForRemove), ...savedRows.slice(indexForRemove + 1, savedRows.length)]);
   }
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof GroupsData) => {
@@ -301,7 +298,7 @@ const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTa
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = groupsDataRows.map((n) => String(n.id));
+      const newSelecteds = savedRows.map((n) => String(n.id));
       setSelected(newSelecteds);
       return;
     }
@@ -369,10 +366,10 @@ const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTa
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={groupsDataRows.length}
+              rowCount={savedRows.length}
             />
             <TableBody>
-              {stableSort(groupsDataRows, getComparator(order, orderBy))
+              {stableSort(savedRows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
@@ -440,7 +437,7 @@ const Groups = ({ groupsDataRows, setGroupsDataRows, openModalChange }: GroupsTa
           labelRowsPerPage={"Количество строк на странице"}
           rowsPerPageOptions={[10, 25, 50, 75, 100]}
           component="div"
-          count={groupsDataRows.length}
+          count={savedRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
