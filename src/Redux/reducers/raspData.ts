@@ -15,7 +15,7 @@ export type pairT = {
 export type pairListT = {
   pair: pairT[],
   id: number,
-  pairtime: string
+  pairtime?: string
 }
 
 export type raspDayT = {
@@ -77,11 +77,12 @@ export default function raspData(
         newState.day.push(action.payload);
       }
 
+      // забиваем пустые поля при незаполнении
       newState.day = newState.day.map((dayItem) => {
         dayItem.pairList = dayItem.pairList.map((pairItem) => {
           const newPairs: pairT[] = [];
           for (let i = 0; i < pairItem.pair.length; i++) {
-            const {subgroup, subject, teacher, aud} = pairItem.pair[i];
+            const { subgroup, subject, teacher, aud } = pairItem.pair[i];
 
             if (!teacher) {
               Object.assign(pairItem.pair[i], {
@@ -113,6 +114,7 @@ export default function raspData(
         return dayItem;
       })
 
+      // чистим дубликаты
       newState.day = newState.day.map((dayItem) => {
         let newPairs: pairListT[] = [];
         // newPairs.push(dayItem);
@@ -131,6 +133,47 @@ export default function raspData(
           return newPairs;
         });
         dayItem.pairList = newPairs;
+        return dayItem;
+      })
+
+
+      // Добавляем пустые пары на пропусках если день не пустой
+      newState.day = newState.day.map((dayItem) => {
+        if (dayItem.pairList.length > 0) {
+          let newPairs: pairListT[] = [];
+          let skippedPairs: number[] = [];
+          let oldPairsID: number[] = [];
+
+          dayItem.pairList.forEach((pairItem) => {
+            oldPairsID.push(pairItem.id);
+          })
+
+          for (let i = 1; i < dayItem.pairList[dayItem.pairList.length - 1].id; i++) {
+
+            if (oldPairsID.find((item) => item === i) === undefined) {
+              skippedPairs.push(i);
+            }
+          }
+
+          for (let i = 0; i < skippedPairs.length; i++) {
+            newPairs[skippedPairs[i] - 1] = {
+              id: skippedPairs[i],
+              pair: []
+            };
+          }
+
+          for (let i = 0; i < oldPairsID.length + skippedPairs.length; i++) {
+            if (newPairs[i] === undefined) {
+              let savedPair = dayItem.pairList.find((item) => item.id === i + 1)
+              if (savedPair) {
+                newPairs[i] = savedPair;
+              }
+            }
+          }
+
+          dayItem.pairList = newPairs;
+        }
+
         return dayItem;
       })
 

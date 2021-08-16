@@ -37,8 +37,16 @@ const SubjectTable = ({ day: { name, id, special_day } }: SubjectTableProps) => 
   useEffect(() => {
     const tempArr = [];
     raspDayTable.pairList.forEach((pair) => {
-      tempArr.push(<Row key={pair.id} stateFunc={pairListHandler} pair={pair.pair} number={pair.id}
-                        timer={pair.pairtime}/>);
+      if (pair.pairtime) {
+        tempArr.push(<Row
+            key={pair.id}
+            stateFunc={pairListHandler}
+            pair={pair.pair}
+            number={pair.id}
+            timer={pair.pairtime}
+          />
+        );
+      }
     })
     for (let i = tempArr.length; i < 7; i++) {
       tempArr.push(<Row key={timings[i].id} stateFunc={pairListHandler} pair={[]} number={timings[i].number}
@@ -72,8 +80,16 @@ const SubjectTable = ({ day: { name, id, special_day } }: SubjectTableProps) => 
     if (rowJSX.refresh) {
       const tempArr = [];
       raspDayTable.pairList.forEach((pair) => {
-        tempArr.push(<Row key={pair.id} stateFunc={pairListHandler} pair={pair.pair} number={pair.id}
-                          timer={pair.pairtime}/>);
+        if (pair.pairtime) {
+          tempArr.push(<Row
+              key={pair.id}
+              stateFunc={pairListHandler}
+              pair={pair.pair}
+              number={pair.id}
+              timer={pair.pairtime}
+            />
+          );
+        }
       })
       for (let i = tempArr.length; i < 7; i++) {
         tempArr.push(<Row key={timings[i].id} stateFunc={pairListHandler} pair={[]} number={timings[i].number}
