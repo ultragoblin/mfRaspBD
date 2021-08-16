@@ -90,7 +90,8 @@ const Header = ({setGroupName ,setPage}: HeaderProps) => {
       if (Number(e.target.value) === dataItem.year) {
         return setRaspSelect(prevState => {
           return {
-            ...prevState,
+            activeSemester: 1,
+            yearOptions: prevState.yearOptions,
             semester: dataItem.semesters["1"],
             year: dataItem.year,
             year_id: dataItem.year_id
@@ -120,31 +121,6 @@ const Header = ({setGroupName ,setPage}: HeaderProps) => {
       }
     })
   }, [])
-
-  const handleFac = (e: any): void => {
-    raspSelect.semester?.forEach((fac) => {
-      if (fac.fac_name === e.target.value) {
-        setRaspSelect(prevState => {
-          return {
-            ...prevState,
-            fac: {
-              options: prevState.fac?.options,
-              val: fac
-            }
-          }
-        })
-      }
-    })
-  }
-
-  const handleRadio = (e: any): void => {
-    setRaspSelect(prevState => {
-      return {
-        ...prevState,
-        activeSemester: Number(e.target.value)
-      }
-    });
-  }
 
   useEffect(() => {
     fullList.data.forEach((year) => {
@@ -197,24 +173,6 @@ const Header = ({setGroupName ,setPage}: HeaderProps) => {
 
   }, [raspSelect.semester])
 
-  const handleCaf = (e: any): void => {
-    raspSelect.fac?.val?.cafs.forEach((caf) => {
-      if (Number(e.target.value) === caf.caf_name) {
-        setRaspSelect(prevState => {
-          return {
-            ...prevState,
-            caf: {
-              options: prevState.caf?.options,
-              val: caf
-            }
-          }
-        })
-      } else {
-        return;
-      }
-    })
-  }
-
   useEffect(() => {
     let cafOp: TOptions[] = [];
     let temp: TOptions;
@@ -237,24 +195,6 @@ const Header = ({setGroupName ,setPage}: HeaderProps) => {
     })
 
   }, [raspSelect.fac])
-
-  const handleGroup = (e: any): void => {
-    raspSelect.caf?.val?.groups.forEach((group) => {
-      if (group.grp_name === e.target.value) {
-        setRaspSelect(prevState => {
-          return {
-            ...prevState,
-            group: {
-              options: prevState.group?.options,
-              val: group
-            }
-          }
-        })
-      } else {
-        return;
-      }
-    })
-  };
 
   useEffect(() => {
     let groupOp: TOptions[] = [];
@@ -288,6 +228,7 @@ const Header = ({setGroupName ,setPage}: HeaderProps) => {
         yearID: year_id,
         semester: activeSemester
       }
+      debugger
       setData(query);
 
       if (fac?.val && caf?.val && group?.val) {
@@ -296,6 +237,83 @@ const Header = ({setGroupName ,setPage}: HeaderProps) => {
     }
 
   }, [raspSelect.group?.val])
+
+  const handleFac = (e: any): void => {
+    raspSelect.semester?.forEach((fac) => {
+      if (fac.fac_name === e.target.value) {
+        setRaspSelect(prevState => {
+          return {
+            yearOptions: prevState.yearOptions,
+            activeSemester: prevState.activeSemester,
+            semester: prevState.semester,
+            year: prevState.year,
+            year_id: prevState.year_id,
+            fac: {
+              options: prevState.fac?.options,
+              val: fac
+            }
+          }
+        })
+      }
+    })
+
+  }
+
+  const handleRadio = (e: any): void => {
+    setRaspSelect(prevState => {
+      return {
+        yearOptions: prevState.yearOptions,
+        activeSemester: Number(e.target.value),
+        year: prevState.year,
+        year_id: prevState.year_id
+      }
+    });
+
+  }
+
+  const handleCaf = (e: any): void => {
+    raspSelect.fac?.val?.cafs.forEach((caf) => {
+      if (Number(e.target.value) === caf.caf_name) {
+        setRaspSelect(prevState => {
+          return {
+            yearOptions: prevState.yearOptions,
+            activeSemester: prevState.activeSemester,
+            semester: prevState.semester,
+            year: prevState.year,
+            year_id: prevState.year_id,
+            fac: prevState.fac,
+            caf: {
+              options: prevState.caf?.options,
+              val: caf
+            }
+          }
+        })
+      } else {
+        return;
+      }
+    })
+
+  }
+
+  const handleGroup = (e: any): void => {
+    raspSelect.caf?.val?.groups.forEach((group) => {
+      if (group.grp_name === e.target.value) {
+        setRaspSelect(prevState => {
+          return {
+            ...prevState,
+            group: {
+              options: prevState.group?.options,
+              val: group
+            }
+          }
+        })
+      }
+    })
+  };
+
+  useEffect(() => {
+    // debugger;
+  }, [raspSelect])
 
   return (
     <header className={styles.header}>

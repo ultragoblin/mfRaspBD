@@ -15,10 +15,11 @@ export interface CustomSelectInterface {
   id: {
     label: string,
     select: string
-  }
+  },
+  resetOnNull?: boolean
 };
 
-const CustomSelect = ({ selectItems, width, label, id, stateFunc }: CustomSelectInterface) => {
+const CustomSelect = ({ selectItems, width, label, id, stateFunc, resetOnNull }: CustomSelectInterface) => {
   const useStyles = makeStyles((theme) => ({
     formControl: {
       minWidth: width,
@@ -30,10 +31,10 @@ const CustomSelect = ({ selectItems, width, label, id, stateFunc }: CustomSelect
   }));
 
   const classes = useStyles();
-  const [select, setSelect] = useState('');
+  const [select, setSelect] = useState<string | null>('');
   const handleChange = (e: any) => {
     stateFunc(e);
-    setSelect(e.target.value);
+    setSelect(e?.target?.value);
   };
 
   return (
