@@ -63,6 +63,7 @@ export default function raspData(
     case raspDataEnum.SET_DATA:
       return action.payload;
     case raspDataEnum.SET_DAY:
+
       let newState: raspDataT = state;
       let isInData: boolean = false;
       newState.day = newState.day.map((dayItem) => {
@@ -82,10 +83,9 @@ export default function raspData(
           const newPairs: pairT[] = [];
           for (let i = 0; i < pairItem.pair.length; i++) {
             const {subgroup, subject, teacher, aud} = pairItem.pair[i];
-
-            if (aud === null) {
-              pairItem.pair[i].aud = [];
-            }
+            // if (aud == null) {
+            //   pairItem.pair[i].aud = [];
+            // }
 
             if (!teacher) {
               Object.assign(pairItem.pair[i], {
@@ -101,7 +101,7 @@ export default function raspData(
 
             if (!aud) {
               Object.assign(pairItem.pair[i], {
-                aud: null
+                aud: []
               })
             }
 
@@ -116,7 +116,7 @@ export default function raspData(
         })
         return dayItem;
       })
-
+      debugger;
       return {
         ...newState
       };
