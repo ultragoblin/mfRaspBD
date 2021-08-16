@@ -63,7 +63,6 @@ export default function raspData(
     case raspDataEnum.SET_DATA:
       return action.payload;
     case raspDataEnum.SET_DAY:
-
       let newState: raspDataT = state;
       let isInData: boolean = false;
       newState.day = newState.day.map((dayItem) => {
@@ -116,7 +115,6 @@ export default function raspData(
         })
         return dayItem;
       })
-      debugger;
       return {
         ...newState
       };
