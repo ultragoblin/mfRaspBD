@@ -82,9 +82,6 @@ export default function raspData(
           const newPairs: pairT[] = [];
           for (let i = 0; i < pairItem.pair.length; i++) {
             const {subgroup, subject, teacher, aud} = pairItem.pair[i];
-            // if (aud == null) {
-            //   pairItem.pair[i].aud = [];
-            // }
 
             if (!teacher) {
               Object.assign(pairItem.pair[i], {
@@ -115,9 +112,29 @@ export default function raspData(
         })
         return dayItem;
       })
-      return {
-        ...newState
-      };
+
+      newState.day = newState.day.map((dayItem) => {
+        let newPairs: pairListT[] = [];
+        // newPairs.push(dayItem);
+        dayItem.pairList.forEach((pairListItem) => {
+          let isDuplicate: boolean = false;
+          newPairs.forEach((second) => {
+            if (pairListItem.id === second.id) {
+              isDuplicate = true;
+            }
+          })
+
+          if (!isDuplicate) {
+            newPairs.push(pairListItem);
+          }
+
+          return newPairs;
+        });
+        dayItem.pairList = newPairs;
+        return dayItem;
+      })
+
+      return newState;
     case raspDataEnum.CLEAR_DATA:
       return {
         ...state,
