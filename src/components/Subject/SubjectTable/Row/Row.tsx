@@ -30,10 +30,10 @@ export enum RowWidth {
     NUMBER = 42,
     TIMER = 121,
     CHECKBOX = 42,
-    SUBJECT = 442,
-    TEACHER = 392,
-    AUD = 213,
-    SUBGROUP = 124
+    SUBJECT = 470,
+    TEACHER = 250,
+    AUD = 326,
+    SUBGROUP = 125
 }
 
 export interface RowProps {

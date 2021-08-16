@@ -1,11 +1,11 @@
 .aud {
   display: grid;
-  grid-template-columns: 177px 32px;
+  grid-template-columns: 290px 32px;
   align-items: center;
   justify-content: center;
 
   &_double {
-    grid-template-columns: 88.5px 88.5px 32px;
+    grid-template-columns: 145px 145px 32px;
   }
 
   &:last-child {
