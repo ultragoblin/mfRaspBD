@@ -1,4 +1,4 @@
-import styles from "./Naming.module.scss";
+import styles from "./Naming.module.css";
 
 const Naming = () => {
   return (

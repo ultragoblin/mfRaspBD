@@ -224,16 +224,16 @@ const Teachers = ({setTeachersDataRows, teachersDataRows}: TeacherProps) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          labelRowsPerPage={"Количество строк на странице"}
-          rowsPerPageOptions={[10, 25, 50, 75, 100]}
-          component="div"
-          count={savedRows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        {/*<TablePagination*/}
+        {/*  labelRowsPerPage={"Количество строк на странице"}*/}
+        {/*  rowsPerPageOptions={[10, 25, 50, 75, 100]}*/}
+        {/*  component="div"*/}
+        {/*  count={savedRows.length}*/}
+        {/*  rowsPerPage={rowsPerPage}*/}
+        {/*  page={page}*/}
+        {/*  onChangePage={handleChangePage}*/}
+        {/*  onChangeRowsPerPage={handleChangeRowsPerPage}*/}
+        {/*/>*/}
       </Paper>
     </div>
   );

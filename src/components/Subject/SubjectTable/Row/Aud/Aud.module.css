@@ -3,14 +3,14 @@
   grid-template-columns: 290px 32px;
   align-items: center;
   justify-content: center;
+}
 
-  &_double {
-    grid-template-columns: 145px 145px 32px;
-  }
+.aud_double {
+  grid-template-columns: 145px 145px 32px;
+}
 
-  &:last-child {
-    cursor: pointer;
-  }
+.aud:last-child {
+  cursor: pointer;
 }
 
 .icon {

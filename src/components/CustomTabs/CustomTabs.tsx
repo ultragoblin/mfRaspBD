@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import styles from './CustomTabs.module.scss';
+import styles from './CustomTabs.module.css';
 import routing from "../../utils/path/routing";
 
 export interface CustomTabsProps {

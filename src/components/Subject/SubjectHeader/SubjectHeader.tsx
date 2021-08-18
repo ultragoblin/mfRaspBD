@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import AutorenewIcon from "@material-ui/icons/Autorenew";
 import SaveIcon from "@material-ui/icons/Save";
-import styles from "./SubjectHeader.module.scss";
+import styles from "./SubjectHeader.module.css";
 import { useActions } from "../../../hooks/useActions";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 

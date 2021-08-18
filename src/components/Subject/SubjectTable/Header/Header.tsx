@@ -1,4 +1,4 @@
-import styles from "./Header.module.scss";
+import styles from "./Header.module.css";
 import CustomRadio from "../../../CustomRadio";
 import { radioType } from "../../../CustomRadio/CustomRadio";
 import { EDayType } from "../SubjectTable";

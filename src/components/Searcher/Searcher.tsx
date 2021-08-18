@@ -1,7 +1,7 @@
 import React from "react";
 import {TextField} from "@material-ui/core";
 import {createStyles, makeStyles} from '@material-ui/core/styles';
-import styles from './Searcher.module.scss';
+import styles from './Searcher.module.css';
 
 export interface SearcherProps {
     state: string,

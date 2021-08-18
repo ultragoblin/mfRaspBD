@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./SubjectTable.module.scss";
+import styles from "./SubjectTable.module.css";
 import Naming from "./Naming";
 import Row from "./Row";
 import Header from "./Header";

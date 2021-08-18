@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import Single from "./Single";
 import Double from "./Double";
-import "./Row.scss";
+import "./Row.css";
 import {pairListT, pairT} from "../../../../Redux/reducers/raspData";
 import {useTypedSelector} from "../../../../hooks/useTypedSelector";
 import {IEveryOptions, TEveryDefaultOptionDouble, TEveryDefaultOptionsSingle} from "../../../../Redux/reducers/data";

@@ -3,7 +3,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
-import styles from "./Aud.module.scss";
+import styles from "./Aud.module.css";
 import { autocompleteNamings } from "../Row";
 import {TAudOptions, TEveryDefaultOptionsSingle} from "../../../../../Redux/reducers/data";
 

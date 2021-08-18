@@ -2,7 +2,7 @@ import React from "react";
 import { Autocomplete } from "@material-ui/lab";
 import TextField from "@material-ui/core/TextField";
 import { InputsProps } from "../CustomModal";
-import styles from './Items.module.scss';
+import styles from './Items.module.css';
 
 export interface CustomAutocompleteProps {
   id: string,

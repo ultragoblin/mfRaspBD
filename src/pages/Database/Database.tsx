@@ -3,7 +3,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 // import IconButton from "@material-ui/core/IconButton";
 // import AddCircleIcon from '@material-ui/icons/AddCircle';
-import "./Database.scss";
+import "./Database.css";
 import CustomTabs from "../../components/CustomTabs/CustomTabs";
 import Groups, { GroupsData } from "../../components/Tables/Groups/Groups";
 import CustomModal, { TAudModal, TGroupModal, TSubjectModal, TTeacherModal } from "../../components/CustomModal/CustomModal";

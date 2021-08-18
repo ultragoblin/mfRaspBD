@@ -4,7 +4,7 @@ import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from "@material-ui/core/MenuItem";
-import "./CustomSelect.scss";
+import "./CustomSelect.css";
 import { TOptions } from "../Header/Header";
 
 export interface CustomSelectInterface {

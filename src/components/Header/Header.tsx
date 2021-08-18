@@ -4,7 +4,7 @@ import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import PrintIcon from '@material-ui/icons/Print';
 import StorageIcon from '@material-ui/icons/Storage';
 import Button from "@material-ui/core/Button";
-import styles from "./Header.module.scss";
+import styles from "./Header.module.css";
 import CustomRadio, { radioType } from "../CustomRadio/CustomRadio";
 import routing from "../../utils/path/routing";
 import { useTypedSelector } from "../../hooks/useTypedSelector";

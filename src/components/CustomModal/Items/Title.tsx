@@ -1,4 +1,4 @@
-import styles from './Items.module.scss';
+import styles from './Items.module.css';
 
 export interface TitleProps {
     text: string

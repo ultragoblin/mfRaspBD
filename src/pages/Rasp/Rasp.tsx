@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import SubjectHeader from "../../components/Subject/SubjectHeader";
 import SubjectTable from "../../components/Subject/SubjectTable";
-import "./Rasp.scss";
+import "./Rasp.css";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import { raspDayT } from "../../Redux/reducers/raspData";
 
