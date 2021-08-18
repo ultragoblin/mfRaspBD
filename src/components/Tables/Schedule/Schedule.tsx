@@ -257,16 +257,16 @@ const Schedule = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        {/*<TablePagination*/}
-        {/*  labelRowsPerPage={"Количество строк на странице"}*/}
-        {/*  rowsPerPageOptions={[10, 25, 50, 75, 100]}*/}
-        {/*  component="div"*/}
-        {/*  count={rows.length}*/}
-        {/*  rowsPerPage={rowsPerPage}*/}
-        {/*  page={page}*/}
-        {/*  onChangePage={(e) => handleChangePage(e, page, setPage)}*/}
-        {/*  onChangeRowsPerPage={(e) => handleChangeRowsPerPage(e, setRowsPerPage, setPage)}*/}
-        {/*/>*/}
+        <TablePagination
+          labelRowsPerPage={"Количество строк на странице"}
+          rowsPerPageOptions={[10, 25, 50, 75, 100]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(e) => handleChangePage(e, page, setPage)}
+          onRowsPerPageChange={(e) => handleChangeRowsPerPage(e, setRowsPerPage, setPage)}
+        />
       </Paper>
     </div>
   );
