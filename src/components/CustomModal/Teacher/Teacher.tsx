@@ -19,13 +19,28 @@ const Teacher = ({ mode, setState, state }: TeacherProps) => {
 
     switch (target.id) {
       case 'teacherInput':
-        setState({ sname: target.value });
+        setState(prevState => {
+          return {
+            ...prevState,
+            sname: target.value
+          }
+        });
         break;
       case 'teacherNameInput':
-        setState({ fname: target.value });
+        setState(prevState => {
+          return {
+            ...prevState,
+            fname: target.value
+          }
+        });
         break;
       case 'teacherLastnameInput':
-        setState({ lname: target.value });
+        setState(prevState => {
+          return {
+            ...prevState,
+            lname: target.value
+          }
+        } );
         break;
       default:
         break;
