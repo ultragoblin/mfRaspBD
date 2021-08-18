@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./SubjectTable.module.css";
+import styles from "./RaspTable.module.css";
 import Naming from "./Naming";
 import Row from "./Row";
 import Header from "./Header";
@@ -16,7 +16,7 @@ export interface SubjectTableProps {
   day: raspDayT
 }
 
-const SubjectTable = ({ day: { name, id, special_day } }: SubjectTableProps) => {
+const RaspTable = ({ day: { name, id, special_day } }: SubjectTableProps) => {
   const tempPairList: pairListT[] = [];
   const [dayType, setDayType] = useState<EDayType>(special_day ? EDayType.SPECIAL : EDayType.COMMON);
   const [rowJSX, setRowJSX] = useState<any>({
@@ -169,7 +169,7 @@ const SubjectTable = ({ day: { name, id, special_day } }: SubjectTableProps) => 
   );
 };
 
-export default SubjectTable;
+export default RaspTable;
 
 // Перебиираю весь массив объектов
 // Чекаю массив свойств, а именно id

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
-import SubjectHeader from "../../components/Subject/SubjectHeader";
-import SubjectTable from "../../components/Subject/SubjectTable";
+import RaspHeader from "../../components/Rasp/RaspHeader";
+import RaspTable from "../../components/Rasp/RaspTable";
 import "./Rasp.css";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import { raspDayT } from "../../Redux/reducers/raspData";
@@ -19,10 +19,10 @@ function Rasp({setPage}: RaspProps) {
     return (fullList.data.length > 0 && timings.length > 0) ? <div className="App">
         <div className="App__container">
             <Header setPage={setPage} setGroupName={setGroupName}/>
-            <SubjectHeader name={groupName}/>
+            <RaspHeader name={groupName}/>
             <div className={"tables__container"}>
                 {
-                    tables.day.map((day: raspDayT) => <SubjectTable day={day} key={day.id}/>)
+                    tables.day.map((day: raspDayT) => <RaspTable day={day} key={day.id}/>)
                 }
             </div>
         </div>

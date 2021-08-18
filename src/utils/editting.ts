@@ -1,6 +1,6 @@
 import { pairT } from "../Redux/reducers/raspData";
 import React from "react";
-import { autocompleteNamings } from "../components/Subject/SubjectTable/Row/Row";
+import { autocompleteNamings } from "../components/Rasp/RaspTable/Row/Row";
 import errorLog from "./Logs/Error";
 
 const editAud = (

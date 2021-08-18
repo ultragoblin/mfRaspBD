@@ -14,6 +14,28 @@ export const setData = (query: TGroupInfo) => {
     }
 };
 
+export const sendData = (data: raspDataT) => {
+    return (dispatch: Dispatch<raspDataAction>) => {
+        fetch(api.DB.group, {
+            ...authDefault,
+            method: "POST",
+            body: JSON.stringify(data)
+        })
+            .then((v) => {
+                if (v.status === 200) {
+                    dispatch({type: raspDataEnum.SEND_DATA})
+                    alert('Данные успешно сохранены');
+                } else {
+                    alert('Произошла ошибка при сохранении данных');
+                }
+
+            })
+            .catch((error) => {
+                console.log('COL fetch error >>> ', error);
+            })
+    }
+}
+
 export const setDay = (dayData: raspDayT) => {
     return (dispatch: Dispatch<raspDataAction>) => {
         dispatch({type: raspDataEnum.SET_DAY, payload: dayData});

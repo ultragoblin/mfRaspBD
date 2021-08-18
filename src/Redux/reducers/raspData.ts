@@ -2,7 +2,8 @@ enum raspDataEnum {
   SET_DATA = 'SET_DATA',
   SET_GROUP_INFO = 'SET_GROUP_INFO',
   SET_DAY = 'SET_DAY',
-  CLEAR_DATA = 'CLEAR_DATA'
+  CLEAR_DATA = 'CLEAR_DATA',
+  SEND_DATA = 'SEND_DATA'
 };
 
 export type pairT = {
@@ -65,13 +66,20 @@ type clearData = {
   type: raspDataEnum.CLEAR_DATA,
 };
 
-export type raspDataAction = setData | setDay | clearData | setClear;
+type sendData = {
+  type: raspDataEnum.SEND_DATA
+};
+
+export type raspDataAction = setData | setDay | clearData | setClear | sendData;
 
 export default function raspData(
   state: raspDataT = initialState,
   action: raspDataAction
 ) {
   switch (action.type) {
+    case raspDataEnum.SEND_DATA:
+      return state;
+      break;
     case raspDataEnum.SET_GROUP_INFO:
       const {year, semester, group} = action.groupInfo;
       return {

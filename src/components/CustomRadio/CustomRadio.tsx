@@ -5,7 +5,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import styles from "./CustomRadio.module.css";
 import { withStyles } from "@material-ui/core/styles";
-import { EDayType } from "../Subject/SubjectTable/SubjectTable";
+import { EDayType } from "../Rasp/RaspTable/RaspTable";
 
 export type radioType = {
   label?: {
