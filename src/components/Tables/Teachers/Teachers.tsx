@@ -29,7 +29,7 @@ interface HeadCell {
 }
 
 const headCells: HeadCell[] = [
-  { id: "teacher", label: 'Аудитория' },
+  { id: "teacher", label: 'Преподаватель' },
 ];
 
 interface EnhancedTableProps {

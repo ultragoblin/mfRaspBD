@@ -28,7 +28,7 @@ const CustomTabs = ({tabValue, tabFunc, setPage}: CustomTabsProps) => {
                     aria-label="full width tabs example"
                     className={styles.tabs}
                 >
-                    <p onClick={setPage} className={styles.arrow}><img src="/arrow-back.svg" alt=""/></p>
+                    <p onClick={setPage} className={styles.arrow}><img src="/adm/arrow-back.svg" alt=""/></p>
                     {/*<Tab label="Расписание"/>*/}
                     <Tab label="Группы"/>
                     <Tab label="Предметы"/>

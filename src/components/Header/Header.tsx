@@ -283,12 +283,13 @@ const Header = ({setGroupName ,setPage}: HeaderProps) => {
     const {group, caf, fac, year_id, activeSemester} = raspSelect;
 
     if (group?.val && year_id && activeSemester) {
+
       const query: TGetGroupRasp = {
         groupID: group.val.grp_id,
         yearID: year_id,
         semester: activeSemester
       }
-      setData(query);
+      // setData(query);
 
       if (fac?.val && caf?.val && group?.val) {
         setGroupName(`${fac.val.fac_name}${caf.val.caf_name}-${group.val.grp_name}`);
@@ -335,7 +336,7 @@ const Header = ({setGroupName ,setPage}: HeaderProps) => {
         {/*<Link to={routing.database}><Button startIcon={<StorageIcon/>} variant="contained">База данных</Button></Link>*/}
         <Button startIcon={<PrintIcon/>} variant="contained" disabled>Печать</Button>
         <Button startIcon={<DirectionsRunIcon/>} variant="contained" color="primary" disabled>
-          Выход
+          Загрузить
         </Button>
       </div>
     </header>
