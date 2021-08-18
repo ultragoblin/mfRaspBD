@@ -59,7 +59,8 @@ const Buttons = ({ tabNumber, modal, audModalData, groupModalData, subjectModalD
         }
 
         if (mode === EModalMode.ADD) {
-          if (data.number && data.stageid && data.cafid && data.name && data.startyear) {
+          console.log(data);
+          if (data.number && data.stageid && data.cafid && data.startyear) {
             putGroupAdm(data);
           } else {
             alert('Заполните все данные!')

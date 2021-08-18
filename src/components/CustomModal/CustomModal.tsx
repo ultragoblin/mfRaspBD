@@ -122,7 +122,8 @@ const CustomModal = ({
               subjectModalData={subjectModalData}
               groupModalData={groupModalData}
               modal={modal}
-              tabNumber={tabNumber}/>
+              tabNumber={tabNumber}
+            />
           </div>
         </>
       </Modal>
