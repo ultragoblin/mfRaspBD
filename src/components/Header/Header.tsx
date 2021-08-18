@@ -10,9 +10,9 @@ import routing from "../../utils/path/routing";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import React, { useEffect, useState } from "react";
 import { TDataFac, TDataGroup, TDataSemesters } from "../../Redux/reducers/data";
-import {TGetGroupRasp} from "../../utils/api/api";
 import {useActions} from "../../hooks/useActions";
 import { AppPages } from "../AppWrapper";
+import {TGroupInfo} from "../../Redux/reducers/raspData";
 
 const selectWidth: number = 167;
 
@@ -77,7 +77,7 @@ export type HeaderProps = {
 };
 
 const Header = ({setGroupName ,setPage}: HeaderProps) => {
-  const {setData} = useActions();
+  const {setGroupInfo} = useActions();
   const fullList = useTypedSelector((store) => store.data.fullList);
 
   const [raspSelect, setRaspSelect] = useState<TRaspValue>({
@@ -284,11 +284,12 @@ const Header = ({setGroupName ,setPage}: HeaderProps) => {
 
     if (group?.val && year_id && activeSemester) {
 
-      const query: TGetGroupRasp = {
-        groupID: group.val.grp_id,
-        yearID: year_id,
+      const query: TGroupInfo = {
+        group: group.val.grp_id,
+        year: year_id,
         semester: activeSemester
       }
+      setGroupInfo(query);
       // setData(query);
 
       if (fac?.val && caf?.val && group?.val) {
@@ -336,7 +337,7 @@ const Header = ({setGroupName ,setPage}: HeaderProps) => {
         {/*<Link to={routing.database}><Button startIcon={<StorageIcon/>} variant="contained">База данных</Button></Link>*/}
         <Button startIcon={<PrintIcon/>} variant="contained" disabled>Печать</Button>
         <Button startIcon={<DirectionsRunIcon/>} variant="contained" color="primary" disabled>
-          Загрузить
+          Выход
         </Button>
       </div>
     </header>

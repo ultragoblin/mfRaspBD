@@ -1,9 +1,9 @@
 import {Dispatch} from "redux";
-import {raspDataAction, raspDataEnum, raspDataT, raspDayT} from "../reducers/raspData";
-import api, {authDefault, TGetGroupRasp} from "../../utils/api/api";
+import {raspDataAction, raspDataEnum, raspDataT, raspDayT, TGroupInfo} from "../reducers/raspData";
+import api, {authDefault} from "../../utils/api/api";
 import errorLog from "../../utils/Logs/Error";
 
-export const setData = (query: TGetGroupRasp) => {
+export const setData = (query: TGroupInfo) => {
     return (dispatch: Dispatch<raspDataAction>) => {
         fetch(api.getGroup(query), authDefault)
             .then((response) => response.json())
@@ -25,3 +25,9 @@ export const clearData = () => {
         dispatch({type: raspDataEnum.CLEAR_DATA});
     }
 };
+
+export const setGroupInfo = (groupInfo: TGroupInfo) => {
+    return (dispatch: Dispatch<raspDataAction>) => {
+        dispatch({type: raspDataEnum.SET_GROUP_INFO, groupInfo})
+    }
+}

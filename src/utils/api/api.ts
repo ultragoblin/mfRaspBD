@@ -1,10 +1,6 @@
 // админские списки: /rasp/api/adm/<teacher,aud,subject,group>/list
 
-export type TGetGroupRasp = {
-  groupID: number,
-  yearID: number,
-  semester: number
-}
+import {TGroupInfo} from "../../Redux/reducers/raspData";
 
 const api = {
   fullList: 'https://rasp.msfu.ru/api/adm/full_list',
@@ -26,10 +22,10 @@ const api = {
     aud: 'https://rasp.msfu.ru/api/adm/aud'
   },
   getGroup: ({
-               groupID,
-               yearID,
+               group,
+               year,
                semester
-             }: TGetGroupRasp) => `https://rasp.msfu.ru/api/adm/group?id=${groupID}&year=${yearID}&semester=${semester}`
+             }: TGroupInfo) => `https://rasp.msfu.ru/api/adm/group?id=${group}&year=${year}&semester=${semester}`
 };
 
 export const authDefault: RequestInit | undefined = {

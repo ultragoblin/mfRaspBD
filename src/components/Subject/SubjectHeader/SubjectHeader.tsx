@@ -5,6 +5,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import styles from "./SubjectHeader.module.css";
 import { useActions } from "../../../hooks/useActions";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
+import {TGroupInfo} from "../../../Redux/reducers/raspData";
 
 export interface SubjectHeaderInteface {
   name: string;
@@ -14,7 +15,7 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
   const { collectData } = useActions();
   const raspData = useTypedSelector((store) => store.raspData);
   const collectingDataState = useTypedSelector((state) => state.collectData)
-
+  const {setData} = useActions();
   useEffect(() => {
     if (collectingDataState.sendReq) {
       let json = JSON.stringify(raspData);
@@ -40,17 +41,27 @@ const SubjectHeader = ({ name }: SubjectHeaderInteface) => {
 
   }, [collectingDataState])
 
+  const handleGetRasp = () => {
+    const query: TGroupInfo = {
+      semester: raspData.semester,
+      year: raspData.year,
+      group: raspData.group
+    }
+
+    setData(query);
+  }
+
   return (
     <div className={styles.header}>
       <h1>Группа {name}</h1>
       <div className={styles.buttons}>
         <Button
+            onClick={handleGetRasp}
           startIcon={<AutorenewIcon/>}
           variant="contained"
           color="secondary"
-          disabled
         >
-          Отменить
+          Загрузить
         </Button>
         <Button onClick={collectData} style={{ backgroundColor: '#007DFF' }} startIcon={<SaveIcon/>} variant="contained" color="primary">
           Сохранить
