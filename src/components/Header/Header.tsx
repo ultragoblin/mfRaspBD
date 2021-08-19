@@ -54,7 +54,7 @@ export type TOptions = {
 type TRaspValue = {
     yearOptions: TOptions[],
     activeSemester: number,
-    year: number,
+    year: string,
     year_id?: number,
     fac?: {
         options?: TOptions[],
@@ -78,12 +78,11 @@ export type HeaderProps = {
 const Header = ({setGroupName, setPage}: HeaderProps) => {
     const {setGroupInfo} = useActions();
     const admList = useTypedSelector((store) => store.data.admLists.data);
-    const fullList = useTypedSelector((store) => store.data.fullList);
 
     const [raspSelect, setRaspSelect] = useState<TRaspValue>({
         yearOptions: [],
         activeSemester: 1,
-        year: 0
+        year: '0'
     });
 
     const handleYearSelect = (e: any): void => {
@@ -161,38 +160,6 @@ const Header = ({setGroupName, setPage}: HeaderProps) => {
         });
     }
 
-    // useEffect(() => {
-    //   fullList.data.forEach((year) => {
-    //     if (raspSelect.year === year.year) {
-    //       switch (raspSelect.activeSemester) {
-    //         case 1:
-    //           setRaspSelect(prevState => {
-    //             return {
-    //               ...prevState,
-    //               semester: year.semesters["1"]
-    //             }
-    //           })
-    //           break;
-    //         case 2:
-    //           setRaspSelect(prevState => {
-    //             return {
-    //               ...prevState,
-    //               semester: year.semesters["2"]
-    //             }
-    //           })
-    //           break;
-    //         default:
-    //           break;
-    //       }
-    //     }
-    //   })
-    //
-    // }, [raspSelect.activeSemester, raspSelect.year])
-
-    useEffect(() => {
-        // Занулить все и чекнуть старт года обучения ???
-    }, [raspSelect.activeSemester])
-
     useEffect(() => {
         let cafOp: TOptions[] = [];
         let temp: TOptions;
@@ -240,13 +207,27 @@ const Header = ({setGroupName, setPage}: HeaderProps) => {
     useEffect(() => {
         let groupOp: TOptions[] = [];
         let temp: TOptions;
+        let y = Number(raspSelect.year.split('-')[0])
 
         admList.group.forEach((group) => {
-            if (group.cafid === raspSelect.caf?.val?.id && group.startyear === raspSelect.year && group.name) {
+            if (group.cafid === raspSelect.caf?.val?.id && y >= group.startyear && group.name && raspSelect.fac?.val?.name) {
+                let suffix: string = '';
+                let calc: string = '';
+
+                admList.stage.forEach((stageItem) => {
+                    if (stageItem.id === group.stageid) {
+                        suffix = stageItem.suffix;
+                    }
+                })
+
+                calc = String((y - group.startyear) * 2 + raspSelect.activeSemester) + String(group.number) + String(suffix);
+                // str((текущий год - год поступления группы) *2 + текущий семестр) + str(номер группы) + str(суффикс группы)
                 temp = {
                     value: String(group.id),
-                    placeholder: group.name.split('-')[1]
+                    placeholder: calc
+                    // placeholder: group.name.split('-')[1]
                 };
+                // (year - startyear) * 2 + semester + number + suffix
 
                 groupOp.push(temp);
             }

@@ -154,6 +154,11 @@ export type TYearList = {
     year: number
 };
 
+export type TNormalisedYearList = {
+    id: number,
+    year: string
+}
+
 export type TAdmListsData = {
     teacher: {
         options: TTeacherOptions[],
@@ -175,7 +180,7 @@ export type TAdmListsData = {
     caf: TAdmCafList[],
     stage: TAdmStageList[],
     fac: TFacList[],
-    year: TYearList[]
+    year: TNormalisedYearList[]
 };
 
 export type TAdmLists = {

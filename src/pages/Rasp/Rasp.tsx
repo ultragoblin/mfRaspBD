@@ -12,11 +12,11 @@ export type RaspProps = {
 
 function Rasp({setPage}: RaspProps) {
     const [groupName, setGroupName] = useState<string>('...')
-    const fullList = useTypedSelector((store) => store.data.fullList);
+    const admList = useTypedSelector((store) => store.data.admLists);
     const tables = useTypedSelector((store) => store.raspData);
     const timings = useTypedSelector((store) => store.timing);
 
-    return (fullList.data.length > 0 && timings.length > 0) ? <div className="App">
+    return (!admList.loading && timings.length > 0) ? <div className="App">
         <div className="App__container">
             <Header setPage={setPage} setGroupName={setGroupName}/>
             <RaspHeader name={groupName}/>

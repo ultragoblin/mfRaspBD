@@ -9,7 +9,7 @@ import {
   TAdmSubgroupList,
   TAdmSubjectList,
   TAdmTeacherList,
-  TAudOptions, TFacList,
+  TAudOptions, TFacList, TNormalisedYearList,
   TSubGroupOptions,
   TSubjectOptions,
   TTeacherOptions, TYearList
@@ -149,7 +149,18 @@ export const getAdmLists = () => {
           requestError = true;
           return dispatch({ type: EData.ERROR_ADM_LISTS, error: `adm year = ${error}` });
         })
-        .then((okYear: TYearList[]) => admLists.year = okYear);
+        .then((okYear: TYearList[]) => {
+          const newYears: TNormalisedYearList[] = [];
+
+          okYear.forEach((year) => {
+            newYears.push(<TNormalisedYearList>{
+              id: year.id,
+              year: `${year.year}-${Number(year.year) + 1}`
+            });
+          })
+
+          admLists.year = newYears;
+        })
 
     if (!requestError) {
       return dispatch({ type: EData.SUCCESS_ADM_LISTS, payload: admLists });
