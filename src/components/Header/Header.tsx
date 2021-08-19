@@ -202,7 +202,7 @@ const Header = ({setGroupName, setPage}: HeaderProps) => {
                 if (caf.facultyid === raspSelect.fac?.val?.id) {
                     temp = {
                         value: String(caf.id),
-                        placeholder: caf.nameshort
+                        placeholder: String(caf.number)
                     };
 
                     cafOp.push(temp);
@@ -242,7 +242,7 @@ const Header = ({setGroupName, setPage}: HeaderProps) => {
         let temp: TOptions;
 
         admList.group.forEach((group) => {
-            if (group.cafid === raspSelect.caf?.val?.id && group.startyear <= raspSelect.year && group.name) {
+            if (group.cafid === raspSelect.caf?.val?.id && group.startyear === raspSelect.year && group.name) {
                 temp = {
                     value: String(group.id),
                     placeholder: group.name.split('-')[1]
@@ -266,9 +266,7 @@ const Header = ({setGroupName, setPage}: HeaderProps) => {
     const handleGroup = (e: any): void => {
 
         admList.group.forEach((group) => {
-            console.log(group.id, e.target.value, '\n\n', group.startyear, raspSelect.year, '\n\n', group.cafid, raspSelect.caf?.val?.id)
             if (group.id === Number(e.target.value)) {
-                debugger
                 setRaspSelect(prevState => {
                     return {
                         ...prevState,
@@ -292,7 +290,6 @@ const Header = ({setGroupName, setPage}: HeaderProps) => {
                 year: year_id,
                 semester: activeSemester
             }
-
             setGroupInfo(query);
 
             if (group?.val.name) {
@@ -300,7 +297,7 @@ const Header = ({setGroupName, setPage}: HeaderProps) => {
             }
         }
 
-    }, [raspSelect.group?.val])
+    }, [raspSelect.group?.val, raspSelect.activeSemester])
 
     return (
         <header className={styles.header}>
