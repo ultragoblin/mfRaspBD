@@ -9,10 +9,10 @@ import {
   TAdmSubgroupList,
   TAdmSubjectList,
   TAdmTeacherList,
-  TAudOptions,
+  TAudOptions, TFacList,
   TSubGroupOptions,
   TSubjectOptions,
-  TTeacherOptions
+  TTeacherOptions, TYearList
 } from "../reducers/data";
 import api, { authDefault } from "../../utils/api/api";
 import { TAudModal, TSubjectModal, TTeacherModal } from "../../components/CustomModal/CustomModal";
@@ -49,7 +49,9 @@ export const getAdmLists = () => {
         val: []
       },
       caf: [],
-      stage: []
+      stage: [],
+      fac: [],
+      year: []
     };
 
     dispatch({ type: EData.GET_ADM_LISTS });
@@ -132,6 +134,22 @@ export const getAdmLists = () => {
         return dispatch({ type: EData.ERROR_ADM_LISTS, error: `adm stage = ${error}` });
       })
       .then((okStage: TAdmStageList[]) => admLists.stage = okStage);
+
+    fetch(api.admLists.faculty, authDefault)
+        .then((response) => response.json())
+        .catch((error) => {
+          requestError = true;
+          return dispatch({ type: EData.ERROR_ADM_LISTS, error: `adm fac = ${error}` });
+        })
+        .then((okFaculty: TFacList[]) => admLists.fac = okFaculty);
+
+    fetch(api.admLists.year, authDefault)
+        .then((response) => response.json())
+        .catch((error) => {
+          requestError = true;
+          return dispatch({ type: EData.ERROR_ADM_LISTS, error: `adm year = ${error}` });
+        })
+        .then((okYear: TYearList[]) => admLists.year = okYear);
 
     if (!requestError) {
       return dispatch({ type: EData.SUCCESS_ADM_LISTS, payload: admLists });

@@ -13,7 +13,9 @@ const api = {
     group: 'https://rasp.msfu.ru/api/adm/group/list',
     subgroup: 'https://rasp.msfu.ru/api/adm/subgroup/list',
     caf: 'https://rasp.msfu.ru/api/adm/caf/list',
-    stage: 'https://rasp.msfu.ru/api/adm/stage/list'
+    stage: 'https://rasp.msfu.ru/api/adm/stage/list',
+    faculty: 'https://rasp.msfu.ru/api/adm/faculty/list',
+    year: 'https://rasp.msfu.ru/api/adm/year/list'
   },
   DB: {
     group: 'https://rasp.msfu.ru/api/adm/group',
