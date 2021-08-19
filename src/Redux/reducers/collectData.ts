@@ -1,6 +1,7 @@
 enum collectDataEnum {
   COLLECT_DATA = 'COLLECT_DATA',
-  STOP_COLLECT_DATA = 'STOP_COLLECT_DATA'
+  STOP_COLLECT_DATA = 'STOP_COLLECT_DATA',
+  SENDED_DATA = 'SENDED_DATA'
 }
 
 export type collectDataT = {
@@ -21,7 +22,11 @@ type stopCollectData = {
   type: collectDataEnum.STOP_COLLECT_DATA
 }
 
-export type collectDataAction = collectData | stopCollectData;
+type sendedData = {
+  type: collectDataEnum.SENDED_DATA
+}
+
+export type collectDataAction = collectData | stopCollectData | sendedData;
 
 export default function raspData(
   state: collectDataT = initialState,
@@ -37,6 +42,11 @@ export default function raspData(
       return {
         collecting: false,
         sendReq: true
+      }
+    case collectDataEnum.SENDED_DATA:
+      return {
+        ...state,
+        sendReq: false
       }
     default:
       return state;

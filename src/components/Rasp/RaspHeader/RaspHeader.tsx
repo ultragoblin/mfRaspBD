@@ -15,12 +15,13 @@ const RaspHeader = ({name}: SubjectHeaderInteface) => {
     const {collectData} = useActions();
     const raspData = useTypedSelector((store) => store.raspData);
     const collectingDataState = useTypedSelector((state) => state.collectData)
-    const {setData, sendData} = useActions();
+    const {setData, sendData, sendedData} = useActions();
 
     useEffect(() => {
         if (collectingDataState.sendReq) {
-            console.log('sending json >>>', raspData, 'jsonnn >>>>', JSON.stringify(raspData))
-            sendData(raspData)
+            console.log('sending json >>>', raspData, 'jsonnn >>>>', JSON.stringify(raspData));
+            sendData(raspData);
+            sendedData()
         }
 
     }, [collectingDataState])

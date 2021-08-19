@@ -3,7 +3,7 @@ enum raspDataEnum {
   SET_GROUP_INFO = 'SET_GROUP_INFO',
   SET_DAY = 'SET_DAY',
   CLEAR_DATA = 'CLEAR_DATA',
-  SEND_DATA = 'SEND_DATA'
+  SEND_DATA = 'SEND_DATA',
 };
 
 export type pairT = {

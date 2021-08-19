@@ -2,6 +2,7 @@ import {Dispatch} from "redux";
 import {raspDataAction, raspDataEnum, raspDataT, raspDayT, TGroupInfo} from "../reducers/raspData";
 import api, {authDefault} from "../../utils/api/api";
 import errorLog from "../../utils/Logs/Error";
+import {collectDataEnum} from "../reducers/collectData";
 
 export const setData = (query: TGroupInfo) => {
     return (dispatch: Dispatch<raspDataAction>) => {
