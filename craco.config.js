@@ -12,4 +12,16 @@ module.exports = {
   webpack: {
     alias: resolvedAliases,
   },
+  devServer: {
+    proxy: {
+      '/api/*': {
+        target: 'https://rasp.msfu.ru/',
+        headers: {
+          'Host': 'rasp.msfu.ru'
+        },
+
+      },
+
+    },
+  },
 };
